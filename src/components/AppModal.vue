@@ -38,7 +38,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1.3rem;
-  font-family: 'Roboto';
   .header {
     width: 100%;
     display: flex;
