@@ -1,22 +1,21 @@
 <template>
-  <div class="sidebar" :style="{ width: width }">
-    <span
-      class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
-    >
-      <i class="fas fa-angle-double-left" />
-    </span>
+  <span
+    class="collapse-icon"
+    :class="{ 'rotate-180': collapsed }"
+    @click="toggleSidebar"
+  >
+    <i class="fas fa-angle-double-left" />
+  </span>
+  <div class="sidebar" :class="{ collapsed: collapsed }">
     <div class="sidebarlink">
-      <router-link to="/messages"
-        ><i class="fas fa-envelope"></i
-        ><span class="link_text">Messages</span></router-link
+      <router-link to="/messages" class="link"
+        ><i class="fas fa-envelope"></i><span>Messages</span></router-link
       >
-      <router-link to="/schedules"
+      <router-link to="/schedules" class="link"
         ><i class="fas fa-calendar-check"></i
         ><span>Schedules</span></router-link
       >
-      <router-link to="/triggers"
+      <router-link to="/triggers" class="link"
         ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
       >
     </div>
@@ -41,16 +40,15 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      return (this.collapsed = !this.collapsed);
+      this.collapsed = !this.collapsed;
     },
   },
 };
 </script>
 <style scoped lang="scss">
 .sidebar {
-  background-color: var(--blue);
+  background-color: var(--primary);
   position: fixed;
-  z-index: 1;
   top: 0;
   left: 0;
   bottom: 0;
@@ -70,26 +68,41 @@ export default {
   cursor: pointer;
   padding: 10px;
   margin: 20px;
-  color: var(--white-60);
+  color: var(--text-primary-2);
   text-decoration: none;
 }
-.router-link-active > i,
-.router-link-active > .link_text {
-  color: var(--white-100) !important;
+.fas {
+  font-size: 24px;
+}
+.link.router-link-active {
+  color: var(--text-primary-1);
 }
 .collapse-icon {
-  position: absolute;
-  padding: 10px;
-  color: var(--white-100);
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 5px;
+  color: #ffc300;
   transition: 0.2s linear;
   margin-bottom: 20px;
+  font-size: 25px;
+}
+.collapsed {
+  transform: translateX(-100%);
 }
 .rotate-180 {
   transform: rotate(-180deg);
   transition: 0.2s linear;
 }
 @include tablet-md {
+  .link {
+    padding: 10px 38px;
+  }
   .collapse-icon {
+    display: none;
+  }
+  .collapsed {
     display: none;
   }
   .rotate-180 {

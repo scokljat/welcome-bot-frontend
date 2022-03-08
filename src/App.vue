@@ -17,7 +17,7 @@ export default {
 @import './style/main';
 
 .container-center {
-  background-color: var(--background);
+  background-color: var(--background-base);
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -27,12 +27,10 @@ export default {
 
 .card {
   padding: 2rem 4rem;
-  width: $icon-w;
   height: 200px;
   width: 300px;
   text-align: center;
-  border: 1px solid var(--accent-color);
+  border: 1px solid var(--primary);
   border-radius: 4px;
-  background-color: var(--white);
 }
 </style>
