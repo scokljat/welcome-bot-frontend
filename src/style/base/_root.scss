@@ -1,18 +1,15 @@
 :root {
-  --white-100: rgba(255, 255, 255);
-  --white-60: rgba(255, 255, 255, 0.6);
-  --gray: rgb(34, 34, 34);
-  --gray-60: rgb(34, 34, 34, 0.6);
-  --gray-30: rgb(34, 34, 34, 0.3);
-  --gray-5: rgb(34, 34, 34, 0.05);
-  --black: rgb(0, 0, 0);
-  --background: rgb(241, 241, 241);
-  --text-color: rgb(34, 34, 34);
-  --light-gray: rgb(222, 222, 222);
-  --blue: rgb(0, 106, 245);
+  --primary: rgb(0, 106, 245);
+  --text-primary-1: rgba(255, 255, 255);
+  --text-primary-2: rgba(255, 255, 255, 0.6);
+  --text-secondary-1: rgb(34, 34, 34);
+  --text-secondary-2: rgb(34, 34, 34, 0.6);
+  --table-header: rgb(34, 34, 34, 0.3);
+  --table-hover: rgb(34, 34, 34, 0.05);
+  --background-base: rgb(241, 241, 241);
 }
 
-[data-theme='darkMode'] {
-  --background: rgb(34, 34, 34);
-  --text-color: rgba(255, 255, 255);
+:root .dark {
+  --background-base: rgb(0, 0, 0);
+  --text-primary-1: rgba(255, 255, 255);
 }
