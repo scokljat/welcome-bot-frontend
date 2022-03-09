@@ -1,11 +1,8 @@
 <template>
-  <span
-    class="collapse-icon"
-    :class="{ 'rotate-180': collapsed }"
-    @click="toggleSidebar"
-  >
-    <i class="fas fa-angle-double-left" />
-  </span>
+  <button class="collapse-icon" @click="toggleSidebar">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
   <div class="sidebar" :class="{ collapsed: collapsed }">
     <div class="sidebarlink">
       <router-link to="/messages" class="link"
@@ -59,7 +56,7 @@ export default {
 .sidebarlink {
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 .link {
   display: flex;
@@ -80,34 +77,25 @@ export default {
 .collapse-icon {
   position: fixed;
   z-index: 100;
-  top: 10px;
-  left: 10px;
+  left: 30px;
   padding: 5px;
-  color: var(--icon-nav);
   transition: 0.2s linear;
   margin-bottom: 20px;
   font-size: 25px;
+  color: var(--text-primary-1);
 }
 .collapsed {
-  transform: translateX(-100%);
-}
-.rotate-180 {
-  transform: rotate(-180deg);
-  transition: 0.2s linear;
+  transform: translateX(-102%);
 }
 @include tablet-md {
+  .collapsed {
+    transform: translateX(0);
+  }
   .link {
     padding: 10px 38px;
   }
   .collapse-icon {
     display: none;
-  }
-  .collapsed {
-    display: none;
-  }
-  .rotate-180 {
-    transform: none;
-    transition: none;
   }
 }
 </style>
