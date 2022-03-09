@@ -83,7 +83,7 @@ export default {
   top: 10px;
   left: 10px;
   padding: 5px;
-  color: #ffc300;
+  color: var(--icon-nav);
   transition: 0.2s linear;
   margin-bottom: 20px;
   font-size: 25px;
