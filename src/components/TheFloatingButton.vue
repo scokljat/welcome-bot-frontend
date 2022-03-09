@@ -1,12 +1,17 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @click="toggleAppModal">
     <i class="fa-solid fa-plus"></i>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'TheFloatingButton',
+  methods: {
+    ...mapMutations({ toggleAppModal: 'toggleAppModal' }),
+  },
 };
 </script>
 

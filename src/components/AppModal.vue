@@ -1,24 +1,34 @@
 <template>
-  <div class="container">
+  <div class="container" :class="{ inactive: !isModalActive }">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
-      <i class="fa-solid fa-x"></i>
+      <i class="fa-solid fa-x" @click="toggleAppModal"></i>
     </div>
     <div class="form_body">
       <slot />
     </div>
     <div class="footer">
-      <button class="cancel">Cancel</button>
+      <button class="cancel" @click="toggleAppModal">Cancel</button>
       <button class="save">Save</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'AppModal',
   props: {
     modalTitle: String,
+  },
+  computed: {
+    ...mapState({
+      isModalActive: 'isModalActive',
+    }),
+  },
+  methods: {
+    ...mapMutations({ toggleAppModal: 'toggleAppModal' }),
   },
 };
 </script>
@@ -26,6 +36,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 /* 375px Mobile */
+.inactive {
+  display: none;
+}
 .container {
   position: fixed;
   width: 84vw;

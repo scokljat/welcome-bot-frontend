@@ -1,9 +1,17 @@
 import { createStore } from 'vuex';
 
 export default createStore({
-  state: {},
+  state: {
+    // app_modal
+    isModalActive: false,
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    // app modal
+    toggleAppModal: (state) => {
+      state.isModalActive = !state.isModalActive;
+    },
+  },
   actions: {},
   modules: {},
 });
