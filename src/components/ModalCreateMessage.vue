@@ -30,7 +30,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-/* 375px Mobile */
 .message_title,
 .message_text {
   width: 100%;
@@ -64,8 +63,6 @@ export default {
   color: var(--text-secondary-1);
   font-size: 13px;
 }
-
-/* 768px tablet */
 @include tablet-sm {
   .label {
     font-size: 13px;

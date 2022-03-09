@@ -35,10 +35,7 @@ export default {
   name: 'ModalCreateTrigger',
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-/* 375px Mobile */
 .select_wrapper {
   position: relative;
 }
@@ -99,8 +96,6 @@ export default {
   color: var(--text-secondary-1);
   font-size: 13px;
 }
-
-/* 768px tablet */
 @include tablet-sm {
   .select_box {
     font-size: 14px;
@@ -117,7 +112,6 @@ export default {
     font-size: 14px;
   }
 }
-/* 1366px laptop */
 @include laptop {
   .select_box {
     margin-bottom: 26px;

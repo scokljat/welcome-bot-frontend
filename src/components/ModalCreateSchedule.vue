@@ -34,10 +34,7 @@ export default {
   name: 'ModalCreateMessage',
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-/* 375px Mobile */
 .select_wrapper {
   position: relative;
 }
@@ -74,13 +71,11 @@ export default {
   font-weight: 400;
   color: var(--text-secondary-2);
 }
-/* 411px */
 @include mobile-md {
   .select_box {
     padding: 10px;
   }
 }
-/* 768px tablet */
 @include tablet-sm {
   .select_box {
     margin-bottom: 20px;
@@ -94,7 +89,6 @@ export default {
     font-size: 13px;
   }
 }
-/* 1366px laptop */
 @include laptop {
   .select_box {
     margin-bottom: 26px;

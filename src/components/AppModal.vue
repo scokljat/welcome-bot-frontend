@@ -41,7 +41,8 @@ export default {
 }
 .container {
   position: fixed;
-  width: 84vw;
+  width: 90%;
+  max-width: 640px;
   z-index: 900;
   background-color: var(--text-primary-1);
   border-radius: 4px;
@@ -92,7 +93,7 @@ export default {
       cursor: pointer;
     }
     .cancel {
-      color: var(--gray);
+      color: var(--text-secondary-1);
       background: transparent;
     }
     .save {
@@ -102,16 +103,9 @@ export default {
     }
   }
 }
-/* 411px */
-@include mobile-md {
-  .container {
-    padding: 1.4rem;
-  }
-}
-/* 768px tablet */
+
 @include tablet-sm {
   .container {
-    width: 72vw;
     padding: 1.7rem;
     .header {
       h2 {
@@ -131,16 +125,10 @@ export default {
     }
   }
 }
-/* 768px tablet */
-@include tablet-md {
-  .container {
-    width: 45vw;
-  }
-}
+
 /* 1366px laptop */
 @include laptop {
   .container {
-    width: 40vw;
     padding: 2rem;
     .header {
       h2 {
