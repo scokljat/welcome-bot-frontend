@@ -1,11 +1,13 @@
-<template><SideBar /></template>
+<template>
+  <router-view />
+  <ThemeSwitcher />
+</template>
+
 <script>
-import SideBar from './components/SideBar.vue';
+import ThemeSwitcher from './components/ThemeSwitcher.vue';
 export default {
   name: 'App',
-  components: {
-    SideBar,
-  },
+  components: { ThemeSwitcher },
 };
 </script>
 

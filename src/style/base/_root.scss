@@ -7,13 +7,11 @@
   --background-base: rgb(241, 241, 241);
   --table-header: var(--background-base);
   --table-hover: rgb(34, 34, 34, 0.05);
-  --icon-nav: rgb(255, 195, 0);
-  --icon-mode: rgb(0, 0, 0);
+  --icon-mode: var(--text-primary-1);
 }
 
-:root .dark {
+:root.dark {
   --background-base: rgb(0, 0, 0);
   --text-primary-1: rgba(255, 255, 255);
-  --icon-mode: rgb(255, 195, 0);
   --table-header: rgb(34, 34, 34, 0.3);
 }
