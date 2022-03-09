@@ -23,18 +23,18 @@ export default {
   bottom: 1.4rem;
   right: 0.8rem;
   padding: 10px;
-  background-color: var(--blue);
+  background-color: var(--primary);
   border-radius: 50%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
     0 4px 5px 0 rgba(0, 0, 0, 0.14);
   cursor: pointer;
   i {
     font-size: 0.88rem;
-    color: var(--white-60);
+    color: var(--text-primary-1);
   }
 }
 /* 411px */
-@media only screen and (min-width: 411px) {
+@include mobile-md {
   .wrapper {
     width: 48px;
     height: 48px;
@@ -46,7 +46,7 @@ export default {
   }
 }
 /* 768px tablet */
-@media only screen and (min-width: 768px) {
+@include tablet-sm {
   .wrapper {
     width: 55px;
     height: 55px;
@@ -58,7 +58,7 @@ export default {
   }
 }
 /* 1366px laptop */
-@media only screen and (min-width: 1366px) {
+@include laptop {
   .wrapper {
     width: 58px;
     height: 58px;

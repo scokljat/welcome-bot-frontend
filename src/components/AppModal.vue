@@ -30,7 +30,7 @@ export default {
   position: fixed;
   width: 84vw;
   z-index: 900;
-  background-color: var(--white-100);
+  background-color: var(--text-primary-1);
   border-radius: 4px;
   box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 5px rgba(0, 0, 0, 0.1),
     0 16px 24px 2px rgba(0, 0, 0, 0.1);
@@ -47,13 +47,13 @@ export default {
     text-align: left;
     h2 {
       font-size: 17px;
-      color: var(--gray);
+      color: var(--text-secondary-1);
       font-weight: 700;
     }
     i {
       font-size: 0.85rem;
       cursor: pointer;
-      color: var(--gray-60);
+      color: var(--text-secondary-2);
     }
   }
   .form_body {
@@ -83,20 +83,20 @@ export default {
       background: transparent;
     }
     .save {
-      background: var(--blue);
+      background: var(--primary);
       margin-left: 3px;
-      color: var(--white-100);
+      color: var(--text-primary-1);
     }
   }
 }
 /* 411px */
-@media only screen and (min-width: 411px) {
+@include mobile-md {
   .container {
     padding: 1.4rem;
   }
 }
 /* 768px tablet */
-@media only screen and (min-width: 768px) {
+@include tablet-sm {
   .container {
     width: 72vw;
     padding: 1.7rem;
@@ -119,13 +119,13 @@ export default {
   }
 }
 /* 768px tablet */
-@media only screen and (min-width: 900px) {
+@include tablet-md {
   .container {
     width: 45vw;
   }
 }
 /* 1366px laptop */
-@media only screen and (min-width: 1366px) {
+@include laptop {
   .container {
     width: 40vw;
     padding: 2rem;

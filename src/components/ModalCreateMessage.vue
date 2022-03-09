@@ -29,7 +29,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 /* 375px Mobile */
 .message_title,
 .message_text {
@@ -41,11 +41,11 @@ export default {
 }
 .label {
   position: absolute;
-  color: var(--gray-60);
+  color: var(--text-secondary-2);
   font-size: 12px;
   font-weight: 500;
   padding: 2px 6px;
-  background-color: var(--white-100);
+  background-color: var(--text-primary-1);
 }
 .title_label {
   left: 3%;
@@ -60,15 +60,13 @@ export default {
   padding: 10px;
   border-radius: 4px;
   outline: none;
-  border: 1px solid var(--gray-30);
-  color: var(--gray);
+  border: 1px solid var(--table-header);
+  color: var(--text-secondary-1);
   font-size: 13px;
 }
-/* 411px */
-@media only screen and (min-width: 411px) {
-}
+
 /* 768px tablet */
-@media only screen and (min-width: 768px) {
+@include tablet-sm {
   .label {
     font-size: 13px;
   }
@@ -79,8 +77,5 @@ export default {
   .message_title {
     padding-bottom: 30px;
   }
-}
-/* 1366px laptop */
-@media only screen and (min-width: 1366px) {
 }
 </style>

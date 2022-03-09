@@ -36,7 +36,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss" scoped>
 /* 375px Mobile */
 .select_wrapper {
   position: relative;
@@ -45,23 +45,23 @@ export default {
   position: absolute;
   top: -21%;
   left: 2%;
-  color: var(--gray-60);
+  color: var(--text-secondary-2);
   font-size: 12px;
   font-weight: 500;
   padding: 2px 6px;
-  background-color: var(--white-100);
+  background-color: var(--text-primary-1);
 }
 .select_box {
   width: 100%;
   background-color: transparent;
   outline: none;
-  border: 1px solid var(--gray-30);
+  border: 1px solid var(--table-header);
   padding: 10px;
   border-radius: 4px;
   margin-bottom: 14px;
   font-size: 13px;
   font-weight: 400;
-  color: var(--gray);
+  color: var(--text-secondary-1);
 }
 .message_state {
   display: flex;
@@ -72,16 +72,16 @@ export default {
   margin-left: 10px;
   font-size: 12px;
   font-weight: 400;
-  color: var(--gray-60);
+  color: var(--text-secondary-2);
 }
 /* 411px */
-@media only screen and (min-width: 411px) {
+@include mobile-md {
   .select_box {
     padding: 10px;
   }
 }
 /* 768px tablet */
-@media only screen and (min-width: 768px) {
+@include tablet-sm {
   .select_box {
     margin-bottom: 20px;
     font-size: 14px;
@@ -95,7 +95,7 @@ export default {
   }
 }
 /* 1366px laptop */
-@media only screen and (min-width: 1366px) {
+@include laptop {
   .select_box {
     margin-bottom: 26px;
     font-size: 16px;
