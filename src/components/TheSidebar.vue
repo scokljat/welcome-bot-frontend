@@ -77,7 +77,8 @@ export default {
 .collapse-icon {
   position: fixed;
   z-index: 100;
-  left: 30px;
+  left: 20px;
+  top: 6px;
   padding: 5px;
   transition: 0.2s linear;
   margin-bottom: 20px;
