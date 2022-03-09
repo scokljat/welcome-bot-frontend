@@ -41,6 +41,7 @@ button {
 }
 .moon {
   background-color: var(--background-base);
+  color: var(--icon-mode);
 }
 @include tablet-md {
   .moon {
