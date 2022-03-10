@@ -13,6 +13,7 @@
     </button>
   </div>
 </template>
+
 <script setup>
 import { useDark, useToggle } from '@vueuse/core';
 const isDark = useDark({
@@ -21,28 +22,30 @@ const isDark = useDark({
 const toggleDark = useToggle(isDark);
 const clicked = false;
 </script>
+
 <style scoped lang="scss">
 .buttonWrap {
   display: flex;
   justify-content: flex-end;
   position: fixed;
-  top: 30px;
-  right: 30px;
+  top: 1.875rem;
+  right: 1.875rem;
 }
-button {
-  border: 0;
-}
+
 .fas {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
+
 .sun {
   background-color: var(--background-base);
   color: var(--icon-mode);
 }
+
 .moon {
   background-color: var(--background-base);
   color: var(--icon-mode);
 }
+
 @include tablet-md {
   .moon {
     color: var(--primary);
