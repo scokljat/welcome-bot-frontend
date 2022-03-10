@@ -6,10 +6,8 @@
 header {
   background-color: var(--primary);
   height: 3.75rem;
-}
 
-@include tablet-md {
-  header {
+  @include tablet-md {
     display: none;
   }
 }
