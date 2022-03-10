@@ -18,21 +18,22 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'TheSidebar',
   data: () => {
     return {
       collapsed: false,
-      sidebarWidth: 100,
-      sidebarWidthCollapsed: 55,
+      sidebarWidth: 6.25,
+      sidebarWidthCollapsed: 3.4375,
     };
   },
   computed: {
     width() {
       return `${
         this.collapsed ? this.sidebarWidthCollapsed : this.sidebarWidth
-      }px`;
+      }rem`;
     },
   },
   methods: {
@@ -42,6 +43,7 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
 .sidebar {
   background-color: var(--primary);
@@ -53,48 +55,57 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .sidebarlink {
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
+  margin-top: 3.75rem;
 }
+
 .link {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  padding: 10px;
-  margin: 20px;
+  padding: 0.625rem;
+  margin: 1.25rem;
   color: var(--text-primary-2);
   text-decoration: none;
 }
+
 .fas {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
+
 .link.router-link-active {
   color: var(--text-primary-1);
 }
+
 .collapse-icon {
   position: fixed;
   z-index: 100;
-  left: 20px;
-  top: 6px;
-  padding: 5px;
+  left: 1.25rem;
+  top: 0.375rem;
+  padding: 0.3125rem;
   transition: 0.2s linear;
-  margin-bottom: 20px;
-  font-size: 25px;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
   color: var(--text-primary-1);
 }
+
 .collapsed {
   transform: translateX(-102%);
 }
+
 @include tablet-md {
   .collapsed {
     transform: translateX(0);
   }
+
   .link {
-    padding: 10px 38px;
+    padding: 0.625rem 2.375rem;
   }
+
   .collapse-icon {
     display: none;
   }

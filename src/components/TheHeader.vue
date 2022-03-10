@@ -5,8 +5,9 @@
 <style lang="scss">
 header {
   background-color: var(--primary);
-  height: 60px;
+  height: 3.75rem;
 }
+
 @include tablet-md {
   header {
     display: none;
