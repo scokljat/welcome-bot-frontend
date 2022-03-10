@@ -27,15 +27,18 @@ export default {
   name: 'ModalCreateMessage',
 };
 </script>
+
 <style lang="scss" scoped>
 .message_title,
 .message_text {
   width: 100%;
   position: relative;
 }
+
 .message_title {
   padding-bottom: 20px;
 }
+
 .label {
   position: absolute;
   color: var(--text-secondary-2);
@@ -44,14 +47,17 @@ export default {
   padding: 2px 6px;
   background-color: var(--text-primary-1);
 }
+
 .title_label {
   left: 3%;
   top: -18%;
 }
+
 .text_label {
   left: 3%;
   top: -8%;
 }
+
 .message_input {
   width: 100%;
   padding: 10px;
@@ -61,14 +67,17 @@ export default {
   color: var(--text-secondary-1);
   font-size: 13px;
 }
+
 @include tablet-sm {
   .label {
     font-size: 13px;
   }
+
   .message_input {
     padding: 10px 20px;
     font-size: 14px;
   }
+
   .message_title {
     padding-bottom: 30px;
   }

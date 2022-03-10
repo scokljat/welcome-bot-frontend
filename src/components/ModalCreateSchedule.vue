@@ -34,10 +34,12 @@ export default {
   name: 'ModalCreateMessage',
 };
 </script>
+
 <style lang="scss" scoped>
 .select_wrapper {
   position: relative;
 }
+
 .select_label {
   position: absolute;
   top: -21%;
@@ -48,6 +50,7 @@ export default {
   padding: 2px 6px;
   background-color: var(--text-primary-1);
 }
+
 .select_box {
   width: 100%;
   background-color: transparent;
@@ -60,40 +63,48 @@ export default {
   font-weight: 400;
   color: var(--text-secondary-1);
 }
+
 .message_state {
   display: flex;
   align-items: center;
   margin-bottom: 6px;
 }
+
 .message_state > label {
   margin-left: 10px;
   font-size: 12px;
   font-weight: 400;
   color: var(--text-secondary-2);
 }
+
 @include mobile-md {
   .select_box {
     padding: 10px;
   }
 }
+
 @include tablet-sm {
   .select_box {
     margin-bottom: 20px;
     font-size: 14px;
     padding: 12px 10px;
   }
+
   .message_state {
     margin-bottom: 10px;
   }
+
   .message_state > label {
     font-size: 13px;
   }
 }
+
 @include laptop {
   .select_box {
     margin-bottom: 26px;
     font-size: 16px;
   }
+
   .message_state > label {
     font-size: 14px;
   }

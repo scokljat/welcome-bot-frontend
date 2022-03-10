@@ -35,10 +35,12 @@ export default {
   name: 'ModalCreateTrigger',
 };
 </script>
+
 <style lang="scss" scoped>
 .select_wrapper {
   position: relative;
 }
+
 .select_label {
   position: absolute;
   top: -21%;
@@ -49,6 +51,7 @@ export default {
   padding: 2px 6px;
   background-color: var(--text-primary-1);
 }
+
 .select_box {
   width: 100%;
   background-color: transparent;
@@ -61,22 +64,26 @@ export default {
   font-weight: 400;
   color: var(--text-secondary-1);
 }
+
 .message_state {
   display: flex;
   align-items: center;
   margin-bottom: 6px;
 }
+
 .message_state > label {
   margin-left: 10px;
   font-size: 12px;
   font-weight: 400;
   color: var(--text-secondary-2);
 }
+
 .channel_title {
   width: 100%;
   position: relative;
   padding-bottom: 20px;
 }
+
 .label {
   position: absolute;
   color: var(--text-secondary-2);
@@ -96,30 +103,37 @@ export default {
   color: var(--text-secondary-1);
   font-size: 13px;
 }
+
 @include tablet-sm {
   .select_box {
     font-size: 14px;
     padding: 12px 10px;
   }
+
   .message_state {
     margin-bottom: 10px;
   }
+
   .message_state > label {
     font-size: 13px;
   }
+
   .channel_input {
     padding: 12px 10px;
     font-size: 14px;
   }
 }
+
 @include laptop {
   .select_box {
     margin-bottom: 26px;
     font-size: 16px;
   }
+
   .message_state > label {
     font-size: 14px;
   }
+
   .channel_input {
     font-size: 16px;
   }

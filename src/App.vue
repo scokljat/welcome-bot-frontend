@@ -4,6 +4,7 @@
     <ModalCreateMessage />
   </AppModal>
 </template>
+
 <script>
 import AppModal from './components/AppModal.vue';
 import ModalCreateMessage from './components/ModalCreateMessage.vue';

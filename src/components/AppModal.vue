@@ -44,6 +44,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .container {
   position: fixed;
@@ -58,6 +59,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1.3rem;
+
   .header {
     width: 100%;
     display: flex;
@@ -65,11 +67,13 @@ export default {
     align-items: center;
     padding-bottom: 20px;
     text-align: left;
+
     h2 {
       font-size: 17px;
       color: var(--text-secondary-1);
       font-weight: 700;
     }
+
     button {
       i {
         font-size: 0.85rem;
@@ -78,16 +82,19 @@ export default {
       }
     }
   }
+
   .form_body {
     padding: 10px 0px;
     font-weight: 400;
   }
+
   .footer {
     padding-top: 8px;
     padding-bottom: 6px;
     display: flex;
     align-items: center;
     justify-content: right;
+
     button {
       min-width: 90px;
       border-radius: 4px;
@@ -100,6 +107,7 @@ export default {
       font-weight: 500;
       cursor: pointer;
     }
+
     .cancel {
       color: var(--text-secondary-1);
       background: transparent;
@@ -107,6 +115,7 @@ export default {
         color: var(--text-secondary-2);
       }
     }
+
     .save {
       background: var(--primary);
       margin-left: 3px;
@@ -121,10 +130,12 @@ export default {
 @include tablet-sm {
   .container {
     padding: 1.7rem;
+
     .header {
       h2 {
         font-size: 22px;
       }
+
       i {
         font-size: 1.08rem;
       }
@@ -143,17 +154,21 @@ export default {
 @include laptop {
   .container {
     padding: 2rem;
+
     .header {
       h2 {
         font-size: 24px;
       }
+
       svg {
         width: 35px;
         height: 35px;
       }
     }
+
     .footer {
       padding-top: 36px;
+
       button {
         min-width: 130px;
         font-size: 18px;

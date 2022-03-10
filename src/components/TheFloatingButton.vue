@@ -14,6 +14,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .wrapper {
   width: 45px;
@@ -32,36 +33,43 @@ export default {
   cursor: pointer;
   outline: none;
   border: none;
+
   &:hover {
     opacity: 0.8;
   }
+
   i {
     font-size: 0.88rem;
     color: var(--text-primary-1);
   }
 }
+
 @include mobile-md {
   .wrapper {
     width: 48px;
     height: 48px;
     right: 1rem;
     padding: 12px;
+
     i {
       font-size: 1rem;
     }
   }
 }
+
 @include tablet-sm {
   .wrapper {
     width: 55px;
     height: 55px;
     right: 1.4rem;
     bottom: 1.6rem;
+
     i {
       font-size: 1.2rem;
     }
   }
 }
+
 @include laptop {
   .wrapper {
     width: 58px;
@@ -69,6 +77,7 @@ export default {
     right: 2.2rem;
     bottom: 2.2rem;
     padding: 14px;
+
     i {
       font-size: 1.4rem;
     }
