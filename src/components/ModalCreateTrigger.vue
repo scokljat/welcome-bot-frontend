@@ -56,7 +56,7 @@ export default {
   width: 100%;
   background-color: transparent;
   outline: none;
-  border: 0.06rem solid var(--table-header);
+  border: 0.062rem solid var(--border-color-1);
   padding: 0.625rem;
   border-radius: 0.25rem;
   margin-bottom: 1.25rem;
@@ -99,7 +99,7 @@ export default {
   padding: 0.625rem;
   border-radius: 0.25rem;
   outline: none;
-  border: 0.06rem solid var(--table-header);
+  border: 0.062rem solid var(--border-color-1);
   color: var(--text-secondary-1);
   font-size: 0.81rem;
 }

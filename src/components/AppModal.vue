@@ -66,6 +66,9 @@ export default {
     }
 
     button {
+      background: none;
+      border: none;
+
       i {
         font-size: 0.85rem;
         cursor: pointer;
@@ -127,8 +130,10 @@ export default {
         font-size: 1.375rem;
       }
 
-      i {
-        font-size: 1.08rem;
+      button {
+        i {
+          font-size: 1.2rem;
+        }
       }
     }
     .footer {
@@ -151,9 +156,8 @@ export default {
         font-size: 1.5rem;
       }
 
-      svg {
-        width: 2.18rem;
-        height: 2.18rem;
+      i {
+        font-size: 1.3rem;
       }
     }
 
