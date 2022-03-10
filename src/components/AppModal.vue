@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="isModalActive">
+  <div v-if="isModalActive" class="container">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
       <button @click="toggleAppModal">
@@ -18,11 +18,15 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { TOGGLE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'AppModal',
   props: {
-    modalTitle: String,
+    modalTitle: {
+      type: String,
+      default: 'Create Message',
+    },
   },
   computed: {
     ...mapState({
@@ -30,7 +34,7 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations({ toggleAppModal: 'TOGGLE_APP_MODAL' }),
+    ...mapMutations({ toggleAppModal: TOGGLE_APP_MODAL }),
   },
 };
 </script>

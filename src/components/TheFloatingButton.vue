@@ -6,11 +6,12 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import { TOGGLE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'TheFloatingButton',
   methods: {
-    ...mapMutations({ toggleAppModal: 'TOGGLE_APP_MODAL' }),
+    ...mapMutations({ toggleAppModal: TOGGLE_APP_MODAL }),
   },
 };
 </script>
