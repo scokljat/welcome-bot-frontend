@@ -25,16 +25,7 @@ export default {
   data: () => {
     return {
       collapsed: false,
-      sidebarWidth: 6.25,
-      sidebarWidthCollapsed: 3.4375,
     };
-  },
-  computed: {
-    width() {
-      return `${
-        this.collapsed ? this.sidebarWidthCollapsed : this.sidebarWidth
-      }rem`;
-    },
   },
   methods: {
     toggleSidebar() {
