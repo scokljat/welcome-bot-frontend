@@ -21,6 +21,11 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'AppModal',
+  data: () => {
+    return {
+      route: window.location.hash,
+    };
+  },
   props: {
     modalTitle: String,
   },
@@ -31,6 +36,11 @@ export default {
   },
   methods: {
     ...mapMutations({ toggleAppModal: 'TOGGLE_APP_MODAL' }),
+  },
+  watch: {
+    route() {
+      this.toggleAppModal();
+    },
   },
 };
 </script>
