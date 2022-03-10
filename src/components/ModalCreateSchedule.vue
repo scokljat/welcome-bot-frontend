@@ -1,28 +1,28 @@
 <template>
   <div class="wrapper">
-    <div class="select_wrapper">
-      <select class="select_box">
+    <div class="select-wrapper">
+      <select class="select-box">
         <option name="Option 1">Some message title One</option>
         <option name="Option 2">Some message title Two</option>
         <option name="Option 3">Some message title Three</option>
       </select>
-      <div class="select_label">Message</div>
+      <div class="select-label">Message</div>
     </div>
-    <div class="select_wrapper">
-      <input class="select_box" type="date" name="date" />
-      <div class="select_label">Run At</div>
+    <div class="select-wrapper">
+      <input class="select-box" type="date" name="date" />
+      <div class="select-label">Run At</div>
     </div>
-    <div class="message_state">
+    <div class="message-state">
       <input
         id="repeat"
-        class="message_state"
+        class="message-state"
         type="checkbox"
         name="repeat"
         value="Repeat"
       />
       <label for="repeat">Repeat</label>
     </div>
-    <div class="message_state">
+    <div class="message-state">
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
     </div>
@@ -36,11 +36,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.select_wrapper {
+.select-wrapper {
   position: relative;
 }
 
-.select_label {
+.select-label {
   position: absolute;
   top: -21%;
   left: 2%;
@@ -51,7 +51,7 @@ export default {
   background-color: var(--text-primary-1);
 }
 
-.select_box {
+.select-box {
   width: 100%;
   background-color: transparent;
   outline: none;
@@ -64,13 +64,13 @@ export default {
   color: var(--text-secondary-1);
 }
 
-.message_state {
+.message-state {
   display: flex;
   align-items: center;
   margin-bottom: 6px;
 }
 
-.message_state > label {
+.message-state > label {
   margin-left: 0.375rem;
   font-size: 0.75rem;
   font-weight: 400;
@@ -78,34 +78,34 @@ export default {
 }
 
 @include mobile-md {
-  .select_box {
+  .select-box {
     padding: 0.625rem;
   }
 }
 
 @include tablet-sm {
-  .select_box {
+  .select-box {
     margin-bottom: 1.25rem;
     font-size: 0.875rem;
     padding: 0.75rem 0.625rem;
   }
 
-  .message_state {
+  .message-state {
     margin-bottom: 0.625rem;
   }
 
-  .message_state > label {
+  .message-state > label {
     font-size: 0.81rem;
   }
 }
 
 @include laptop {
-  .select_box {
+  .select-box {
     margin-bottom: 1.625rem;
     font-size: 1rem;
   }
 
-  .message_state > label {
+  .message-state > label {
     font-size: 0.875rem;
   }
 }

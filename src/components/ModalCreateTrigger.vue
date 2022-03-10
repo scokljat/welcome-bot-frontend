@@ -1,29 +1,29 @@
 <template>
   <div class="wrapper">
-    <div class="select_wrapper">
-      <select class="select_box">
+    <div class="select-wrapper">
+      <select class="select-box">
         <option name="Option 1">Some message title One</option>
         <option name="Option 2">Some message title Two</option>
         <option name="Option 3">Some message title Three</option>
       </select>
-      <div class="select_label">Message</div>
+      <div class="select-label">Message</div>
     </div>
-    <div class="select_wrapper">
-      <select class="select_box">
+    <div class="select-wrapper">
+      <select class="select-box">
         <option name="channel-join">On channel join</option>
       </select>
-      <div class="select_label">Trigger</div>
+      <div class="select-label">Trigger</div>
     </div>
-    <div class="channel_title">
+    <div class="channel-title">
       <div class="label">Channel</div>
       <input
-        class="channel_input"
+        class="channel-input"
         type="text"
         name="title"
         placeholder="Enter the channel name..."
       />
     </div>
-    <div class="message_state">
+    <div class="message-state">
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
     </div>
@@ -37,11 +37,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.select_wrapper {
+.select-wrapper {
   position: relative;
 }
 
-.select_label {
+.select-label {
   position: absolute;
   top: -21%;
   left: 2%;
@@ -52,7 +52,7 @@ export default {
   background-color: var(--text-primary-1);
 }
 
-.select_box {
+.select-box {
   width: 100%;
   background-color: transparent;
   outline: none;
@@ -65,20 +65,20 @@ export default {
   color: var(--text-secondary-1);
 }
 
-.message_state {
+.message-state {
   display: flex;
   align-items: center;
   margin-bottom: 0.375rem;
 }
 
-.message_state > label {
+.message-state > label {
   margin-left: 0.625rem;
   font-size: 0.75rem;
   font-weight: 400;
   color: var(--text-secondary-2);
 }
 
-.channel_title {
+.channel-title {
   width: 100%;
   position: relative;
   padding-bottom: 1.25rem;
@@ -94,7 +94,7 @@ export default {
   left: 2%;
   top: -21%;
 }
-.channel_input {
+.channel-input {
   width: 100%;
   padding: 0.625rem;
   border-radius: 0.25rem;
@@ -105,36 +105,36 @@ export default {
 }
 
 @include tablet-sm {
-  .select_box {
+  .select-box {
     font-size: 0.875rem;
     padding: 0.75rem 0.625rem;
   }
 
-  .message_state {
+  .message-state {
     margin-bottom: 0.625rem;
   }
 
-  .message_state > label {
+  .message-state > label {
     font-size: 0.81rem;
   }
 
-  .channel_input {
+  .channel-input {
     padding: 0.75rem 0.625rem;
     font-size: 0.875rem;
   }
 }
 
 @include laptop {
-  .select_box {
+  .select-box {
     margin-bottom: 1.625rem;
     font-size: 1rem;
   }
 
-  .message_state > label {
+  .message-state > label {
     font-size: 0.875rem;
   }
 
-  .channel_input {
+  .channel-input {
     font-size: 1rem;
   }
 }

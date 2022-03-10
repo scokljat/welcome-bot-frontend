@@ -1,18 +1,18 @@
 <template>
   <div class="wrapper">
-    <div class="message_title">
-      <div class="label title_label">Title</div>
+    <div class="message-title">
+      <div class="label title-label">Title</div>
       <input
-        class="message_input"
+        class="message-input"
         type="text"
         name="title"
         placeholder="Enter the message title..."
       />
     </div>
-    <div class="message_text">
-      <div class="label text_label">Text</div>
+    <div class="message-text">
+      <div class="label text-label">Text</div>
       <textarea
-        class="message_input"
+        class="message-input"
         type="text"
         name="text"
         rows="5"
@@ -29,13 +29,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.message_title,
-.message_text {
+.message-title,
+.message-text {
   width: 100%;
   position: relative;
 }
 
-.message_title {
+.message-title {
   padding-bottom: 1.25rem;
 }
 
@@ -48,17 +48,17 @@ export default {
   background-color: var(--text-primary-1);
 }
 
-.title_label {
+.title-label {
   left: 3%;
   top: -18%;
 }
 
-.text_label {
+.text-label {
   left: 3%;
   top: -8%;
 }
 
-.message_input {
+.message-input {
   width: 100%;
   padding: 0.625rem;
   border-radius: 0.25rem;
@@ -73,12 +73,12 @@ export default {
     font-size: 0.81rem;
   }
 
-  .message_input {
+  .message-input {
     padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
   }
 
-  .message_title {
+  .message-title {
     padding-bottom: 1.875rem;
   }
 }

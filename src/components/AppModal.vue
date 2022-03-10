@@ -6,7 +6,7 @@
         <i class="fa-solid fa-x"></i>
       </button>
     </div>
-    <div class="form_body">
+    <div class="form-body">
       <slot />
     </div>
     <div class="footer">
@@ -83,7 +83,7 @@ export default {
     }
   }
 
-  .form_body {
+  .form-body {
     padding: 0.625rem 0;
     font-weight: 400;
   }
