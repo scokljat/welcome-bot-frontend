@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { TOGGLE_APP_MODAL } from './mutation-types';
 
 export default createStore({
   state: {
@@ -6,7 +7,7 @@ export default createStore({
   },
   getters: {},
   mutations: {
-    toggleAppModal: (state) => {
+    [TOGGLE_APP_MODAL]: (state) => {
       state.isModalActive = !state.isModalActive;
     },
   },

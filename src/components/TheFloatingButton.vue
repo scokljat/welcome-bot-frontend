@@ -10,7 +10,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'TheFloatingButton',
   methods: {
-    ...mapMutations({ toggleAppModal: 'toggleAppModal' }),
+    ...mapMutations({ toggleAppModal: 'TOGGLE_APP_MODAL' }),
   },
 };
 </script>

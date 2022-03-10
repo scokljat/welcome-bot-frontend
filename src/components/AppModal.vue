@@ -30,7 +30,7 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations({ toggleAppModal: 'toggleAppModal' }),
+    ...mapMutations({ toggleAppModal: 'TOGGLE_APP_MODAL' }),
   },
 };
 </script>
