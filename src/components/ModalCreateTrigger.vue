@@ -46,9 +46,9 @@ export default {
   top: -21%;
   left: 2%;
   color: var(--text-secondary-2);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 2px 6px;
+  padding: 0.125ren 0.375rem;
   background-color: var(--text-primary-1);
 }
 
@@ -56,11 +56,11 @@ export default {
   width: 100%;
   background-color: transparent;
   outline: none;
-  border: 1px solid var(--table-header);
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  font-size: 13px;
+  border: 0.06rem solid var(--table-header);
+  padding: 0.625rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.81rem;
   font-weight: 400;
   color: var(--text-secondary-1);
 }
@@ -68,12 +68,12 @@ export default {
 .message_state {
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 
 .message_state > label {
-  margin-left: 10px;
-  font-size: 12px;
+  margin-left: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--text-secondary-2);
 }
@@ -81,61 +81,61 @@ export default {
 .channel_title {
   width: 100%;
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
 }
 
 .label {
   position: absolute;
   color: var(--text-secondary-2);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 2px 6px;
+  padding: 0.125rem 0.375rem;
   background-color: var(--text-primary-1);
   left: 2%;
   top: -21%;
 }
 .channel_input {
   width: 100%;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 0.625rem;
+  border-radius: 0.25rem;
   outline: none;
-  border: 1px solid var(--table-header);
+  border: 0.06rem solid var(--table-header);
   color: var(--text-secondary-1);
-  font-size: 13px;
+  font-size: 0.81rem;
 }
 
 @include tablet-sm {
   .select_box {
-    font-size: 14px;
-    padding: 12px 10px;
+    font-size: 0.875rem;
+    padding: 0.75rem 0.625rem;
   }
 
   .message_state {
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
   }
 
   .message_state > label {
-    font-size: 13px;
+    font-size: 0.81rem;
   }
 
   .channel_input {
-    padding: 12px 10px;
-    font-size: 14px;
+    padding: 0.75rem 0.625rem;
+    font-size: 0.875rem;
   }
 }
 
 @include laptop {
   .select_box {
-    margin-bottom: 26px;
-    font-size: 16px;
+    margin-bottom: 1.625rem;
+    font-size: 1rem;
   }
 
   .message_state > label {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .channel_input {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 </style>

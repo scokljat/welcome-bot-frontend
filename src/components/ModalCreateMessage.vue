@@ -36,15 +36,15 @@ export default {
 }
 
 .message_title {
-  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
 }
 
 .label {
   position: absolute;
   color: var(--text-secondary-2);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 2px 6px;
+  padding: 0.125rem 0.375rem;
   background-color: var(--text-primary-1);
 }
 
@@ -60,26 +60,26 @@ export default {
 
 .message_input {
   width: 100%;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 0.625rem;
+  border-radius: 0.25rem;
   outline: none;
-  border: 1px solid var(--table-header);
+  border: 0.062rem solid var(--table-header);
   color: var(--text-secondary-1);
-  font-size: 13px;
+  font-size: 0.81rem;
 }
 
 @include tablet-sm {
   .label {
-    font-size: 13px;
+    font-size: 0.81rem;
   }
 
   .message_input {
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
   }
 
   .message_title {
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem;
   }
 }
 </style>

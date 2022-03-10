@@ -49,12 +49,13 @@ export default {
 .container {
   position: fixed;
   width: 90%;
-  max-width: 640px;
+  max-width: 40rem;
   z-index: 900;
   background-color: var(--text-primary-1);
-  border-radius: 4px;
-  box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 5px rgba(0, 0, 0, 0.1),
-    0 16px 24px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 0.625rem 0 rgba(0, 0, 0, 0.2),
+    0 0.375rem 1.875rem 0.312rem rgba(0, 0, 0, 0.1),
+    0 1rem 1.5rem 0.125rem rgba(0, 0, 0, 0.1);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -65,11 +66,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: 1.25rem;
     text-align: left;
 
     h2 {
-      font-size: 17px;
+      font-size: 1.06rem;
       color: var(--text-secondary-1);
       font-weight: 700;
     }
@@ -84,25 +85,25 @@ export default {
   }
 
   .form_body {
-    padding: 10px 0px;
+    padding: 0.625rem 0;
     font-weight: 400;
   }
 
   .footer {
-    padding-top: 8px;
-    padding-bottom: 6px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.375rem;
     display: flex;
     align-items: center;
     justify-content: right;
 
     button {
-      min-width: 90px;
-      border-radius: 4px;
-      padding: 10px;
+      min-width: 5.625rem;
+      border-radius: 0.25rem;
+      padding: 0.625rem;
       border: none;
       outline: none;
-      font-size: 14px;
-      line-height: 22px;
+      font-size: 0.875rem;
+      line-height: 1.375rem;
       text-align: center;
       font-weight: 500;
       cursor: pointer;
@@ -118,7 +119,7 @@ export default {
 
     .save {
       background: var(--primary);
-      margin-left: 3px;
+      margin-left: 0.187rem;
       color: var(--text-primary-1);
       &:hover {
         opacity: 0.8;
@@ -133,7 +134,7 @@ export default {
 
     .header {
       h2 {
-        font-size: 22px;
+        font-size: 1.375rem;
       }
 
       i {
@@ -141,11 +142,11 @@ export default {
       }
     }
     .footer {
-      padding-top: 26px;
+      padding-top: 1.625rem;
       button {
-        min-width: 110px;
-        font-size: 16px;
-        padding: 12px 10px;
+        min-width: 6.875rem;
+        font-size: 1rem;
+        padding: 0.75rem 0.625rem;
       }
     }
   }
@@ -157,22 +158,22 @@ export default {
 
     .header {
       h2 {
-        font-size: 24px;
+        font-size: 1.5rem;
       }
 
       svg {
-        width: 35px;
-        height: 35px;
+        width: 2.18rem;
+        height: 2.18rem;
       }
     }
 
     .footer {
-      padding-top: 36px;
+      padding-top: 2.25rem;
 
       button {
-        min-width: 130px;
-        font-size: 18px;
-        padding: 14px 10px;
+        min-width: 8.12rem;
+        font-size: 1.12rem;
+        padding: 0.875rem 0.625rem;
       }
     }
   }

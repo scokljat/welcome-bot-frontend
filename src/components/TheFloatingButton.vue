@@ -17,19 +17,20 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  width: 45px;
-  height: 45px;
+  width: 2.81rem;
+  height: 2.81rem;
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   bottom: 1.4rem;
   right: 0.8rem;
-  padding: 10px;
+  padding: 0.625rem;
   background-color: var(--primary);
   border-radius: 50%;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
-    0 4px 5px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.2),
+    0 0.062rem 0.625rem 0 rgba(0, 0, 0, 0.12),
+    0 0.25rem 0.31rem 0 rgba(0, 0, 0, 0.14);
   cursor: pointer;
   outline: none;
   border: none;
@@ -46,10 +47,10 @@ export default {
 
 @include mobile-md {
   .wrapper {
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
     right: 1rem;
-    padding: 12px;
+    padding: 0.75rem;
 
     i {
       font-size: 1rem;
@@ -59,8 +60,8 @@ export default {
 
 @include tablet-sm {
   .wrapper {
-    width: 55px;
-    height: 55px;
+    width: 3.43rem;
+    height: 3.43rem;
     right: 1.4rem;
     bottom: 1.6rem;
 
@@ -72,11 +73,11 @@ export default {
 
 @include laptop {
   .wrapper {
-    width: 58px;
-    height: 58px;
+    width: 3.625rem;
+    height: 3.625;
     right: 2.2rem;
     bottom: 2.2rem;
-    padding: 14px;
+    padding: 0.875;
 
     i {
       font-size: 1.4rem;
