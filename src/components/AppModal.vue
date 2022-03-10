@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ inactive: !isModalActive }">
+  <div class="container" v-if="isModalActive">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
       <button @click="toggleAppModal">
@@ -35,9 +35,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.inactive {
-  display: none;
-}
 .container {
   position: fixed;
   width: 90%;
