@@ -4,14 +4,23 @@
   </button>
   <div class="sidebar" :class="{ collapsed }">
     <div class="linkWrap">
-      <router-link to="/messages" class="sidebarLink" @click="toggleSidebar"
+      <router-link
+        :to="{ name: 'messages' }"
+        class="sidebarLink"
+        @click="toggleSidebar"
         ><i class="fas fa-envelope"></i><span>Messages</span></router-link
       >
-      <router-link to="/schedules" class="sidebarLink" @click="toggleSidebar"
+      <router-link
+        :to="{ name: 'schedules' }"
+        class="sidebarLink"
+        @click="toggleSidebar"
         ><i class="fas fa-calendar-check"></i
         ><span>Schedules</span></router-link
       >
-      <router-link to="/triggers" class="sidebarLink" @click="toggleSidebar"
+      <router-link
+        :to="{ name: 'triggers' }"
+        class="sidebarLink"
+        @click="toggleSidebar"
         ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
       >
     </div>
