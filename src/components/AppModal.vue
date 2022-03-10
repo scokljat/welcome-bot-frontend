@@ -50,6 +50,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1.3rem;
+  transition: all 0.3s ease;
 
   .header {
     width: 100%;
@@ -68,6 +69,7 @@ export default {
     button {
       background: none;
       border: none;
+      transition: all 0.3s ease-in;
 
       i {
         font-size: 0.85rem;
@@ -105,6 +107,7 @@ export default {
     .cancel {
       color: var(--text-secondary-1);
       background: transparent;
+
       &:hover {
         color: var(--text-secondary-2);
       }
@@ -114,6 +117,7 @@ export default {
       background: var(--primary);
       margin-left: 0.187rem;
       color: var(--text-primary-1);
+
       &:hover {
         opacity: 0.8;
       }
@@ -138,6 +142,7 @@ export default {
     }
     .footer {
       padding-top: 1.625rem;
+
       button {
         min-width: 6.875rem;
         font-size: 1rem;
