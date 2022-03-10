@@ -2,7 +2,9 @@
   <div class="container" :class="{ inactive: !isModalActive }">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
-      <i class="fa-solid fa-x" @click="toggleAppModal"></i>
+      <button @click="toggleAppModal">
+        <i class="fa-solid fa-x"></i>
+      </button>
     </div>
     <div class="form_body">
       <slot />
@@ -64,10 +66,12 @@ export default {
       color: var(--text-secondary-1);
       font-weight: 700;
     }
-    i {
-      font-size: 0.85rem;
-      cursor: pointer;
-      color: var(--text-secondary-2);
+    button {
+      i {
+        font-size: 0.85rem;
+        cursor: pointer;
+        color: var(--text-secondary-2);
+      }
     }
   }
   .form_body {
@@ -95,11 +99,17 @@ export default {
     .cancel {
       color: var(--text-secondary-1);
       background: transparent;
+      &:hover {
+        color: var(--text-secondary-2);
+      }
     }
     .save {
       background: var(--primary);
       margin-left: 3px;
       color: var(--text-primary-1);
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }
