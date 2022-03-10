@@ -14,10 +14,7 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-/* 375px Mobile */
 .wrapper {
   width: 45px;
   height: 45px;
@@ -43,7 +40,6 @@ export default {
     color: var(--text-primary-1);
   }
 }
-/* 411px */
 @include mobile-md {
   .wrapper {
     width: 48px;
@@ -55,7 +51,6 @@ export default {
     }
   }
 }
-/* 768px tablet */
 @include tablet-sm {
   .wrapper {
     width: 55px;
@@ -67,7 +62,6 @@ export default {
     }
   }
 }
-/* 1366px laptop */
 @include laptop {
   .wrapper {
     width: 58px;

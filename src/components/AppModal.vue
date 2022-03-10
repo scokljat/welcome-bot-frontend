@@ -34,10 +34,7 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-/* 375px Mobile */
 .inactive {
   display: none;
 }
@@ -136,7 +133,6 @@ export default {
   }
 }
 
-/* 1366px laptop */
 @include laptop {
   .container {
     padding: 2rem;
