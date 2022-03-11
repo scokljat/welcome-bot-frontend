@@ -47,7 +47,7 @@ export default {
   color: var(--text-secondary-2);
   font-size: 0.75rem;
   font-weight: 500;
-  padding: 0.125rem 0.375rem;
+  padding: 0.13rem 0.38rem;
   background-color: var(--text-primary-1);
 }
 
@@ -55,10 +55,10 @@ export default {
   width: 100%;
   background-color: transparent;
   outline: none;
-  border: 0.062rem solid var(--border-color-1);
-  padding: 0.625rem;
+  border: 0.06rem solid var(--border-color-1);
+  padding: 0.63rem;
   border-radius: 0.25rem;
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.88rem;
   font-size: 0.81rem;
   font-weight: 400;
   color: var(--text-secondary-1);
@@ -71,7 +71,7 @@ export default {
 }
 
 .message-state > label {
-  margin-left: 0.375rem;
+  margin-left: 0.38rem;
   font-size: 0.75rem;
   font-weight: 400;
   color: var(--text-secondary-2);
@@ -79,19 +79,19 @@ export default {
 
 @include mobile-md {
   .select-box {
-    padding: 0.625rem;
+    padding: 0.63rem;
   }
 }
 
 @include tablet-sm {
   .select-box {
     margin-bottom: 1.25rem;
-    font-size: 0.875rem;
-    padding: 0.75rem 0.625rem;
+    font-size: 0.88rem;
+    padding: 0.75rem 0.63rem;
   }
 
   .message-state {
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.63rem;
   }
 
   .message-state > label {
@@ -101,12 +101,12 @@ export default {
 
 @include laptop {
   .select-box {
-    margin-bottom: 1.625rem;
+    margin-bottom: 1.63rem;
     font-size: 1rem;
   }
 
   .message-state > label {
-    font-size: 0.875rem;
+    font-size: 0.88rem;
   }
 }
 </style>

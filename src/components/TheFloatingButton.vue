@@ -74,11 +74,11 @@ export default {
 
 @include laptop {
   .wrapper {
-    width: 3.625rem;
-    height: 3.625;
+    width: 3.63rem;
+    height: 3.63rem;
     right: 2.2rem;
     bottom: 2.2rem;
-    padding: 0.875;
+    padding: 0.88rem;
 
     i {
       font-size: 1.4rem;

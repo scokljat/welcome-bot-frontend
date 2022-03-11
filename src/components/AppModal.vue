@@ -25,7 +25,7 @@ export default {
   props: {
     modalTitle: {
       type: String,
-      default: 'Create Message',
+      required: true,
     },
   },
   computed: {
@@ -47,9 +47,9 @@ export default {
   z-index: 900;
   background-color: var(--text-primary-1);
   border-radius: 0.25rem;
-  box-shadow: 0 0.5rem 0.625rem 0 rgba(0, 0, 0, 0.2),
-    0 0.375rem 1.875rem 0.312rem rgba(0, 0, 0, 0.1),
-    0 1rem 1.5rem 0.125rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5rem 0.63rem 0 rgba(0, 0, 0, 0.2),
+    0 0.38rem 1.88rem 0.31rem rgba(0, 0, 0, 0.1),
+    0 1rem 1.5rem 0.13rem rgba(0, 0, 0, 0.1);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -84,25 +84,25 @@ export default {
   }
 
   .form-body {
-    padding: 0.625rem 0;
+    padding: 0.63rem 0;
     font-weight: 400;
   }
 
   .footer {
     padding-top: 0.5rem;
-    padding-bottom: 0.375rem;
+    padding-bottom: 0.38rem;
     display: flex;
     align-items: center;
     justify-content: right;
 
     button {
-      min-width: 5.625rem;
+      min-width: 5.63rem;
       border-radius: 0.25rem;
-      padding: 0.625rem;
+      padding: 0.63rem;
       border: none;
       outline: none;
-      font-size: 0.875rem;
-      line-height: 1.375rem;
+      font-size: 0.88rem;
+      line-height: 1.38rem;
       text-align: center;
       font-weight: 500;
       cursor: pointer;
@@ -119,7 +119,7 @@ export default {
 
     .save {
       background: var(--primary);
-      margin-left: 0.187rem;
+      margin-left: 0.19rem;
       color: var(--text-primary-1);
 
       &:hover {
@@ -135,7 +135,7 @@ export default {
 
     .header {
       h2 {
-        font-size: 1.375rem;
+        font-size: 1.38rem;
       }
 
       button {
@@ -145,12 +145,12 @@ export default {
       }
     }
     .footer {
-      padding-top: 1.625rem;
+      padding-top: 1.63rem;
 
       button {
-        min-width: 6.875rem;
+        min-width: 6.88rem;
         font-size: 1rem;
-        padding: 0.75rem 0.625rem;
+        padding: 0.75rem 0.63rem;
       }
     }
   }
@@ -176,7 +176,7 @@ export default {
       button {
         min-width: 8.12rem;
         font-size: 1.12rem;
-        padding: 0.875rem 0.625rem;
+        padding: 0.88rem 0.63rem;
       }
     }
   }
