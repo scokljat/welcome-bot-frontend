@@ -45,7 +45,7 @@ export default {
   width: 90%;
   max-width: 40rem;
   z-index: 900;
-  background-color: var(--text-primary-1);
+  background-color: var(--text-secondary-1);
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 0.63rem 0 rgba(0, 0, 0, 0.2),
     0 0.38rem 1.88rem 0.31rem rgba(0, 0, 0, 0.1),
@@ -66,7 +66,7 @@ export default {
 
     h2 {
       font-size: $text-lg;
-      color: var(--text-secondary-1);
+      color: var(--text-primary-1);
       font-weight: 700;
 
       @include tablet-sm {
@@ -82,7 +82,7 @@ export default {
       i {
         font-size: $text-lg;
         cursor: pointer;
-        color: var(--text-secondary-2);
+        color: var(--text-primary-2);
       }
     }
   }
@@ -119,18 +119,18 @@ export default {
     }
 
     .cancel {
-      color: var(--text-secondary-1);
+      color: var(--text-primary-1);
       background: transparent;
 
       &:hover {
-        color: var(--text-secondary-2);
+        color: var(--text-primary-2);
       }
     }
 
     .save {
       background: var(--primary);
       margin-left: 0.19rem;
-      color: var(--text-primary-1);
+      color: var(--text-secondary-1);
 
       &:hover {
         opacity: 0.8;

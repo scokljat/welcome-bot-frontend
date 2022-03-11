@@ -1,20 +1,18 @@
 :root {
   --primary: rgb(0, 106, 245);
-  --text-primary-1: rgba(255, 255, 255);
-  --text-primary-2: rgba(255, 255, 255, 0.6);
-  --text-secondary-1: rgb(34, 34, 34);
-  --text-secondary-2: rgb(34, 34, 34, 0.6);
+  --text-primary-1: rgb(34, 34, 34);
+  --text-primary-2: rgb(34, 34, 34, 0.6);
+  --text-secondary-1: rgb(255, 255, 255);
+  --text-secondary-2: rgb(255, 255, 255, 0.6);
   --background-base: rgb(241, 241, 241);
   --table-header: var(--background-base);
   --table-hover: rgb(34, 34, 34, 0.05);
-  --icon-nav: rgb(255, 195, 0);
-  --icon-mode: rgb(0, 0, 0);
   --border-color-1: rgb(34, 34, 34, 0.2);
 }
 
 :root .dark {
   --background-base: rgb(0, 0, 0);
   --text-primary-1: rgba(255, 255, 255);
-  --icon-mode: rgb(255, 195, 0);
+  --text-primary-2: rgb(255, 255, 255, 0.6);
   --table-header: rgb(34, 34, 34, 0.3);
 }
