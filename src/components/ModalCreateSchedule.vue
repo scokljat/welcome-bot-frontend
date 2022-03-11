@@ -12,6 +12,15 @@
       <input class="input-text" type="date" name="date" />
       <div class="input-label">Run At</div>
     </div>
+    <div class="input-box">
+      <select class="input-text">
+        <option name="Option 1">Every minute</option>
+        <option name="Option 2">Every hour</option>
+        <option name="Option 3">Every day</option>
+      </select>
+
+      <div class="input-label">Interval</div>
+    </div>
     <div class="input-checkbox">
       <input id="repeat" type="checkbox" name="repeat" value="Repeat" />
       <label for="repeat">Repeat</label>

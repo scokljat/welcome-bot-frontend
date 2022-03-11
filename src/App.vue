@@ -1,20 +1,20 @@
 <template>
   <TheFloatingButton />
-  <AppModal modal-title="Create Message">
-    <ModalCreateTrigger />
+  <AppModal modal-title="Create Schedule">
+    <ModalCreateSchedule />
   </AppModal>
 </template>
 
 <script>
 import AppModal from './components/AppModal.vue';
 import TheFloatingButton from './components/TheFloatingButton.vue';
-import ModalCreateTrigger from './components/ModalCreateTrigger.vue';
+import ModalCreateSchedule from './components/ModalCreateSchedule.vue';
 export default {
   name: 'App',
   components: {
     AppModal,
     TheFloatingButton,
-    ModalCreateTrigger,
+    ModalCreateSchedule,
   },
 };
 </script>
