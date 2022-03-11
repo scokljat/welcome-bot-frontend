@@ -1,17 +1,17 @@
 <template>
-  <button class="collapseIcon" @click="toggleSidebar">
+  <button class="collapse-icon" @click="toggleSidebar">
     <i class="fa-solid fa-bars"></i>
   </button>
   <div class="sidebar" :class="{ collapsed }">
-    <div class="linkWrap">
-      <router-link to="/messages" class="sidebarLink" @click="toggleSidebar"
+    <div class="link-wrap">
+      <router-link to="/messages" class="sidebar-link"
         ><i class="fas fa-envelope"></i><span>Messages</span></router-link
       >
-      <router-link to="/schedules" class="sidebarLink" @click="toggleSidebar"
+      <router-link to="/schedules" class="sidebar-link"
         ><i class="fas fa-calendar-check"></i
         ><span>Schedules</span></router-link
       >
-      <router-link to="/triggers" class="sidebarLink" @click="toggleSidebar"
+      <router-link to="/triggers" class="sidebar-link"
         ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
       >
     </div>
@@ -51,13 +51,13 @@ export default {
   }
 }
 
-.linkWrap {
+.link-wrap {
   display: flex;
   flex-direction: column;
   margin-top: 3.75rem;
 }
 
-.sidebarLink {
+.sidebar-link {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,11 +76,11 @@ span {
   font-size: $text-sm;
 }
 
-.sidebarLink.router-link-active {
+.sidebar-link.router-link-active {
   color: var(--text-secondary-1);
 }
 
-.collapseIcon {
+.collapse-icon {
   position: fixed;
   z-index: 100;
   left: 1.25rem;
@@ -103,11 +103,11 @@ span {
     }
   }
 
-  .sidebarLink {
+  .sidebar-link {
     padding: 0.63rem 2.38rem;
   }
 
-  .collapseIcon {
+  .collapse-icon {
     display: none;
   }
 }
