@@ -72,6 +72,10 @@ export default {
   font-size: $text-xl;
 }
 
+span {
+  font-size: $text-sm;
+}
+
 .sidebarLink.router-link-active {
   color: var(--text-secondary-1);
 }
