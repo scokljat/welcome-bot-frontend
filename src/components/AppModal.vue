@@ -53,7 +53,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1.3rem;
+  padding: 1.5rem;
   transition: all 0.3s ease;
 
   .header {
@@ -65,9 +65,13 @@ export default {
     text-align: left;
 
     h2 {
-      font-size: 1.06rem;
+      font-size: $text-lg;
       color: var(--text-secondary-1);
       font-weight: 700;
+
+      @include tablet-sm {
+        font-size: $text-xl;
+      }
     }
 
     button {
@@ -76,7 +80,7 @@ export default {
       transition: all 0.3s ease-in;
 
       i {
-        font-size: 0.85rem;
+        font-size: $text-lg;
         cursor: pointer;
         color: var(--text-secondary-2);
       }
@@ -101,11 +105,17 @@ export default {
       padding: 0.63rem;
       border: none;
       outline: none;
-      font-size: 0.88rem;
+      font-size: $text-md;
       line-height: 1.38rem;
       text-align: center;
       font-weight: 500;
       cursor: pointer;
+
+      @include tablet-sm {
+        min-width: 6.88rem;
+        padding: 0.75rem 0.63rem;
+        font-size: $text-lg;
+      }
     }
 
     .cancel {
@@ -124,59 +134,6 @@ export default {
 
       &:hover {
         opacity: 0.8;
-      }
-    }
-  }
-}
-
-@include tablet-sm {
-  .container {
-    padding: 1.7rem;
-
-    .header {
-      h2 {
-        font-size: 1.38rem;
-      }
-
-      button {
-        i {
-          font-size: 1.2rem;
-        }
-      }
-    }
-    .footer {
-      padding-top: 1.63rem;
-
-      button {
-        min-width: 6.88rem;
-        font-size: 1rem;
-        padding: 0.75rem 0.63rem;
-      }
-    }
-  }
-}
-
-@include laptop {
-  .container {
-    padding: 2rem;
-
-    .header {
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      i {
-        font-size: 1.3rem;
-      }
-    }
-
-    .footer {
-      padding-top: 2.25rem;
-
-      button {
-        min-width: 8.12rem;
-        font-size: 1.12rem;
-        padding: 0.88rem 0.63rem;
       }
     }
   }
