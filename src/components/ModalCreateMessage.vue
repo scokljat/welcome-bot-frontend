@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="input-box">
-      <div class="input-label">Title</div>
+      <label class="input-label">Title</label>
       <input
         class="input-text"
         type="text"
@@ -10,7 +10,7 @@
       />
     </div>
     <div class="input-box">
-      <div class="input-label">Text</div>
+      <label class="input-label">Text</label>
       <textarea
         class="input-text"
         type="text"

@@ -54,7 +54,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1.5rem;
-  transition: all 0.3s ease;
 
   .header {
     width: 100%;
@@ -77,7 +76,6 @@ export default {
     button {
       background: none;
       border: none;
-      transition: all 0.3s ease-in;
 
       i {
         font-size: $text-lg;

@@ -6,11 +6,11 @@
         <option name="Option 2">Some message title Two</option>
         <option name="Option 3">Some message title Three</option>
       </select>
-      <div class="input-label">Message</div>
+      <label class="input-label">Message</label>
     </div>
     <div class="input-box">
       <input class="input-text" type="date" name="date" />
-      <div class="input-label">Run At</div>
+      <label class="input-label">Run At</label>
     </div>
     <div class="input-box">
       <select class="input-text">
@@ -19,7 +19,7 @@
         <option name="Option 3">Every day</option>
       </select>
 
-      <div class="input-label">Interval</div>
+      <label class="input-label">Interval</label>
     </div>
     <div class="input-checkbox">
       <input id="repeat" type="checkbox" name="repeat" value="Repeat" />

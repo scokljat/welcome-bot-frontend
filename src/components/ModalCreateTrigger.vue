@@ -6,16 +6,16 @@
         <option name="Option 2">Some message title Two</option>
         <option name="Option 3">Some message title Three</option>
       </select>
-      <div class="input-label">Message</div>
+      <label class="input-label">Message</label>
     </div>
     <div class="input-box">
       <select class="input-text">
         <option name="channel-join">On channel join</option>
       </select>
-      <div class="input-label">Trigger</div>
+      <label class="input-label">Trigger</label>
     </div>
     <div class="input-box">
-      <div class="input-label">Channel</div>
+      <label class="input-label">Channel</label>
       <input
         class="input-text"
         type="text"
