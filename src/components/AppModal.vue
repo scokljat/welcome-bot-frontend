@@ -2,7 +2,7 @@
   <div v-if="isModalActive" class="container">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
-      <button @click="toggleAppModal">
+      <button @click="closeAppModal">
         <i class="fa-solid fa-x"></i>
       </button>
     </div>
@@ -10,7 +10,7 @@
       <slot />
     </div>
     <div class="footer">
-      <button class="cancel" @click="toggleAppModal">Cancel</button>
+      <button class="cancel" @click="closeAppModal">Cancel</button>
       <button class="save">Save</button>
     </div>
   </div>
@@ -18,7 +18,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { TOGGLE_APP_MODAL } from '@/store/mutation-types';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'AppModal',
@@ -34,7 +34,7 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations({ toggleAppModal: TOGGLE_APP_MODAL }),
+    ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
   },
 };
 </script>
@@ -74,8 +74,8 @@ export default {
     }
 
     button {
-      background: none;
       border: none;
+      background: none;
 
       i {
         font-size: $text-lg;
