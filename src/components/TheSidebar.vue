@@ -62,30 +62,30 @@ export default {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  padding: 0.625rem;
+  padding: 0.63rem;
   margin: 1.25rem;
-  color: var(--text-primary-2);
+  color: var(--text-secondary-2);
   text-decoration: none;
 }
 
 .fas {
-  font-size: 1.5rem;
+  font-size: $text-xl;
 }
 
 .sidebarLink.router-link-active {
-  color: var(--text-primary-1);
+  color: var(--text-secondary-1);
 }
 
 .collapseIcon {
   position: fixed;
   z-index: 100;
   left: 1.25rem;
-  top: 0.375rem;
-  padding: 0.3125rem;
+  top: 0.38rem;
+  padding: 0.31rem;
   transition: 0.2s ease;
   margin-bottom: 1.25rem;
   font-size: 1.5rem;
-  color: var(--text-primary-1);
+  color: var(--text-secondary-1);
 }
 
 @include tablet-md {
@@ -100,7 +100,7 @@ export default {
   }
 
   .sidebarLink {
-    padding: 0.625rem 2.375rem;
+    padding: 0.63rem 2.38rem;
   }
 
   .collapseIcon {
