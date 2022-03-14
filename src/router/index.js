@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
+    path: '/auth',
+    name: 'login',
+    component: () => import('../pages/LoginPage.vue'),
+  },
+  {
     path: '/messages',
     name: 'messages',
     component: () => import('../pages/MessagesPage.vue'),
@@ -15,6 +20,15 @@ const routes = [
     path: '/triggers',
     name: 'triggers',
     component: () => import('../pages/TriggersPage.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/error',
+  },
+  {
+    path: '/error',
+    name: 'error',
+    component: () => import('../pages/ErrorPage.vue'),
   },
 ];
 const router = createRouter({
