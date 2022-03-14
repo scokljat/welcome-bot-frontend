@@ -28,22 +28,14 @@ const clicked = false;
   display: flex;
   justify-content: flex-end;
   position: fixed;
-  top: 1.875rem;
-  right: 1.875rem;
+  top: 0.94rem;
+  right: 1.25rem;
 }
 
 .fas {
   font-size: 1.5rem;
-}
-
-.sun {
-  background-color: var(--background-base);
-  color: var(--icon-mode);
-}
-
-.moon {
-  background-color: var(--background-base);
-  color: var(--icon-mode);
+  background-color: transparent;
+  color: var(--text-secondary-1);
 }
 
 @include tablet-md {
