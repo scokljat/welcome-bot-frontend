@@ -1,35 +1,49 @@
 <template>
-  <button class="collapse-icon" @click="toggleSidebar">
-    <i class="fa-solid fa-bars"></i>
-  </button>
-  <div class="sidebar" :class="{ collapsed }">
-    <div class="link-wrap">
-      <router-link to="/messages" class="sidebar-link"
-        ><i class="fas fa-envelope"></i><span>Messages</span></router-link
-      >
-      <router-link to="/schedules" class="sidebar-link"
-        ><i class="fas fa-calendar-check"></i
-        ><span>Schedules</span></router-link
-      >
-      <router-link to="/triggers" class="sidebar-link"
-        ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
-      >
+  <div ref="target">
+    <button class="collapse-icon" @click="toggleSidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="sidebar" :class="{ collapsed }">
+      <div class="link-wrap">
+        <router-link to="/messages" class="sidebar-link" @click="closeSidebar"
+          ><i class="fas fa-envelope"></i><span>Messages</span></router-link
+        >
+        <router-link to="/schedules" class="sidebar-link" @click="closeSidebar"
+          ><i class="fas fa-calendar-check"></i
+          ><span>Schedules</span></router-link
+        >
+        <router-link to="/triggers" class="sidebar-link" @click="closeSidebar"
+          ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
+
 export default {
   name: 'TheSidebar',
-  data: () => {
-    return {
-      collapsed: false,
+  setup() {
+    const target = ref(null);
+    let collapsed = ref(false);
+
+    onClickOutside(target, () => {
+      collapsed.value = true;
+    });
+
+    const toggleSidebar = () => {
+      collapsed.value = !collapsed.value;
     };
-  },
-  methods: {
-    toggleSidebar() {
-      this.collapsed = !this.collapsed;
-    },
+
+    const closeSidebar = () => {
+      collapsed.value = true;
+    };
+
+    return { target, collapsed, toggleSidebar, closeSidebar };
   },
 };
 </script>
