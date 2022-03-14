@@ -40,8 +40,8 @@ body::-webkit-scrollbar {
   font-size: $text-md;
   font-weight: 400;
   color: var(--text-primary-1);
-  padding-top: 0.75rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.1rem;
   cursor: default;
   display: inline-block;
   overflow: hidden;
@@ -61,31 +61,41 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   min-height: 2.82rem;
-  border-top: 1px solid var(--text-primary-2);
+  border-top: 1px solid var(--text-secondary-2);
+  background-color: var(--text-secondary-1);
 }
 .el-pager li {
   position: relative;
   font-size: $text-lg !important;
-  color: var(--table-header);
+  color: rgb(34, 34, 34, 0.3);
 }
-.el-pager li.active {
+.el-pager li.is-active {
   color: var(--text-primary-1) !important;
 }
-.el-pager li.active::after {
+.el-pager li.is-active::after {
   content: '';
   width: 90%;
-  height: 0.13rem;
+  height: 0.15rem;
   background-color: var(--primary);
   position: absolute;
-  top: -0.57rem;
+  top: -0.5rem;
+}
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev {
+  color: rgb(34, 34, 34, 0.3) !important;
 }
 i.icon {
-  width: 1.25rem;
-  height: 1.13rem;
+  width: 1.3rem;
+  height: 1.3rem;
   cursor: pointer;
   color: var(--text-primary-2);
   margin-top: 0.25rem;
 }
 i.icon:first-child {
-  margin-right: 0.4rem;
+  margin-right: 0.6rem;
+}
+.action-icons {
+  display: flex !important;
+  justify-content: right;
+  padding-right: 0.8rem;
 }
