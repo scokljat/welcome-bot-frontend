@@ -83,17 +83,21 @@ body::-webkit-scrollbar {
   color: rgb(34, 34, 34, 0.3) !important;
 }
 i.icon {
-  width: 1.3rem;
-  height: 1.3rem;
+  font-size: 1rem;
   cursor: pointer;
   color: var(--text-primary-2);
   margin-top: 0.25rem;
+  opacity: 0.8;
+}
+i.icon:hover {
+  opacity: 0.6;
 }
 i.icon:first-child {
-  margin-right: 0.6rem;
+  margin-right: 1.2rem;
 }
 .action-icons {
   display: flex !important;
   justify-content: right;
   padding-right: 0.8rem;
+  padding-bottom: 0.7rem !important;
 }
