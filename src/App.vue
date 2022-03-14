@@ -1,24 +1,30 @@
 <template>
-  <TheFloatingButton />
-  <AppModal modal-title="Create Schedule">
-    <ModalCreateSchedule />
-  </AppModal>
+  <div id="app">
+    <TheHeader />
+    <div class="container">
+      <TheSidebar />
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
-import AppModal from './components/AppModal.vue';
-import TheFloatingButton from './components/TheFloatingButton.vue';
-import ModalCreateSchedule from './components/ModalCreateSchedule.vue';
+import TheHeader from './components/TheHeader.vue';
+import TheSidebar from './components/TheSidebar.vue';
+
 export default {
   name: 'App',
-  components: {
-    AppModal,
-    TheFloatingButton,
-    ModalCreateSchedule,
-  },
+  components: { TheSidebar, TheHeader },
 };
 </script>
 
 <style lang="scss">
 @import './style/main';
+
+.container {
+  @include tablet-md {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
 </style>
