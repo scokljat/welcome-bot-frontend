@@ -50,4 +50,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import '../style/components/data-table.scss';
+</style>
