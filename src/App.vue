@@ -4,7 +4,9 @@
       <TheHeader />
       <TheSidebar />
       <ThemeSwitcher />
-      <router-view />
+      <div class="pages-container">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -27,5 +29,11 @@ export default {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
   }
+}
+
+.pages-container {
+  grid-column: 2 / 13;
+  padding-left: 1rem;
+  padding-top: 3.5rem;
 }
 </style>
