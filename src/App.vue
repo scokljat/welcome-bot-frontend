@@ -32,8 +32,8 @@ export default {
 }
 
 .pages-container {
-  grid-column: 2 / 12;
+  grid-column: 2 / 13;
   padding-left: 1rem;
-  padding-top: 2rem;
+  padding-top: 3.5rem;
 }
 </style>
