@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <TheHeader />
     <div class="container">
+      <TheHeader />
       <TheSidebar />
+      <ThemeSwitcher />
       <router-view />
     </div>
   </div>
@@ -11,10 +12,10 @@
 <script>
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
-
+import ThemeSwitcher from './components/ThemeSwitcher.vue';
 export default {
   name: 'App',
-  components: { TheSidebar, TheHeader },
+  components: { TheSidebar, TheHeader, ThemeSwitcher },
 };
 </script>
 
