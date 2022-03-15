@@ -4,7 +4,7 @@
     :default-sort="{ prop: 'date', order: 'descending' }"
   >
     <el-table-column
-      v-for="col in tableLabel"
+      v-for="col in tableColumns"
       :key="col.id"
       :prop="col.prop"
       :label="col.label"
@@ -24,7 +24,9 @@
 
 <script>
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
-import 'element-plus/dist/index.css';
+import 'element-plus/es/components/table/style/css';
+import 'element-plus/es/components/table-column/style/css';
+import 'element-plus/es/components/pagination/style/css';
 
 export default {
   name: 'MessagesDataTable',
@@ -87,7 +89,7 @@ export default {
           date: '2017-02-04',
         },
       ],
-      tableLabel: [
+      tableColumns: [
         {
           id: 1,
           label: 'Title',
