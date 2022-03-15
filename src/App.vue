@@ -1,27 +1,50 @@
 <template>
-  <TheFloatingButton />
-  <AppModal modal-title="Create Schedule">
-    <ModalCreateSchedule />
-  </AppModal>
-  <MessagesDataTable />
+  <div id="app">
+    <div class="container">
+      <TheHeader />
+      <TheSidebar />
+      <ThemeSwitcher />
+      <TheFloatingButton />
+      <div class="pages-container">
+        <router-view />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import AppModal from './components/AppModal.vue';
+import TheHeader from './components/TheHeader.vue';
+import TheSidebar from './components/TheSidebar.vue';
+import ThemeSwitcher from './components/ThemeSwitcher.vue';
 import TheFloatingButton from './components/TheFloatingButton.vue';
-import ModalCreateSchedule from './components/ModalCreateSchedule.vue';
-import MessagesDataTable from './components/MessagesDataTable.vue';
 export default {
   name: 'App',
   components: {
-    AppModal,
     TheFloatingButton,
-    ModalCreateSchedule,
-    MessagesDataTable,
+    TheSidebar,
+    TheHeader,
+    ThemeSwitcher,
   },
 };
 </script>
 
 <style lang="scss">
 @import './style/main';
+
+.pages-container {
+  padding-top: 1.5rem;
+  padding-left: 1rem;
+}
+
+@include tablet-md {
+  .container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .pages-container {
+    grid-column: 2 / 13;
+    padding-top: 3.5rem;
+  }
+}
 </style>
