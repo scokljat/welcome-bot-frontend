@@ -43,7 +43,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    grid-column: 3/12;
 
     h1 {
       font-size: 9.4rem;
