@@ -2,8 +2,10 @@
   <div class="container">
     <h1>404</h1>
     <h2>Page not found</h2>
-    <h3>The Page you are looking for doesn't exist !</h3>
-    <router-link :to="{ name: 'messages' }"><button>Home</button></router-link>
+    <p>The Page you are looking for doesn't exist !</p>
+    <router-link class="redirect-link" :to="{ name: 'messages' }"
+      >Home</router-link
+    >
   </div>
 </template>
 <style scoped lang="scss">
@@ -25,12 +27,14 @@
     font-size: 1.25rem;
   }
 
-  h3 {
+  p {
     font-size: 0.94rem;
   }
 
-  button {
+  .redirect-link {
     background-color: var(--primary);
+    color: var(--text-secondary-1);
+    text-decoration: none;
     padding: 0.63rem;
     margin: 1.25rem;
     border-radius: 0.25rem;
@@ -53,7 +57,7 @@
       font-size: 1.88rem;
     }
 
-    h3 {
+    p {
       font-size: 1.25rem;
     }
   }
