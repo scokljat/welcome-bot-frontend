@@ -1,46 +1,47 @@
 <template>
-  <div class="buttonWrap">
-    <button
-      :class="{ isDark: dark, moon: !clicked, sun: clicked }"
-      @click="
-        () => {
-          toggleDark(), (clicked = !clicked);
-        }
-      "
-    >
-      <i v-if="isDark" class="fas fa-sun sun"></i>
-      <i v-else class="fas fa-moon moon"></i>
-    </button>
-  </div>
+  <button class="button-wrap" @click="toggleDark">
+    <i v-if="isDark" class="fas fa-sun"></i>
+    <i v-else class="fas fa-moon"></i>
+  </button>
 </template>
 
-<script setup>
+<script>
 import { useDark, useToggle } from '@vueuse/core';
-const isDark = useDark({
-  valueDark: 'dark',
-});
-const toggleDark = useToggle(isDark);
-const clicked = false;
+export default {
+  name: 'ThemeSwitcher',
+  setup() {
+    const isDark = useDark({
+      valueDark: 'dark',
+    });
+    const toggleDark = useToggle(isDark);
+    return {
+      toggleDark,
+      isDark,
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss">
-.buttonWrap {
+.button-wrap {
   display: flex;
   justify-content: flex-end;
   position: fixed;
-  top: 0.94rem;
+  top: 0.75rem;
   right: 1.25rem;
+  padding: 0.31rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary-1);
 }
 
 .fas {
   font-size: 1.5rem;
-  background-color: transparent;
-  color: var(--text-secondary-1);
 }
 
-@include tablet-md {
-  .moon {
-    color: var(--primary);
+.button-wrap {
+  @include tablet-md {
+    color: var(--text-primary-1);
   }
 }
 </style>
