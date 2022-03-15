@@ -24,16 +24,20 @@ export default {
 <style lang="scss">
 @import './style/main';
 
-.container {
-  @include tablet-md {
+.pages-container {
+  padding-top: 1.5rem;
+  padding-left: 1rem;
+}
+
+@include tablet-md {
+  .container {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
   }
-}
 
-.pages-container {
-  grid-column: 2 / 13;
-  padding-left: 1rem;
-  padding-top: 3.5rem;
+  .pages-container {
+    grid-column: 2 / 13;
+    padding-top: 3.5rem;
+  }
 }
 </style>
