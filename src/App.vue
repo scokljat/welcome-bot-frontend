@@ -4,6 +4,7 @@
       <TheHeader />
       <TheSidebar />
       <ThemeSwitcher />
+      <TheFloatingButton />
       <div class="pages-container">
         <router-view />
       </div>
@@ -15,9 +16,15 @@
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import TheFloatingButton from './components/TheFloatingButton.vue';
 export default {
   name: 'App',
-  components: { TheSidebar, TheHeader, ThemeSwitcher },
+  components: {
+    TheFloatingButton,
+    TheSidebar,
+    TheHeader,
+    ThemeSwitcher,
+  },
 };
 </script>
 
