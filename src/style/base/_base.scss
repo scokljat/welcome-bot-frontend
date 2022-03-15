@@ -1,4 +1,13 @@
 body {
   background-color: var(--background-base);
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
+  color: var(--text-primary-1);
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  color: var(--text-secondary-1);
+  cursor: pointer;
 }
