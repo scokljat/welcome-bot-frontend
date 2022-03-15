@@ -23,8 +23,14 @@
 </template>
 
 <script>
+import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
 export default {
   name: 'MessagesDataTable',
+  components: {
+    ElTable,
+    ElTableColumn,
+    ElPagination,
+  },
   data() {
     return {
       tableData: [
