@@ -23,8 +23,16 @@
 </template>
 
 <script>
+import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
+import 'element-plus/dist/index.css';
+
 export default {
   name: 'SchedulesDataTable',
+  components: {
+    ElTable,
+    ElTableColumn,
+    ElPagination,
+  },
   data() {
     return {
       tableData: [
