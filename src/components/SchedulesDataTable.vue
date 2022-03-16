@@ -24,9 +24,6 @@
 
 <script>
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
-import 'element-plus/es/components/table/style/css';
-import 'element-plus/es/components/table-column/style/css';
-import 'element-plus/es/components/pagination/style/css';
 
 export default {
   name: 'SchedulesDataTable',
@@ -118,5 +115,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../style/components/data-table.scss';
+@import '../style/components/_data-table.scss';
 </style>
