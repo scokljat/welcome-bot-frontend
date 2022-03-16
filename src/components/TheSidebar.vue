@@ -59,6 +59,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 0.2;
+  z-index: 100;
 
   &.collapsed {
     transform: translateX(-102%);
@@ -105,7 +106,7 @@ span {
 
 .collapse-icon {
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   left: 1.25rem;
   top: 0.38rem;
   padding: 0.31rem;
