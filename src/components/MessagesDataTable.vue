@@ -109,5 +109,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../style/components/data-table.scss';
+@import '../style/components/_data-table.scss';
 </style>
