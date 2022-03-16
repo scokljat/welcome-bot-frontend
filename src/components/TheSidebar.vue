@@ -59,6 +59,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 0.2;
+  z-index: 100;
 
   &.collapsed {
     transform: translateX(-102%);
@@ -72,14 +73,14 @@ export default {
 }
 
 .sidebar-link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  padding: 0.63rem;
-  margin: 1.25rem;
   color: var(--text-secondary-2);
   text-decoration: none;
+  padding: 1.25rem;
 }
 
 .fas {
@@ -92,11 +93,20 @@ span {
 
 .sidebar-link.router-link-active {
   color: var(--text-secondary-1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--text-secondary-1);
+    opacity: 0.1;
+    z-index: 100;
+  }
 }
 
 .collapse-icon {
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   left: 1.25rem;
   top: 0.38rem;
   padding: 0.31rem;
@@ -118,7 +128,7 @@ span {
   }
 
   .sidebar-link {
-    padding: 0.63rem 2.38rem;
+    padding: 1.8rem 2.1rem;
   }
 
   .collapse-icon {
