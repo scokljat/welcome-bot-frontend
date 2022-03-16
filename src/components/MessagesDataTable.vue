@@ -24,9 +24,6 @@
 
 <script>
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
-import 'element-plus/es/components/table/style/css';
-import 'element-plus/es/components/table-column/style/css';
-import 'element-plus/es/components/pagination/style/css';
 
 export default {
   name: 'MessagesDataTable',
