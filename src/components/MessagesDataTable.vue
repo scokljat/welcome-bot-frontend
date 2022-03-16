@@ -4,7 +4,7 @@
     :default-sort="{ prop: 'date', order: 'descending' }"
   >
     <el-table-column
-      v-for="col in tableLabel"
+      v-for="col in tableColumns"
       :key="col.id"
       :prop="col.prop"
       :label="col.label"
