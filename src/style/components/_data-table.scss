@@ -1,10 +1,10 @@
-body::-webkit-scrollbar {
-  display: none;
-  background-color: var(--background-base);
-}
-
 .el-table {
   --el-border-color-lighter: var(--border-color-1);
+  height: 85vh !important;
+
+  @include tablet-md {
+    height: 88vh !important;
+  }
 }
 
 .el-table__body,
@@ -66,7 +66,6 @@ body::-webkit-scrollbar {
 }
 
 .el-table--fit {
-  min-height: 88vh;
   border: 1px solid var(--border-color-1);
   background-color: var(--table-row-bg);
 }
