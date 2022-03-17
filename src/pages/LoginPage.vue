@@ -5,46 +5,25 @@
     <button @click="handleClickSignIn">
       <i class="fab fa-google"></i>Sign in
     </button>
-    <button @click="handleClickSignOut">Sign out</button>
   </div>
-  <p>{{ Vue3GoogleOauth.isAuthorized }}</p>
 </template>
 <script>
-import { inject } from 'vue';
+import { mapActions } from 'vuex';
+
 export default {
   name: 'LoginPage',
-  setup() {
-    const Vue3GoogleOauth = inject('Vue3GoogleOauth');
-    console.log(Vue3GoogleOauth.instance);
-    return {
-      Vue3GoogleOauth,
-    };
-  },
-  // data() {
-  //   return { isLoggedIn: false };
-  // },
+
   methods: {
+    ...mapActions({ login: 'login' }),
+
     async handleClickSignIn() {
       try {
         const googleUser = await this.$gAuth.signIn();
-        // this.isLoggedIn = this.$gAuth.isAuthorized;
-        // console.log(
-        //   'getAuthResponse$G',
-        //   this.$gAuth.GoogleAuth.get().getAuthResponse()
-        // );
-        //this.isLoggedIn = this.$gAuth.isAuthorized;
         if (!googleUser) {
           return null;
         }
-        console.log('googleUser', googleUser);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async handleClickSignOut() {
-      try {
-        await this.$gAuth.signOut();
-        // Vue3GoogleOauth.getAuthInstance().disconnect();
+        const token = googleUser.wc.id_token;
+        this.login({ token });
       } catch (error) {
         console.error(error);
       }
@@ -52,6 +31,7 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
 .container {
   display: flex;
@@ -59,23 +39,27 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 80vh;
+
   h1 {
-    font-size: 70px;
+    font-size: 4.4rem;
   }
+
   h2 {
-    font-size: 30px;
+    font-size: 1.9rem;
   }
 }
+
 button {
   background-color: var(--primary);
-  width: 150px;
-  height: 70px;
+  width: 9.4rem;
+  height: 4.4rem;
   font-size: $text-lg;
-  margin: 20px;
-  border-radius: 4px;
+  margin: 1.25rem;
+  border-radius: 0.25rem;
+
   i {
     font-size: 1.5rem;
-    padding-right: 10px;
+    padding-right: 0.63rem;
   }
 }
 </style>
