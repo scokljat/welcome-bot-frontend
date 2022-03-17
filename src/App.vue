@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <TheHeader />
-      <TheSidebar />
+      <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
       <div class="pages-container">
         <router-view />
@@ -15,9 +15,14 @@
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import { mapState } from 'vuex';
+
 export default {
   name: 'App',
   components: { TheSidebar, TheHeader, ThemeSwitcher },
+  computed: {
+    ...mapState({ isLoggedIn: 'isLoggedIn' }),
+  },
 };
 </script>
 
