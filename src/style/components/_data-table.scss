@@ -3,10 +3,23 @@ body::-webkit-scrollbar {
   background-color: var(--background-base);
 }
 
+.el-table {
+  --el-border-color-lighter: var(--border-color-1);
+}
+
 .el-table__body,
 .el-table__footer,
 .el-table__header {
   width: 100% !important;
+}
+
+.el-table__body-wrapper {
+  background-color: var(--table-bg) !important;
+  padding: 0 !important;
+}
+
+.el-table__inner-wrapper {
+  background-color: var(--table-bg);
 }
 
 .el-table .caret-wrapper {
@@ -16,14 +29,14 @@ body::-webkit-scrollbar {
   transform: translateY(-60%);
 }
 
-.el-table .sort-caret.descending {
+.el-table .sort-caret .descending {
   bottom: 0px;
 }
 
 .el-table th.el-table__cell > .cell {
   padding: 0.63rem 0.88rem;
   height: 2.88rem;
-  background-color: var(--background-base);
+  background-color: var(--table-header) !important;
   font-size: $text-md;
   font-weight: 500;
   color: var(--text-primary-1);
@@ -52,13 +65,18 @@ body::-webkit-scrollbar {
   white-space: nowrap;
 }
 
-.el-table td.el-table__cell:hover {
-  background-color: var(--table-hover);
+.el-table--fit {
+  min-height: 88vh;
+  border: 1px solid var(--border-color-1);
+  background-color: var(--table-row-bg);
 }
 
-.el-table--fit {
-  min-height: 100%;
-  border: 1px solid var(--border-color-1);
+.el-table tr {
+  background-color: var(--table-row-bg) !important;
+}
+
+.el-table tr:hover {
+  --el-table-row-hover-bg-color: var(--table-hover);
 }
 
 .el-table__body-wrapper {
@@ -73,15 +91,20 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   min-height: 3rem;
-  border-top: 1px solid var(--border-color-1);
-  background-color: var(--text-secondary-1);
+  border-top: 2px solid var(--border-color-1);
+  background-color: var(--table-bg);
   z-index: 99;
+}
+
+.el-pagination > button {
+  background-color: transparent !important;
 }
 
 .el-pager li {
   position: relative;
   font-size: $text-lg !important;
-  color: rgb(34, 34, 34, 0.3);
+  color: var(--text-primary-2) !important;
+  background-color: transparent;
 }
 
 .el-pager li.is-active {

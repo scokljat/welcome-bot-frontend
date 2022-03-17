@@ -25,4 +25,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.messages-page {
+  border: 1px solid var(--border-color-1);
+}
+</style>

@@ -5,14 +5,20 @@
   --text-secondary-1: rgb(255, 255, 255);
   --text-secondary-2: rgb(255, 255, 255, 0.6);
   --background-base: rgb(241, 241, 241);
-  --table-header: var(--background-base);
-  --table-hover: rgb(34, 34, 34, 0.05);
-  --border-color-1: rgb(34, 34, 34, 0.2);
+  --table-bg: rgb(255, 255, 255);
+  --table-header: rgb(236, 236, 236);
+  --table-hover: rgb(244, 244, 244);
+  --table-row-bg: rgba(255, 255, 255);
+  --border-color-1: rgb(34, 34, 34, 0.1);
 }
 
 :root.dark {
-  --background-base: rgb(0, 0, 0);
+  --background-base: rgb(27, 30, 36);
   --text-primary-1: rgba(255, 255, 255);
   --text-primary-2: rgb(255, 255, 255, 0.6);
-  --table-header: rgb(34, 34, 34, 0.3);
+  --table-bg: rgb(34, 34, 34);
+  --table-header: rgb(51, 54, 62);
+  --table-row-bg: rgb(45, 48, 56);
+  --border-color-1: rgb(69, 72, 79);
+  --table-hover: rgb(66, 69, 76);
 }
