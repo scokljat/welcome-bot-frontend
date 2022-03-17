@@ -37,11 +37,11 @@
 
 @mixin input-label {
   position: absolute;
-  color: var(--text-primary-2);
+  color: var(--text-label);
   font-size: $text-sm;
   font-weight: 500;
   padding: 0.13rem 0.38rem;
-  background-color: var(--text-secondary-1);
+  background-color: var(--table-row-bg);
   left: 0.5rem;
   top: -0.7rem;
 }
@@ -54,7 +54,7 @@
   border: 0.07rem solid var(--border-color-1);
   color: var(--text-primary-1);
   font-size: $text-sm;
-  background-color: var(--text-secondary-1);
+  background-color: transparent;
 
   @include tablet-sm {
     padding: 0.63rem 1.25rem;

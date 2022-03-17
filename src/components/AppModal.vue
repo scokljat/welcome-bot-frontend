@@ -45,7 +45,7 @@ export default {
   width: 90%;
   max-width: 40rem;
   z-index: 900;
-  background-color: var(--text-secondary-1);
+  background-color: var(--table-row-bg);
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 0.63rem 0 rgba(0, 0, 0, 0.2),
     0 0.38rem 1.88rem 0.31rem rgba(0, 0, 0, 0.1),
