@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isModalActive" class="container">
+  <div v-if="isModalActive" class="modal-container">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
       <button @click="closeAppModal">
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.modal-container {
   position: fixed;
   width: 90%;
   max-width: 40rem;

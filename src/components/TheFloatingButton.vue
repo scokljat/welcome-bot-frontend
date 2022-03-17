@@ -35,6 +35,7 @@ export default {
   cursor: pointer;
   outline: none;
   border: none;
+  z-index: 101;
 
   &:hover {
     opacity: 0.8;

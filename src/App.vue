@@ -31,6 +31,7 @@ export default {
 .pages-container {
   padding-top: 1.5rem;
   padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @include tablet-md {
