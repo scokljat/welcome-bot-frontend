@@ -17,7 +17,11 @@ import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
 export default {
   name: 'App',
-  components: { TheSidebar, TheHeader, ThemeSwitcher },
+  components: {
+    TheSidebar,
+    TheHeader,
+    ThemeSwitcher,
+  },
 };
 </script>
 
