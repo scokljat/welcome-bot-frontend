@@ -146,3 +146,12 @@ i.icon:first-child {
   padding-right: 0.8rem;
   padding-bottom: 0.7rem !important;
 }
+
+i.fa-pencil,
+i.fa-trash {
+  font-size: 0.85rem;
+
+  @include tablet-md {
+    font-size: 1rem;
+  }
+}
