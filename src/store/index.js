@@ -5,10 +5,9 @@ import AuthService from '@/api/services/LogInService';
 export default createStore({
   state: {
     isModalActive: false,
-    isLoggedIn: localStorage.getItem('token') ? true : false,
     token: localStorage.getItem('token') || null,
   },
-  getters: {},
+  getters: { isLoggedIn: (state) => Boolean(state.token) },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
       state.isModalActive = true;

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
@@ -21,7 +21,7 @@ export default {
   name: 'App',
   components: { TheSidebar, TheHeader, ThemeSwitcher },
   computed: {
-    ...mapState({ isLoggedIn: 'isLoggedIn' }),
+    ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
   },
 };
 </script>
