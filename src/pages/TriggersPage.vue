@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-.messages-page {
+.triggers-page {
   border: 1px solid var(--border-color-1);
 }
 </style>
