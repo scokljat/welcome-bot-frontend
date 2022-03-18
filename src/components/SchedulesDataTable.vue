@@ -1,8 +1,5 @@
 <template>
-  <el-table
-    :data="tableData"
-    :default-sort="{ prop: 'next_run', order: 'ascending' }"
-  >
+  <el-table :data="tableData" height="88vh">
     <el-table-column
       v-for="col in tableColumn"
       :key="col.id"
@@ -79,6 +76,41 @@ export default {
           message: 'Nineth Message',
           next_run: '2012-09-09',
           active: 'Inactive',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          next_run: '2017-02-04',
+          active: 'Active',
         },
         {
           message: 'Tenth Message',
