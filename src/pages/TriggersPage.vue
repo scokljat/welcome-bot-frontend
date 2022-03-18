@@ -1,7 +1,6 @@
 <template>
   <div class="triggers-page">
-    <TheFloatingButton />
-    <AppModal modalTitle="Create Trigger">
+    <AppModal modal-title="Create Trigger">
       <ModalCreateTrigger />
     </AppModal>
     <TriggersDataTable />
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import TheFloatingButton from '@/components/TheFloatingButton.vue';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateTrigger from '@/components/ModalCreateTrigger.vue';
 import TriggersDataTable from '@/components/TriggersDataTable.vue';
@@ -17,7 +15,6 @@ import TriggersDataTable from '@/components/TriggersDataTable.vue';
 export default {
   name: 'MessagesPage',
   components: {
-    TheFloatingButton,
     AppModal,
     ModalCreateTrigger,
     TriggersDataTable,
