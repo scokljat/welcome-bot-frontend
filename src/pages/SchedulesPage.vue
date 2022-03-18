@@ -1,7 +1,6 @@
 <template>
   <div class="schedules-page">
-    <TheFloatingButton />
-    <AppModal modalTitle="Create Schedule">
+    <AppModal modal-title="Create Schedule">
       <ModalCreateSchedule />
     </AppModal>
     <SchedulesDataTable />
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import TheFloatingButton from '@/components/TheFloatingButton.vue';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateSchedule from '@/components/ModalCreateSchedule.vue';
 import SchedulesDataTable from '@/components/SchedulesDataTable.vue';
@@ -17,7 +15,6 @@ import SchedulesDataTable from '@/components/SchedulesDataTable.vue';
 export default {
   name: 'MessagesPage',
   components: {
-    TheFloatingButton,
     AppModal,
     ModalCreateSchedule,
     SchedulesDataTable,
