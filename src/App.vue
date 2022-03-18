@@ -12,10 +12,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
-import { mapState } from 'vuex';
 
 export default {
   name: 'App',
