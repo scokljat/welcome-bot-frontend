@@ -16,7 +16,6 @@ export default createStore({
       state.isModalActive = false;
     },
     [SET_USER]: (state, { token }) => {
-      state.isLoggedIn = true;
       state.token = { token };
       localStorage.setItem('token', token);
     },

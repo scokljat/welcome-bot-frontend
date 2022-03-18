@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store';
 
 const routes = [
-  { path: '/', redirect: '/auth' },
+  { path: '/', redirect: '/messages' },
   {
     path: '/auth',
     name: 'login',
@@ -41,6 +41,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.name !== 'login' && to.name !== 'error' && !store.getters.isLoggedIn)
     next({ name: 'login' });
+  if (to.name == 'login' && store.getters.isLoggedIn)
+    next({ name: 'messages' });
   else next();
 });
 

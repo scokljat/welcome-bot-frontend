@@ -24,6 +24,7 @@ export default {
         }
         const token = googleUser.wc.id_token;
         this.login({ token });
+        this.$router.push({ name: 'messages' });
       } catch (error) {
         console.error(error);
       }
@@ -38,10 +39,15 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   min-height: 80vh;
 
   h1 {
-    font-size: 4.4rem;
+    font-size: 2.9rem;
+
+    @include tablet-md {
+      font-size: 4.4rem;
+    }
   }
 
   h2 {
