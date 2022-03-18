@@ -1,8 +1,5 @@
 <template>
-  <el-table
-    :data="tableData"
-    :default-sort="{ prop: 'date', order: 'descending' }"
-  >
+  <el-table :data="tableData" height="88vh">
     <el-table-column
       v-for="col in tableColumns"
       :key="col.id"
@@ -14,8 +11,8 @@
     />
     <el-table-column prop="action" label="">
       <div class="action-icons">
-        <i class="fa-solid fa-clipboard-check icon"></i>
-        <i class="fa-solid fa-bell icon"></i>
+        <i class="fa-solid fa-pencil icon"></i>
+        <i class="fa-solid fa-trash icon"></i>
       </div>
     </el-table-column>
   </el-table>
@@ -87,6 +84,60 @@ export default {
           message: 'NIneth Message',
           trigger: '2012-09-09',
           channel: 'Channel 9',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
+          active: 'Active',
+        },
+        {
+          message: 'Tenth Message',
+          trigger: '2017-02-04',
+          channel: 'Channel 10',
           active: 'Active',
         },
         {
