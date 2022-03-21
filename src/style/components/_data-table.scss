@@ -65,7 +65,7 @@
   white-space: nowrap;
 }
 
-.expanded {
+.el-table__row.expanded .cell {
   white-space: normal !important;
 }
 

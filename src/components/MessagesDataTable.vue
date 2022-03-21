@@ -155,7 +155,9 @@ export default {
     //   cell.childNodes[0].classList.toggle('expanded');
     // },
     handleCellClick: (row, column, cell) => {
-      cell.childNodes[0].classList.toggle('expanded');
+      console.log(cell.parentElement);
+      console.log(row);
+      cell.parentElement.classList.toggle('expanded');
       // this.toggleTableRow(cell);
     },
     handleEdit: (table) => {
