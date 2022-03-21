@@ -1,0 +1,157 @@
+.el-table {
+  --el-border-color-lighter: var(--border-color-1);
+  height: 85vh !important;
+
+  @include tablet-md {
+    height: 88vh !important;
+  }
+}
+
+.el-table__body,
+.el-table__footer,
+.el-table__header {
+  width: 100% !important;
+}
+
+.el-table__body-wrapper {
+  background-color: var(--table-bg) !important;
+  padding: 0 !important;
+}
+
+.el-table__inner-wrapper {
+  background-color: var(--table-bg);
+}
+
+.el-table .caret-wrapper {
+  position: absolute !important;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-60%);
+}
+
+.el-table .sort-caret .descending {
+  bottom: 0px;
+}
+
+.el-table th.el-table__cell > .cell {
+  padding: 0.63rem 0.88rem;
+  height: 2.88rem;
+  background-color: var(--table-header) !important;
+  font-size: $text-md;
+  font-weight: 500;
+  color: var(--text-primary-1);
+}
+
+.el-table .el-table__cell {
+  padding: 0 !important;
+}
+
+.el-table td.el-table__cell {
+  padding: 0.82rem 0;
+}
+
+.el-table td.el-table__cell div {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  font-size: $text-md;
+  font-weight: 400;
+  color: var(--text-primary-1);
+  padding-top: 0.4rem;
+  padding-bottom: 0.1rem;
+  cursor: default;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.el-table--fit {
+  border: 1px solid var(--border-color-1);
+  background-color: var(--table-row-bg);
+}
+
+.el-table tr {
+  background-color: var(--table-row-bg) !important;
+}
+
+.el-table tr:hover {
+  --el-table-row-hover-bg-color: var(--table-hover);
+}
+
+.el-table__body-wrapper {
+  padding-bottom: 0.94rem;
+}
+
+.el-pagination {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 3rem;
+  border-top: 2px solid var(--border-color-1);
+  background-color: var(--table-bg);
+  z-index: 99;
+}
+
+.el-pagination > button {
+  background-color: transparent !important;
+}
+
+.el-pager li {
+  position: relative;
+  font-size: $text-lg !important;
+  color: var(--text-primary-2) !important;
+  background-color: transparent;
+}
+
+.el-pager li.is-active {
+  color: var(--text-primary-1) !important;
+}
+
+.el-pager li.is-active::after {
+  content: '';
+  width: 90%;
+  height: 0.15rem;
+  background-color: var(--primary);
+  position: absolute;
+  top: -0.5rem;
+}
+
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev {
+  color: rgb(34, 34, 34, 0.3) !important;
+}
+
+i.icon {
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text-primary-2);
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+i.icon:hover {
+  opacity: 0.6;
+}
+
+i.icon:first-child {
+  margin-right: 1.2rem;
+}
+
+.action-icons {
+  display: flex !important;
+  justify-content: right;
+  padding-right: 0.8rem;
+  padding-bottom: 0.7rem !important;
+}
+
+i.fa-pencil,
+i.fa-trash {
+  font-size: 0.85rem;
+
+  @include tablet-md {
+    font-size: 1rem;
+  }
+}
