@@ -4,7 +4,7 @@
       <TheHeader />
       <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
-      <div class="pages-container">
+      <div :class="[isLoggedIn ? 'logged-pages' : 'unlogged-pages']">
         <router-view />
       </div>
     </div>
@@ -40,8 +40,13 @@ export default {
     grid-template-columns: repeat(12, 1fr);
   }
 
-  .pages-container {
+  .logged-pages {
     grid-column: 2 / 13;
+    padding-top: 3.5rem;
+  }
+
+  .unlogged-pages {
+    grid-column: 1/13;
     padding-top: 3.5rem;
   }
 }
