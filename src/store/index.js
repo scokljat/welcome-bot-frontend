@@ -1,5 +1,6 @@
-import SchedulesService from '@/api/services/SchedulesService';
 import { createStore } from 'vuex';
+import SchedulesService from '@/api/services/SchedulesService';
+import format from 'date-fns/format';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
@@ -25,8 +26,13 @@ export default createStore({
   },
   actions: {
     fetchSchedules({ commit }) {
-      const response = SchedulesService.fetchSchedules();
-      commit(SET_SCHEDULES, response);
+      const data = SchedulesService.fetchSchedules();
+
+      data.forEach((schedule) => {
+        schedule.nextRun = format(new Date(schedule.nextRun), 'dd MMM yyyy');
+      });
+
+      commit(SET_SCHEDULES, data);
     },
   },
   modules: {},
