@@ -38,14 +38,23 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   min-height: 80vh;
 
   h1 {
-    font-size: 4.4rem;
+    font-size: 3.4rem;
+
+    @include tablet-md {
+      font-size: 4.4rem;
+    }
   }
 
   h2 {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
+
+    @include tablet-md {
+      font-size: 1.9rem;
+    }
   }
 }
 
