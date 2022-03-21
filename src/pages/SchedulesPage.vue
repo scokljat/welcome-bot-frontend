@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateSchedule from '@/components/ModalCreateSchedule.vue';
 import SchedulesDataTable from '@/components/SchedulesDataTable.vue';
@@ -18,6 +19,12 @@ export default {
     AppModal,
     ModalCreateSchedule,
     SchedulesDataTable,
+  },
+  mounted() {
+    this.fetchSchedules();
+  },
+  methods: {
+    ...mapActions({ fetchSchedules: 'fetchSchedules' }),
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" height="88vh">
+  <el-table :data="getSchedules" height="88vh">
     <el-table-column
       v-for="col in tableColumn"
       :key="col.id"
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
 
 export default {
@@ -31,117 +32,34 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          message: 'First Message',
-          next_run: '2016-04-03',
-          active: 'Active',
-        },
-        {
-          message: 'Second Message',
-          next_run: '2016-11-03',
-          active: 'Inactive',
-        },
-        {
-          message: 'Third Message',
-          next_run: '2015-08-07',
-          active: 'Active',
-        },
-        {
-          message: 'Fourth Message',
-          next_run: '2016-01-03',
-          active: 'Active',
-        },
-        {
-          message: 'Fifth Message',
-          next_run: '2012-09-09',
-          active: 'Active',
-        },
-        {
-          message: 'Sixth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Seventh Message',
-          next_run: '2015-08-07',
-          active: 'Active',
-        },
-        {
-          message: 'Eight Message',
-          next_run: '2016-01-03',
-          active: 'Active',
-        },
-        {
-          message: 'Nineth Message',
-          next_run: '2012-09-09',
-          active: 'Inactive',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-      ],
+      schedules: [],
       tableColumn: [
         {
           id: 1,
           label: 'Message',
-          prop: 'message',
+          prop: 'message.text',
           isSortable: true,
           width: '350',
         },
         {
           id: 2,
           label: 'Next Run',
-          prop: 'next_run',
+          prop: 'nextRun',
           isSortable: true,
           width: '135',
         },
         {
           id: 3,
           label: 'Active',
-          prop: 'active',
+          prop: 'isActive',
           isSortable: true,
           width: '135',
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters({ getSchedules: 'getSchedules' }),
   },
 };
 </script>

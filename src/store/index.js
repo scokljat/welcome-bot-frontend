@@ -1,11 +1,17 @@
+import SchedulesService from '@/api/services/SchedulesService';
 import { createStore } from 'vuex';
-import { OPEN_APP_MODAL, CLOSE_APP_MODAL } from './mutation-types';
+import {
+  OPEN_APP_MODAL,
+  CLOSE_APP_MODAL,
+  SET_SCHEDULES,
+} from './mutation-types';
 
 export default createStore({
   state: {
     isModalActive: false,
+    schedules: [],
   },
-  getters: {},
+  getters: { getSchedules: (state) => state.schedules },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
       state.isModalActive = true;
@@ -13,7 +19,15 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
+    [SET_SCHEDULES]: (state, payload) => {
+      state.schedules = payload;
+    },
   },
-  actions: {},
+  actions: {
+    fetchSchedules({ commit }) {
+      const response = SchedulesService.fetchSchedules();
+      commit(SET_SCHEDULES, response);
+    },
+  },
   modules: {},
 });
