@@ -4,7 +4,7 @@
       <TheHeader />
       <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
-      <TheFloatingButton />
+      <TheFloatingButton v-if="isLoggedIn" />
       <div :class="[isLoggedIn ? 'logged-pages' : 'unlogged-pages']">
         <router-view />
       </div>
@@ -44,7 +44,7 @@ export default {
   }
 
   .logged-pages {
-    grid-column: 2 / 13;
+    grid-column: 2/13;
     padding-top: 3.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
