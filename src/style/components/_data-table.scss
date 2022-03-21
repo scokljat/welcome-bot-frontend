@@ -65,6 +65,10 @@
   white-space: nowrap;
 }
 
+.expanded {
+  white-space: normal !important;
+}
+
 .el-table--fit {
   border: 1px solid var(--border-color-1);
   background-color: var(--table-row-bg);

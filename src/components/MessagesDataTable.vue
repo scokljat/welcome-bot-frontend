@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" height="88vh">
+  <el-table :data="tableData" height="88vh" @cell-click="handleCellClick">
     <el-table-column
       v-for="col in tableColumns"
       :key="col.id"
@@ -131,6 +131,15 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    // toggleTableRow: (cell) => {
+    //   cell.childNodes[0].classList.toggle('expanded');
+    // },
+    handleCellClick: (row, column, cell) => {
+      cell.childNodes[0].classList.toggle('expanded');
+      // this.toggleTableRow(cell);
+    },
   },
 };
 </script>
