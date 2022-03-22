@@ -2,9 +2,7 @@
   <div class="container">
     <h1>Welcome Bot</h1>
     <h2>Log in</h2>
-    <button @click="handleClickSignIn">
-      <i class="fab fa-google"></i>Sign in
-    </button>
+    <button @click="handleSignIn"><i class="fab fa-google"></i>Sign in</button>
   </div>
 </template>
 <script>
@@ -16,7 +14,7 @@ export default {
   methods: {
     ...mapActions({ login: 'login' }),
 
-    async handleClickSignIn() {
+    async handleSignIn() {
       try {
         const googleUser = await this.$gAuth.signIn();
         if (!googleUser) {
