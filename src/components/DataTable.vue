@@ -15,13 +15,21 @@
           <i
             class="fa-solid fa-pencil icon"
             @click="
-              $emit('edit', table.row);
-              openAppModal();
+              (event) => {
+                $emit('edit', table.row);
+                openAppModal();
+                preventRowExpansion(event);
+              }
             "
           ></i>
           <i
             class="fa-solid fa-trash icon"
-            @click="$emit('delete', table.row)"
+            @click="
+              (event) => {
+                $emit('delete', table.row);
+                preventRowExpansion(event);
+              }
+            "
           ></i>
         </div>
       </template>
@@ -62,6 +70,11 @@ export default {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleCellClick: (row, column, cell) => {
       cell.parentElement.classList.toggle('expanded');
+    },
+    preventRowExpansion: (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
     },
   },
 };
