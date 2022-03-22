@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store';
 
 const routes = [
-  { path: '/', redirect: '/messages' },
+  { path: '/', redirect: { name: 'messages' } },
   {
     path: '/auth',
     name: 'login',
@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/error',
+    redirect: { name: 'error' },
   },
   {
     path: '/error',
