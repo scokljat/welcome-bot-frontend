@@ -58,8 +58,7 @@ export default {
 
 button {
   background-color: var(--primary);
-  width: 9.4rem;
-  height: 4.4rem;
+  padding: 1.25rem 1.9rem;
   font-size: $text-lg;
   margin: 1.25rem;
   border-radius: 0.25rem;
