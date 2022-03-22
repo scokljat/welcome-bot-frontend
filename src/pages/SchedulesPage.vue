@@ -6,8 +6,9 @@
     <DataTable
       :table-data="tableData"
       :table-columns="tableColumns"
-      :edit-handler="editSchedule"
-      :delete-handler="deleteSchedule"
+      @edit="handleEditSchedule"
+      @delete="handleDeleteSchedule"
+      @page-change="handlePagination"
     />
   </div>
 </template>
@@ -140,11 +141,14 @@ export default {
     };
   },
   methods: {
-    editSchedule: (row) => {
+    handleEditSchedule: (row) => {
       console.log(row);
     },
-    deleteSchedule: (row) => {
+    handleDeleteSchedule: (row) => {
       console.log(row);
+    },
+    handlePagination: (newPageNumber) => {
+      console.log(newPageNumber);
     },
   },
 };

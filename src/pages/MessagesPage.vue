@@ -6,8 +6,9 @@
     <DataTable
       :table-data="tableData"
       :table-columns="tableColumns"
-      :edit-handler="editMessage"
-      :delete-handler="deleteMessage"
+      @edit="handleEditMessage"
+      @delete="handleDeleteMessage"
+      @page-change="handlePagination"
     />
   </div>
 </template>
@@ -144,11 +145,14 @@ export default {
     };
   },
   methods: {
-    editMessage: (row) => {
+    handleEditMessage: (row) => {
       console.log(row);
     },
-    deleteMessage: (row) => {
+    handleDeleteMessage: (row) => {
       console.log(row);
+    },
+    handlePagination: (newPageNumber) => {
+      console.log(newPageNumber);
     },
   },
 };

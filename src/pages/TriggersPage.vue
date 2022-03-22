@@ -6,8 +6,9 @@
     <DataTable
       :table-data="tableData"
       :table-columns="tableColumns"
-      :edit-handler="editTrigger"
-      :delete-handler="deleteTrigger"
+      @edit="handleEditTrigger"
+      @delete="handleDeleteTrigger"
+      @page-change="handlePagination"
     />
   </div>
 </template>
@@ -175,11 +176,14 @@ export default {
     };
   },
   methods: {
-    editTrigger: (row) => {
+    handleEditTrigger: (row) => {
       console.log(row);
     },
-    deleteTrigger: (row) => {
+    handleDeleteTrigger: (row) => {
       console.log(row);
+    },
+    handlePagination: (newPageNumber) => {
+      console.log(newPageNumber);
     },
   },
 };

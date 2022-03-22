@@ -15,19 +15,23 @@
           <i
             class="fa-solid fa-pencil icon"
             @click="
-              editHandler(table.row);
+              $emit('edit', table.row);
               openAppModal();
             "
           ></i>
           <i
             class="fa-solid fa-trash icon"
-            @click="deleteHandler(table.row)"
+            @click="$emit('delete', table.row)"
           ></i>
         </div>
       </template>
     </el-table-column>
   </el-table>
-  <el-pagination layout="prev, pager, next" :total="tableData.length">
+  <el-pagination
+    layout="prev, pager, next"
+    :total="tableData.length"
+    @current-change="(newPageNumber) => $emit('pageChange', newPageNumber)"
+  >
   </el-pagination>
 </template>
 
@@ -52,15 +56,8 @@ export default {
       type: Array,
       required: true,
     },
-    editHandler: {
-      type: Function,
-      required: true,
-    },
-    deleteHandler: {
-      type: Function,
-      required: true,
-    },
   },
+  emits: ['edit', 'delete', 'pageChange'],
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleCellClick: (row, column, cell) => {
