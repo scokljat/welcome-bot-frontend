@@ -15,10 +15,8 @@
           <i
             class="fa-solid fa-pencil icon"
             @click="
-              () => {
-                editHandler(table.row);
-                openAppModal();
-              }
+              editHandler(table.row);
+              openAppModal();
             "
           ></i>
           <i
