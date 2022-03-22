@@ -12,25 +12,24 @@
     <el-table-column prop="action" label="">
       <template #default="table">
         <div class="action-icons">
-          <i
-            class="fa-solid fa-pencil icon"
+          <button
             @click="
               (event) => {
-                $emit('edit', table.row);
-                openAppModal();
-                preventRowExpansion(event);
+                handleActionButtons(event, 'edit', table.row);
               }
             "
-          ></i>
-          <i
-            class="fa-solid fa-trash icon"
+          >
+            <i class="fa-solid fa-pencil icon"></i>
+          </button>
+          <button
             @click="
               (event) => {
-                $emit('delete', table.row);
-                preventRowExpansion(event);
+                handleActionButtons(event, 'delete', table.row);
               }
             "
-          ></i>
+          >
+            <i class="fa-solid fa-trash icon"></i>
+          </button>
         </div>
       </template>
     </el-table-column>
@@ -68,13 +67,16 @@ export default {
   emits: ['edit', 'delete', 'pageChange'],
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    handleCellClick: (row, column, cell) => {
+    handleCellClick(row, column, cell) {
       cell.parentElement.classList.toggle('expanded');
     },
-    preventRowExpansion: (event) => {
-      event.preventDefault();
+    preventRowExpansion(event) {
       event.stopPropagation();
-      event.stopImmediatePropagation();
+    },
+    handleActionButtons(e, emitEvent, row) {
+      this.$emit(emitEvent, row);
+      this.openAppModal();
+      this.preventRowExpansion(e);
     },
   },
 };
