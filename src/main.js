@@ -9,7 +9,7 @@ import 'element-plus/es/components/table-column/style/css';
 import 'element-plus/es/components/pagination/style/css';
 
 const gAuthOptions = {
-  clientId: '808924355914-8k4928tljobpmqc276b5iqa60fshkubi',
+  clientId: process.env.VUE_APP_CLIENT_ID,
   scope: 'email',
   prompt: 'consent',
   fetch_basic_profile: false,
