@@ -4,7 +4,8 @@
       <TheHeader />
       <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
-      <div :class="[isLoggedIn ? 'logged-pages' : 'unlogged-pages']">
+      <TheFloatingButton v-if="isLoggedIn" />
+      <div class="page" :class="pageClass">
         <router-view />
       </div>
     </div>
@@ -16,12 +17,16 @@ import { mapGetters } from 'vuex';
 import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import TheFloatingButton from './components/TheFloatingButton.vue';
 
 export default {
   name: 'App',
-  components: { TheSidebar, TheHeader, ThemeSwitcher },
+  components: { TheSidebar, TheHeader, ThemeSwitcher, TheFloatingButton },
   computed: {
     ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
+    pageClass() {
+      return this.isLoggedIn && 'logged-in';
+    },
   },
 };
 </script>
@@ -31,7 +36,8 @@ export default {
 
 .pages-container {
   padding-top: 1.5rem;
-  padding-left: 1rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
 }
 
 @include tablet-md {
@@ -40,14 +46,15 @@ export default {
     grid-template-columns: repeat(12, 1fr);
   }
 
-  .logged-pages {
-    grid-column: 2 / 13;
+  .page {
+    grid-column: 1/13;
     padding-top: 3.5rem;
   }
 
-  .unlogged-pages {
-    grid-column: 1/13;
-    padding-top: 3.5rem;
+  .logged-in {
+    grid-column: 2/13;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 </style>

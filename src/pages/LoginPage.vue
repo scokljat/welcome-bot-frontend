@@ -2,9 +2,7 @@
   <div class="container">
     <h1>Welcome Bot</h1>
     <h2>Log in</h2>
-    <button @click="handleClickSignIn">
-      <i class="fab fa-google"></i>Sign in
-    </button>
+    <button @click="handleSignIn"><i class="fab fa-google"></i>Sign in</button>
   </div>
 </template>
 <script>
@@ -16,15 +14,14 @@ export default {
   methods: {
     ...mapActions({ login: 'login' }),
 
-    async handleClickSignIn() {
+    async handleSignIn() {
       try {
         const googleUser = await this.$gAuth.signIn();
         if (!googleUser) {
           return null;
         }
         const token = googleUser.wc.id_token;
-        this.login({ token });
-        this.$router.push({ name: 'messages' });
+        this.login(token);
       } catch (error) {
         console.error(error);
       }
@@ -43,7 +40,7 @@ export default {
   min-height: 80vh;
 
   h1 {
-    font-size: 2.9rem;
+    font-size: 3.4rem;
 
     @include tablet-md {
       font-size: 4.4rem;
@@ -51,14 +48,17 @@ export default {
   }
 
   h2 {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
+
+    @include tablet-md {
+      font-size: 1.9rem;
+    }
   }
 }
 
 button {
   background-color: var(--primary);
-  width: 9.4rem;
-  height: 4.4rem;
+  padding: 1.25rem 1.9rem;
   font-size: $text-lg;
   margin: 1.25rem;
   border-radius: 0.25rem;
