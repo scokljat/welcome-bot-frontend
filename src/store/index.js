@@ -23,8 +23,8 @@ export default createStore({
     },
   },
   actions: {
-    login({ commit }, { token }) {
-      const response = AuthService.login({ token });
+    login({ commit }, token) {
+      const response = AuthService.login(token);
       commit(SET_USER, response);
     },
   },
