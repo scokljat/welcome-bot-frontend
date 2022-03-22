@@ -1,3 +1,71 @@
 <template>
-  <h1>Log in Page</h1>
+  <div class="container">
+    <h1>Welcome Bot</h1>
+    <h2>Log in</h2>
+    <button @click="handleSignIn"><i class="fab fa-google"></i>Sign in</button>
+  </div>
 </template>
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+  name: 'LoginPage',
+
+  methods: {
+    ...mapActions({ login: 'login' }),
+
+    async handleSignIn() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+        const token = googleUser.wc.id_token;
+        this.login(token);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 80vh;
+
+  h1 {
+    font-size: 3.4rem;
+
+    @include tablet-md {
+      font-size: 4.4rem;
+    }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+
+    @include tablet-md {
+      font-size: 1.9rem;
+    }
+  }
+}
+
+button {
+  background-color: var(--primary);
+  padding: 1.25rem 1.9rem;
+  font-size: $text-lg;
+  margin: 1.25rem;
+  border-radius: 0.25rem;
+
+  i {
+    font-size: 1.5rem;
+    padding-right: 0.63rem;
+  }
+}
+</style>
