@@ -14,7 +14,12 @@
         <div class="action-icons">
           <i
             class="fa-solid fa-pencil icon"
-            @click="editHandler(table.row)"
+            @click="
+              () => {
+                editHandler(table.row);
+                openAppModal();
+              }
+            "
           ></i>
           <i
             class="fa-solid fa-trash icon"
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
 
 export default {
@@ -57,6 +64,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleCellClick: (row, column, cell) => {
       cell.parentElement.classList.toggle('expanded');
     },
