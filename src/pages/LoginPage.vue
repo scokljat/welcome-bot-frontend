@@ -21,7 +21,8 @@ export default {
           return null;
         }
         const token = googleUser.wc.id_token;
-        this.login(token);
+        this.login({ token });
+        this.$router.push({ name: 'messages' });
       } catch (error) {
         console.error(error);
       }

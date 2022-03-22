@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '@/store';
 
 const routes = [
+  { path: '/', redirect: { name: 'messages' } },
   {
     path: '/auth',
     name: 'login',
@@ -23,7 +25,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/error',
+    redirect: { name: 'error' },
   },
   {
     path: '/error',
@@ -34,6 +36,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && to.name !== 'error' && !store.getters.isLoggedIn)
+    next({ name: 'login' });
+  else if (to.name == 'login' && store.getters.isLoggedIn)
+    next({ name: 'messages' });
+  else next();
 });
 
 export default router;
