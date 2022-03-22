@@ -5,7 +5,7 @@
       <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
       <TheFloatingButton v-if="isLoggedIn" />
-      <div class="page" :class="renderPage">
+      <div class="page" :class="pageClass">
         <router-view />
       </div>
     </div>
@@ -24,7 +24,7 @@ export default {
   components: { TheSidebar, TheHeader, ThemeSwitcher, TheFloatingButton },
   computed: {
     ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
-    renderPage() {
+    pageClass() {
       return this.isLoggedIn && 'logged-in';
     },
   },
