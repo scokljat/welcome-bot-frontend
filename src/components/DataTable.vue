@@ -64,7 +64,6 @@ export default {
     },
     handleDeleteAction(row) {
       this.$emit('delete', row);
-      this.openAppModal();
     },
   },
 };
