@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'GlobalTextarea',
+  name: 'MessageTextarea',
 };
 </script>
 

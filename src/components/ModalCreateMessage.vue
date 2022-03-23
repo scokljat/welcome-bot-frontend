@@ -1,16 +1,16 @@
 <template>
   <div class="wrapper">
-    <GlobalInput />
-    <GlobalTextarea />
+    <MessageInput />
+    <MessageTextarea />
   </div>
 </template>
 
 <script>
-import GlobalInput from './GlobalInput.vue';
-import GlobalTextarea from './GlobalTextarea.vue';
+import MessageInput from './MessageInput.vue';
+import MessageTextarea from './MessageTextarea.vue';
 
 export default {
   name: 'ModalCreateMessage',
-  components: { GlobalInput, GlobalTextarea },
+  components: { MessageInput, MessageTextarea },
 };
 </script>
