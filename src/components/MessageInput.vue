@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'GlobalInput',
+  name: 'MessageInput',
 };
 </script>
 
