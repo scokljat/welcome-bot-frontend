@@ -12,22 +12,10 @@
     <el-table-column prop="action" label="">
       <template #default="table">
         <div class="action-icons">
-          <button
-            @click="
-              (event) => {
-                handleActionButtons(event, 'edit', table.row);
-              }
-            "
-          >
+          <button @click.stop="handleEditAction(table.row)">
             <i class="fa-solid fa-pencil icon"></i>
           </button>
-          <button
-            @click="
-              (event) => {
-                handleActionButtons(event, 'delete', table.row);
-              }
-            "
-          >
+          <button @click.stop="handleDeleteAction(table.row)">
             <i class="fa-solid fa-trash icon"></i>
           </button>
         </div>
@@ -70,13 +58,13 @@ export default {
     handleCellClick(row, column, cell) {
       cell.parentElement.classList.toggle('expanded');
     },
-    preventRowExpansion(event) {
-      event.stopPropagation();
-    },
-    handleActionButtons(e, emitEvent, row) {
-      this.$emit(emitEvent, row);
+    handleEditAction(row) {
+      this.$emit('edit', row);
       this.openAppModal();
-      this.preventRowExpansion(e);
+    },
+    handleDeleteAction(row) {
+      this.$emit('delete', row);
+      this.openAppModal();
     },
   },
 };
