@@ -7,5 +7,9 @@ const MessagesService = {
     );
     return response.data;
   },
+  fetchAllMessages: async () => {
+    const response = await axios.get('/messages');
+    return response.data;
+  },
 };
 export default MessagesService;
