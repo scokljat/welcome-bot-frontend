@@ -4,18 +4,24 @@ import {
   CLOSE_APP_MODAL,
   SET_USER,
   SET_CURRENT_PAGE,
+  SET_MESSAGES,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
+import MessagesService from '@/api/services/MessagesService';
 
 export default createStore({
   state: {
     isModalActive: false,
     token: localStorage.getItem('token') || null,
     currentPage: 1,
+    messages: [],
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
     getCurrentPage: (state) => state.currentPage,
+    getMessages: (state) => {
+      return state.messages;
+    },
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -31,6 +37,9 @@ export default createStore({
     [SET_CURRENT_PAGE]: (state, page) => {
       state.currentPage = page;
     },
+    [SET_MESSAGES]: (state, payload) => {
+      state.messages = payload;
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -39,6 +48,11 @@ export default createStore({
     },
     editCurrentPage({ commit }, page) {
       commit(SET_CURRENT_PAGE, page);
+    },
+    async fetchMessages({ commit }, pageNumber) {
+      const messages = await MessagesService.fetchMessages(pageNumber);
+      console.log(messages);
+      commit(SET_MESSAGES, messages.content);
     },
   },
   modules: {},
