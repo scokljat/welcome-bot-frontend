@@ -25,6 +25,8 @@
   <el-pagination
     layout="prev, pager, next"
     :total="tableData.length"
+    :current-page="currentPage"
+    @update:current-page="handleCurrentPage"
     @current-change="(newPageNumber) => $emit('pageChange', newPageNumber)"
   >
   </el-pagination>
@@ -53,6 +55,11 @@ export default {
     },
   },
   emits: ['edit', 'delete', 'pageChange'],
+  data: () => {
+    return {
+      currentPage: 1,
+    };
+  },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleCellClick(row, column, cell) {
@@ -64,6 +71,9 @@ export default {
     },
     handleDeleteAction(row) {
       this.$emit('delete', row);
+    },
+    handleCurrentPage(pageNumber) {
+      this.currentPage = pageNumber;
     },
   },
 };

@@ -151,8 +151,8 @@ export default {
     handleDeleteMessage: (row) => {
       console.log(row);
     },
-    handlePagination: (newPageNumber) => {
-      console.log(newPageNumber);
+    handlePagination: () => {
+      //console.log(newPageNumber);
     },
   },
 };
