@@ -14,7 +14,10 @@
       </select>
       <label class="input-label">Trigger</label>
     </div>
-    <ChannelInput />
+    <GlobalInput
+      title-input="Channel"
+      placeholder-input="Enter the channel name..."
+    />
     <div class="input-checkbox">
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
@@ -23,10 +26,10 @@
 </template>
 
 <script>
-import ChannelInput from './ChannelInput.vue';
+import GlobalInput from './GlobalInput.vue';
 export default {
   name: 'ModalCreateTrigger',
-  components: { ChannelInput },
+  components: { GlobalInput },
 };
 </script>
 

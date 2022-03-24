@@ -1,18 +1,19 @@
 <template>
   <div class="input-box">
-    <label class="input-label">Channel</label>
-    <input
+    <label class="input-label">Text</label>
+    <textarea
       class="input-text"
       type="text"
-      name="title"
-      placeholder="Enter the channel name..."
+      name="text"
+      rows="5"
+      placeholder="Enter the message text..."
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChannelInput',
+  name: 'GlobalTextarea',
 };
 </script>
 
