@@ -25,15 +25,14 @@
   <el-pagination
     layout="prev, pager, next"
     :total="tableData.length"
-    :current-page="currentPage"
-    @update:current-page="handleCurrentPage"
-    @current-change="(newPageNumber) => $emit('pageChange', newPageNumber)"
+    :current-page="getCurrentPage"
+    @current-change="handlePageChange"
   >
   </el-pagination>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus';
 
@@ -60,8 +59,12 @@ export default {
       currentPage: 1,
     };
   },
+  computed: {
+    ...mapGetters({ getCurrentPage: 'getCurrentPage' }),
+  },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
+    ...mapActions({ editCurrentPage: 'editCurrentPage' }),
     handleCellClick(row, column, cell) {
       cell.parentElement.classList.toggle('expanded');
     },
@@ -72,8 +75,9 @@ export default {
     handleDeleteAction(row) {
       this.$emit('delete', row);
     },
-    handleCurrentPage(pageNumber) {
-      this.currentPage = pageNumber;
+    handlePageChange(newPageNumber) {
+      this.$emit('pageChange', newPageNumber);
+      this.editCurrentPage(newPageNumber);
     },
   },
 };
