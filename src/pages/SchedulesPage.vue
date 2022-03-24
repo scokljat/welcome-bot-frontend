@@ -72,13 +72,15 @@ export default {
       console.log(row);
     },
     handleDeleteSchedule(row) {
-      console.log(row);
+      this.deleteSchedule(row.scheduleId);
     },
     handlePagination(pageNumber) {
-      console.log(pageNumber);
       this.fetchSchedules(pageNumber);
     },
-    ...mapActions({ fetchSchedules: 'fetchSchedules' }),
+    ...mapActions({
+      fetchSchedules: 'fetchSchedules',
+      deleteSchedule: 'deleteSchedule',
+    }),
   },
 };
 </script>
