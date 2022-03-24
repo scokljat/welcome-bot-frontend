@@ -3,3 +3,5 @@ export const CLOSE_APP_MODAL = 'CLOSE_APP_MODAL';
 export const SET_USER = 'SET_USER';
 export const SET_SCHEDULES = 'SET_SCHEDULES';
 export const REMOVE_SCHEDULE = 'REMOVE_SCHEDULE';
+export const SET_MESSAGES = 'SET_MESSAGES';
+export const SET_PAGINATION = 'SET_PAGINATION';

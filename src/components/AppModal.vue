@@ -11,7 +11,7 @@
     </div>
     <div class="footer">
       <button class="cancel" @click="closeAppModal">Cancel</button>
-      <button class="save">Save</button>
+      <button class="save" @click="$store.dispatch(actionType)">Save</button>
     </div>
   </div>
 </template>
@@ -24,6 +24,10 @@ export default {
   name: 'AppModal',
   props: {
     modalTitle: {
+      type: String,
+      required: true,
+    },
+    actionType: {
       type: String,
       required: true,
     },
