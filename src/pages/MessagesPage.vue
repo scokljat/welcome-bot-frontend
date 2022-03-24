@@ -49,16 +49,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getMessages: 'getMessages' }),
+    ...mapGetters({
+      getMessages: 'getMessages',
+    }),
   },
-  // watch: {
-  //   currentPage() {
-  //     this.fetchMessages({ pageNumber: this.currentPage });
-  //   },
-  // },
   mounted() {
-    console.log('mounted');
-    this.fetchMessages({ pageNumber: this.currentPage });
+    // this should be store pagination
+    this.fetchMessages({ pageNumber: 1 });
   },
   methods: {
     ...mapActions({ fetchMessages: 'fetchMessages' }),
@@ -69,7 +66,6 @@ export default {
       console.log(row);
     },
     handlePagination(pageNumber) {
-      console.log(pageNumber);
       // this.currentPage = pageNumber;
       this.fetchMessages({ pageNumber });
     },

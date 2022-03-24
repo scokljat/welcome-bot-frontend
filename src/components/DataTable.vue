@@ -24,8 +24,8 @@
   </el-table>
   <el-pagination
     layout="prev, pager, next"
-    :total="tableData.length"
-    :current-page="getCurrentPage"
+    :total="pagination.total"
+    :current-page="pagination.page"
     @current-change="handlePageChange"
   >
   </el-pagination>
@@ -60,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getCurrentPage: 'getCurrentPage' }),
+    ...mapGetters({ pagination: 'getPagination' }),
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
@@ -76,8 +76,10 @@ export default {
       this.$emit('delete', row);
     },
     handlePageChange(newPageNumber) {
+      // if (newPageNumber === 1) {
+      //   return;
+      // }
       this.$emit('pageChange', newPageNumber);
-      this.editCurrentPage(newPageNumber);
     },
   },
 };
