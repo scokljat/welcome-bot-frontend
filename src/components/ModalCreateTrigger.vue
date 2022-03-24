@@ -14,15 +14,10 @@
       </select>
       <label class="input-label">Trigger</label>
     </div>
-    <div class="input-box">
-      <label class="input-label">Channel</label>
-      <input
-        class="input-text"
-        type="text"
-        name="title"
-        placeholder="Enter the channel name..."
-      />
-    </div>
+    <GlobalInput
+      title-input="Channel"
+      placeholder-input="Enter the channel name..."
+    />
     <div class="input-checkbox">
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
@@ -31,8 +26,10 @@
 </template>
 
 <script>
+import GlobalInput from './GlobalInput.vue';
 export default {
   name: 'ModalCreateTrigger',
+  components: { GlobalInput },
 };
 </script>
 

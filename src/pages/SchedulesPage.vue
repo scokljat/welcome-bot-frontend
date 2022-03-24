@@ -32,6 +32,7 @@ export default {
           message:
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
           next_run: '2016-04-03',
+          channel: 'First channel',
           active: 'Active',
         },
         {
@@ -132,6 +133,13 @@ export default {
         },
         {
           id: 3,
+          label: 'Channel',
+          prop: 'channel',
+          isSortable: true,
+          width: '160',
+        },
+        {
+          id: 4,
           label: 'Active',
           prop: 'active',
           isSortable: true,

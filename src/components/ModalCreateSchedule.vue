@@ -21,6 +21,10 @@
 
       <label class="input-label">Interval</label>
     </div>
+    <GlobalInput
+      title-input="Channel"
+      placeholder-input="Enter the channel name..."
+    />
     <div class="input-checkbox">
       <input id="repeat" type="checkbox" name="repeat" value="Repeat" />
       <label for="repeat">Repeat</label>
@@ -33,8 +37,11 @@
 </template>
 
 <script>
+import GlobalInput from './GlobalInput.vue';
+
 export default {
   name: 'ModalCreateSchedule',
+  components: { GlobalInput },
 };
 </script>
 
