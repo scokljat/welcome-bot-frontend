@@ -1,6 +1,6 @@
 <template>
   <div class="messages-page">
-    <AppModal modal-title="Create Message">
+    <AppModal :modal-title="modalTitle">
       <ModalCreateMessage />
     </AppModal>
     <DataTable
@@ -14,10 +14,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateMessage from '@/components/ModalCreateMessage.vue';
 import DataTable from '@/components/DataTable.vue';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'MessagesPage',
@@ -51,7 +52,13 @@ export default {
   computed: {
     ...mapGetters({
       getMessages: 'getMessages',
+      getFormAction: 'getFormAction',
     }),
+    modalTitle() {
+      return this.getFormAction === 'create'
+        ? 'Create Message'
+        : 'Update Message';
+    },
   },
   mounted() {
     // this should be store pagination
@@ -59,8 +66,10 @@ export default {
   },
   methods: {
     ...mapActions({ fetchMessages: 'fetchMessages' }),
+    ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleEditMessage(row) {
       console.log(row);
+      this.openAppModal('update');
     },
     handleDeleteMessage(row) {
       console.log(row);
