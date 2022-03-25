@@ -5,6 +5,7 @@ import {
   CLOSE_APP_MODAL,
   SET_USER,
   SET_MESSAGES,
+  SET_ALL_MESSAGES,
   SET_PAGINATION,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
@@ -19,6 +20,7 @@ export default createStore({
     token: localStorage.getItem('token') || null,
     schedules: [],
     messages: [],
+    allMessages: [],
     pagination: {
       page: 1,
       size: 15,
@@ -32,6 +34,7 @@ export default createStore({
     },
     getPagination: (state) => state.pagination,
     getSchedules: (state) => state.schedules,
+    getAllMessages: (state) => state.allMessages,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -44,6 +47,16 @@ export default createStore({
       state.token = token;
       localStorage.setItem('token', token);
     },
+    [SET_PAGINATION]: (state, { page, total }) => {
+      state.pagination.page = page;
+      state.pagination.total = total;
+    },
+    [SET_MESSAGES]: (state, payload) => {
+      state.messages = payload;
+    },
+    [SET_ALL_MESSAGES]: (state, payload) => {
+      state.allMessages = payload;
+    },
     [SET_SCHEDULES]: (state, payload) => {
       state.schedules = payload;
     },
@@ -52,18 +65,25 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
-    [SET_PAGINATION]: (state, { page, total }) => {
-      state.pagination.page = page;
-      state.pagination.total = total;
-    },
-    [SET_MESSAGES]: (state, payload) => {
-      state.messages = payload;
-    },
   },
   actions: {
     login({ commit }, token) {
       const response = AuthService.login(token);
       commit(SET_USER, response);
+    },
+    async fetchMessages({ commit }, pageNumber) {
+      const response = await MessagesService.fetchMessages(pageNumber);
+      // set pagination
+      commit(SET_PAGINATION, {
+        page: response.pageable.pageNumber + 1,
+        total: response.totalElements,
+      });
+      commit(SET_MESSAGES, response.content);
+    },
+    async fetchAllMessages({ commit }) {
+      const response = await MessagesService.fetchAllMessages();
+      console.log('aaa');
+      commit(SET_ALL_MESSAGES, response);
     },
     async fetchSchedules({ commit }, pageNumber) {
       const response = await SchedulesService.fetchSchedules(pageNumber);
@@ -79,15 +99,6 @@ export default createStore({
     async deleteSchedule({ commit }, id) {
       await SchedulesService.deleteSchedule(id);
       commit(REMOVE_SCHEDULE, id);
-    },
-    async fetchMessages({ commit }, pageNumber) {
-      const response = await MessagesService.fetchMessages(pageNumber);
-      // set pagination
-      commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
-      });
-      commit(SET_MESSAGES, response.content);
     },
   },
   modules: {},

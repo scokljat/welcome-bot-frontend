@@ -2,9 +2,9 @@
   <div class="wrapper">
     <div class="input-box">
       <select class="input-text">
-        <option name="Option 1">Some message title One</option>
-        <option name="Option 2">Some message title Two</option>
-        <option name="Option 3">Some message title Three</option>
+        <option v-for="message in getAllMessages" :key="message.messageId">
+          {{ message.title }}
+        </option>
       </select>
       <label class="input-label">Message</label>
     </div>
@@ -37,11 +37,23 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import GlobalInput from './GlobalInput.vue';
 
 export default {
   name: 'ModalCreateSchedule',
   components: { GlobalInput },
+  computed: {
+    ...mapGetters({ getAllMessages: 'getAllMessages' }),
+  },
+  mounted() {
+    this.fetchAllMessages();
+  },
+  methods: {
+    ...mapActions({
+      fetchAllMessages: 'fetchAllMessages',
+    }),
+  },
 };
 </script>
 

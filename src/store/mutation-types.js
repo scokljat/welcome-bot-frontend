@@ -4,4 +4,5 @@ export const SET_USER = 'SET_USER';
 export const SET_SCHEDULES = 'SET_SCHEDULES';
 export const REMOVE_SCHEDULE = 'REMOVE_SCHEDULE';
 export const SET_MESSAGES = 'SET_MESSAGES';
+export const SET_ALL_MESSAGES = 'SET_ALL_MESSAGES';
 export const SET_PAGINATION = 'SET_PAGINATION';
