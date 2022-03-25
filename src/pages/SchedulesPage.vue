@@ -1,6 +1,6 @@
 <template>
   <div class="schedules-page">
-    <AppModal modal-title="Create Schedule">
+    <AppModal :modal-title="modalTitle">
       <ModalCreateSchedule />
     </AppModal>
     <DataTable
@@ -14,13 +14,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateSchedule from '@/components/ModalCreateSchedule.vue';
 import DataTable from '@/components/DataTable.vue';
 
 export default {
-  name: 'MessagesPage',
+  name: 'SchedulesPage',
   components: {
     AppModal,
     ModalCreateSchedule,
@@ -63,24 +64,33 @@ export default {
   },
   computed: {
     ...mapGetters({ getSchedules: 'getSchedules' }),
+    ...mapGetters({ getFormAction: 'getFormAction' }),
+    modalTitle() {
+      return this.getFormAction === 'create'
+        ? 'Create Schedule'
+        : 'Update Schedule';
+    },
   },
   mounted() {
     this.fetchSchedules({ pageNumber: 1 });
   },
   methods: {
-    handleEditSchedule(row) {
-      console.log(row);
-    },
-    handleDeleteSchedule(row) {
-      this.deleteSchedule(row.scheduleId);
-    },
-    handlePagination(pageNumber) {
-      this.fetchSchedules({ pageNumber });
-    },
+    ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     ...mapActions({
       fetchSchedules: 'fetchSchedules',
       deleteSchedule: 'deleteSchedule',
     }),
+    handleEditSchedule(row) {
+      console.log(row);
+      this.openAppModal('update');
+    },
+    handleDeleteSchedule(row) {
+      this.deleteSchedule(row.scheduleId);
+      console.log(row);
+    },
+    handlePagination(pageNumber) {
+      this.fetchSchedules({ pageNumber });
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <form class="wrapper">
+  <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
       <select v-model="selectedMessage" class="input-text">
         <option
@@ -28,7 +28,7 @@
       </select>
       <label class="input-label">Interval</label>
     </div>
-    <GlobalInput
+    <AppInput
       title-input="Channel"
       placeholder-input="Enter the channel name..."
     />
@@ -40,16 +40,21 @@
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
     </div>
+    <div class="button-wrapper">
+      <AppButton intent="cancel" title="Cancel" />
+      <AppButton intent="create" title="Save" />
+    </div>
   </form>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import GlobalInput from './GlobalInput.vue';
+import AppInput from './AppInput.vue';
+import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { GlobalInput },
+  components: { AppInput, AppButton },
   data: () => {
     return { selectedMessage: null, selectedInterval: null };
   },
@@ -67,6 +72,9 @@ export default {
       let interval = event.target.value.split(' ')[1].toUpperCase();
       console.log(interval);
       return interval;
+    },
+    handleFormSubmit() {
+      // handle form
     },
   },
 };
@@ -87,5 +95,13 @@ export default {
 
 .input-checkbox {
   @include input-checkbox;
+}
+
+.button-wrapper {
+  padding-top: 1.1rem;
+  padding-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 </style>
