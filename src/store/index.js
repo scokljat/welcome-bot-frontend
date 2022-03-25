@@ -7,6 +7,8 @@ import {
   SET_PAGINATION,
   REMOVE_MESSAGE,
   SET_FORM_STATE,
+  INCREMENT_PAGINATION_TOTAL,
+  DECREMENT_PAGINATION_TOTAL,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
@@ -57,6 +59,12 @@ export default createStore({
     [SET_FORM_STATE]: (state) => {
       state.isFormSubmitted = true;
     },
+    [INCREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total += 1;
+    },
+    [DECREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total -= 1;
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -74,13 +82,7 @@ export default createStore({
     },
     async deleteMessage({ commit }, id) {
       await MessagesService.deleteMessage(id);
-      // fetch new pagination
-      const response = await MessagesService.fetchMessages({ pageNumber: 1 });
-      // set pagination
-      commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
-      });
+      commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_MESSAGE, id);
     },
     editFormState({ commit }) {
