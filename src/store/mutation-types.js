@@ -4,3 +4,4 @@ export const SET_USER = 'SET_USER';
 export const SET_MESSAGES = 'SET_MESSAGES';
 export const SET_PAGINATION = 'SET_PAGINATION';
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
+export const SET_FORM_STATE = 'SET_FORM_STATE';

@@ -6,6 +6,7 @@ import {
   SET_MESSAGES,
   SET_PAGINATION,
   REMOVE_MESSAGE,
+  SET_FORM_STATE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
@@ -20,6 +21,7 @@ export default createStore({
       size: 15,
       total: 0,
     },
+    isFormSubmitted: false,
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
@@ -27,6 +29,7 @@ export default createStore({
       return state.messages;
     },
     getPagination: (state) => state.pagination,
+    getIsFormSubmitted: (state) => state.isFormSubmitted,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -50,6 +53,9 @@ export default createStore({
       state.messages = state.messages.filter((message) => {
         return message.messageId !== id;
       });
+    },
+    [SET_FORM_STATE]: (state) => {
+      state.isFormSubmitted = true;
     },
   },
   actions: {
@@ -76,6 +82,9 @@ export default createStore({
         total: response.totalElements,
       });
       commit(REMOVE_MESSAGE, id);
+    },
+    editFormState({ commit }) {
+      commit('SET_FORM_STATE');
     },
   },
   modules: {},
