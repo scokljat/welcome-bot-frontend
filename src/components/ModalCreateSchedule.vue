@@ -1,7 +1,7 @@
 <template>
   <form class="wrapper">
     <div class="input-box">
-      <select class="input-text" @change="onChangeMessage($event)">
+      <select v-model="selectedMessage" class="input-text">
         <option
           v-for="message in getAllMessages"
           :key="message.messageId"
@@ -17,12 +17,15 @@
       <label class="input-label">Run At</label>
     </div>
     <div class="input-box">
-      <select class="input-text" @change="onChangeInterval($event)">
+      <select
+        v-model="selectedInterval"
+        class="input-text"
+        @change="onChangeInterval($event)"
+      >
         <option name="Option 1">Every minute</option>
         <option name="Option 2">Every hour</option>
         <option name="Option 3">Every day</option>
       </select>
-
       <label class="input-label">Interval</label>
     </div>
     <GlobalInput
@@ -47,6 +50,9 @@ import GlobalInput from './GlobalInput.vue';
 export default {
   name: 'ModalCreateSchedule',
   components: { GlobalInput },
+  data: () => {
+    return { selectedMessage: null, selectedInterval: null };
+  },
   computed: {
     ...mapGetters({ getAllMessages: 'getAllMessages' }),
   },
@@ -57,10 +63,6 @@ export default {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
     }),
-    onChangeMessage(event) {
-      console.log(event.target.value);
-      return event.target.value;
-    },
     onChangeInterval(event) {
       let interval = event.target.value.split(' ')[1].toUpperCase();
       console.log(interval);
