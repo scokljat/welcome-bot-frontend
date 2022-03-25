@@ -1,11 +1,11 @@
 <template>
-  <div class="wrapper">
+  <form class="wrapper">
     <GlobalInput
       title-input="Title"
       placeholder-input="Enter the message title..."
     />
     <GlobalTextarea />
-  </div>
+  </form>
 </template>
 
 <script>

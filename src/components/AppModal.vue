@@ -11,13 +11,13 @@
     </div>
     <div class="footer">
       <button class="cancel" @click="closeAppModal">Cancel</button>
-      <button class="save" @click="$store.dispatch(actionType)">Save</button>
+      <button class="save" @click="handleForm">Save</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
@@ -39,6 +39,11 @@ export default {
   },
   methods: {
     ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
+    ...mapActions({ editFormState: 'editFormState' }),
+    handleForm() {
+      this.$store.dispatch(this.actionType);
+      this.editFormState();
+    },
   },
 };
 </script>
