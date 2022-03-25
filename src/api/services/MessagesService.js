@@ -11,5 +11,9 @@ const MessagesService = {
     const response = await axios.get('/messages');
     return response.data;
   },
+  deleteMessage: async (id) => {
+    const response = await axios.delete(`/messages/${id}`);
+    return response.data;
+  },
 };
 export default MessagesService;

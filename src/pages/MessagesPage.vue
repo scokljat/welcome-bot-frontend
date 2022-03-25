@@ -58,12 +58,15 @@ export default {
     this.fetchMessages({ pageNumber: 1 });
   },
   methods: {
-    ...mapActions({ fetchMessages: 'fetchMessages' }),
+    ...mapActions({
+      fetchMessages: 'fetchMessages',
+      deleteMessage: 'deleteMessage',
+    }),
     handleEditMessage(row) {
       console.log(row);
     },
     handleDeleteMessage(row) {
-      console.log(row);
+      this.deleteMessage(row.messageId);
     },
     handlePagination(pageNumber) {
       // this.currentPage = pageNumber;

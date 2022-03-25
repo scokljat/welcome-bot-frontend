@@ -5,6 +5,7 @@ import {
   SET_USER,
   SET_MESSAGES,
   SET_PAGINATION,
+  REMOVE_MESSAGE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
@@ -17,7 +18,7 @@ export default createStore({
     pagination: {
       page: 1,
       size: 15,
-      total: 100,
+      total: 0,
     },
   },
   getters: {
@@ -45,6 +46,11 @@ export default createStore({
     [SET_MESSAGES]: (state, payload) => {
       state.messages = payload;
     },
+    [REMOVE_MESSAGE]: (state, id) => {
+      state.messages = state.messages.filter((message) => {
+        return message.messageId !== id;
+      });
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -59,6 +65,17 @@ export default createStore({
         total: response.totalElements,
       });
       commit(SET_MESSAGES, response.content);
+    },
+    async deleteMessage({ commit }, id) {
+      await MessagesService.deleteMessage(id);
+      // fetch new pagination
+      const response = await MessagesService.fetchMessages({ pageNumber: 1 });
+      // set pagination
+      commit(SET_PAGINATION, {
+        page: response.pageable.pageNumber + 1,
+        total: response.totalElements,
+      });
+      commit(REMOVE_MESSAGE, id);
     },
   },
   modules: {},
