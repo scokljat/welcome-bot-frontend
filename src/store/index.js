@@ -9,7 +9,8 @@ import {
   SET_PAGINATION,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
-  SET_FORM_STATE,
+  INCREMENT_PAGINATION_TOTAL,
+  DECREMENT_PAGINATION_TOTAL,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -27,7 +28,6 @@ export default createStore({
       size: 15,
       total: 100,
     },
-    isFormSubmitted: false,
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
@@ -37,7 +37,6 @@ export default createStore({
     getPagination: (state) => state.pagination,
     getSchedules: (state) => state.schedules,
     getAllMessages: (state) => state.allMessages,
-    getIsFormSubmitted: (state) => state.isFormSubmitted,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -68,7 +67,13 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
-    [SET_FORM_STATE]: (state) => (state.isFormSubmitted = true),
+
+    [INCREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total += 1;
+    },
+    [DECREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total -= 1;
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -106,16 +111,10 @@ export default createStore({
     },
     async deleteSchedule({ commit }, id) {
       await SchedulesService.deleteSchedule(id);
-      const response = await SchedulesService.fetchSchedules({ pageNumber: 1 });
+
       // set pagination
-      commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
-      });
+      commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
-    },
-    editFormState({ commit }) {
-      commit(SET_FORM_STATE);
     },
   },
   modules: {},
