@@ -9,6 +9,7 @@ import {
   SET_PAGINATION,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
+  SET_FORM_STATE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -26,6 +27,7 @@ export default createStore({
       size: 15,
       total: 100,
     },
+    isFormSubmitted: false,
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
@@ -35,6 +37,7 @@ export default createStore({
     getPagination: (state) => state.pagination,
     getSchedules: (state) => state.schedules,
     getAllMessages: (state) => state.allMessages,
+    getIsFormSubmitted: (state) => state.isFormSubmitted,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -65,6 +68,7 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
+    [SET_FORM_STATE]: (state) => (state.isFormSubmitted = true),
   },
   actions: {
     login({ commit }, token) {
@@ -82,7 +86,6 @@ export default createStore({
     },
     async fetchAllMessages({ commit }) {
       const response = await MessagesService.fetchAllMessages();
-      console.log('aaa');
       commit(SET_ALL_MESSAGES, response);
     },
     async fetchSchedules({ commit }, pageNumber) {
@@ -94,11 +97,25 @@ export default createStore({
         if (schedule.active) schedule.active = 'Active';
         else schedule.active = 'Inactive';
       });
+      // set pagination
+      commit(SET_PAGINATION, {
+        page: response.pageable.pageNumber + 1,
+        total: response.totalElements,
+      });
       commit(SET_SCHEDULES, schedules);
     },
     async deleteSchedule({ commit }, id) {
       await SchedulesService.deleteSchedule(id);
+      const response = await SchedulesService.fetchSchedules({ pageNumber: 1 });
+      // set pagination
+      commit(SET_PAGINATION, {
+        page: response.pageable.pageNumber + 1,
+        total: response.totalElements,
+      });
       commit(REMOVE_SCHEDULE, id);
+    },
+    editFormState({ commit }) {
+      commit(SET_FORM_STATE);
     },
   },
   modules: {},

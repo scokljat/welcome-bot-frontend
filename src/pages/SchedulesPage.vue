@@ -65,7 +65,7 @@ export default {
     ...mapGetters({ getSchedules: 'getSchedules' }),
   },
   mounted() {
-    this.fetchSchedules(this.pageNumber);
+    this.fetchSchedules({ pageNumber: 1 });
   },
   methods: {
     handleEditSchedule(row) {
@@ -75,7 +75,7 @@ export default {
       this.deleteSchedule(row.scheduleId);
     },
     handlePagination(pageNumber) {
-      this.fetchSchedules(pageNumber);
+      this.fetchSchedules({ pageNumber });
     },
     ...mapActions({
       fetchSchedules: 'fetchSchedules',

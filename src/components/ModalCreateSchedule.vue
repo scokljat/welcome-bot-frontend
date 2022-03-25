@@ -1,8 +1,12 @@
 <template>
-  <div class="wrapper">
+  <form class="wrapper">
     <div class="input-box">
-      <select class="input-text">
-        <option v-for="message in getAllMessages" :key="message.messageId">
+      <select class="input-text" @change="onChangeMessage($event)">
+        <option
+          v-for="message in getAllMessages"
+          :key="message.messageId"
+          :value="message.messageId"
+        >
           {{ message.title }}
         </option>
       </select>
@@ -13,7 +17,7 @@
       <label class="input-label">Run At</label>
     </div>
     <div class="input-box">
-      <select class="input-text">
+      <select class="input-text" @change="onChangeInterval($event)">
         <option name="Option 1">Every minute</option>
         <option name="Option 2">Every hour</option>
         <option name="Option 3">Every day</option>
@@ -33,7 +37,7 @@
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -53,6 +57,15 @@ export default {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
     }),
+    onChangeMessage(event) {
+      console.log(event.target.value);
+      return event.target.value;
+    },
+    onChangeInterval(event) {
+      let interval = event.target.value.split(' ')[1].toUpperCase();
+      console.log(interval);
+      return interval;
+    },
   },
 };
 </script>
