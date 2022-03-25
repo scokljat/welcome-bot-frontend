@@ -1,28 +1,19 @@
 <template>
   <div class="input-box">
-    <label class="input-label">{{ titleInput }}</label>
-    <input
+    <label class="input-label">Text</label>
+    <textarea
       class="input-text"
       type="text"
-      name="title"
-      :placeholder="placeholderInput"
+      name="text"
+      rows="5"
+      placeholder="Enter the message text..."
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'GlobalInput',
-  props: {
-    titleInput: {
-      type: String,
-      required: true,
-    },
-    placeholderInput: {
-      type: String,
-      required: true,
-    },
-  },
+  name: 'AppTextarea',
 };
 </script>
 

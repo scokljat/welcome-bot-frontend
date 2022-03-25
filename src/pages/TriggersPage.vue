@@ -1,6 +1,6 @@
 <template>
   <div class="triggers-page">
-    <AppModal modal-title="Create Trigger">
+    <AppModal :modal-title="modalTitle">
       <ModalCreateTrigger />
     </AppModal>
     <DataTable
@@ -14,12 +14,14 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateTrigger from '@/components/ModalCreateTrigger.vue';
 import DataTable from '@/components/DataTable.vue';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 
 export default {
-  name: 'MessagesPage',
+  name: 'TriggersPage',
   components: {
     AppModal,
     ModalCreateTrigger,
@@ -175,14 +177,24 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters({ getFormAction: 'getFormAction' }),
+    modalTitle() {
+      return this.getFormAction === 'create'
+        ? 'Create Trigger'
+        : 'Update Trigger';
+    },
+  },
   methods: {
-    handleEditTrigger: (row) => {
+    ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
+    handleEditTrigger(row) {
+      console.log(row);
+      this.openAppModal('update');
+    },
+    handleDeleteTrigger(row) {
       console.log(row);
     },
-    handleDeleteTrigger: (row) => {
-      console.log(row);
-    },
-    handlePagination: (newPageNumber) => {
+    handlePagination(newPageNumber) {
       console.log(newPageNumber);
     },
   },

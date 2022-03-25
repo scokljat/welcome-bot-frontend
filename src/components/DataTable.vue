@@ -72,7 +72,6 @@ export default {
     },
     handleEditAction(row) {
       this.$emit('edit', row);
-      this.openAppModal();
     },
     handleDeleteAction(row) {
       this.$emit('delete', row);

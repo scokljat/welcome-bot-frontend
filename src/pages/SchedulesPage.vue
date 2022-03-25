@@ -1,6 +1,6 @@
 <template>
   <div class="schedules-page">
-    <AppModal modal-title="Create Schedule">
+    <AppModal :modal-title="modalTitle">
       <ModalCreateSchedule />
     </AppModal>
     <DataTable
@@ -14,12 +14,14 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateSchedule from '@/components/ModalCreateSchedule.vue';
 import DataTable from '@/components/DataTable.vue';
 
 export default {
-  name: 'MessagesPage',
+  name: 'SchedulesPage',
   components: {
     AppModal,
     ModalCreateSchedule,
@@ -148,11 +150,21 @@ export default {
       ],
     };
   },
-  methods: {
-    handleEditSchedule: (row) => {
-      console.log(row);
+  computed: {
+    ...mapGetters({ getFormAction: 'getFormAction' }),
+    modalTitle() {
+      return this.getFormAction === 'create'
+        ? 'Create Schedule'
+        : 'Update Schedule';
     },
-    handleDeleteSchedule: (row) => {
+  },
+  methods: {
+    ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
+    handleEditSchedule(row) {
+      console.log(row);
+      this.openAppModal('update');
+    },
+    handleDeleteSchedule(row) {
       console.log(row);
     },
     handlePagination: (newPageNumber) => {

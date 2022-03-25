@@ -9,10 +9,6 @@
     <div class="form-body">
       <slot />
     </div>
-    <div class="footer">
-      <button class="cancel" @click="closeAppModal">Cancel</button>
-      <button class="save" @click="handleForm">Save</button>
-    </div>
   </div>
 </template>
 
@@ -82,66 +78,15 @@ export default {
       }
     }
 
-    button {
-      border: none;
-      background: none;
-
-      i {
-        font-size: $text-lg;
-        cursor: pointer;
-        color: var(--text-primary-2);
-      }
-    }
-  }
-
-  .form-body {
-    padding: 0.63rem 0;
-    font-weight: 400;
-  }
-
-  .footer {
-    padding-top: 0.5rem;
-    padding-bottom: 0.38rem;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-
-    button {
-      min-width: 5.63rem;
-      border-radius: 0.25rem;
-      padding: 0.63rem;
-      border: none;
-      outline: none;
-      font-size: $text-md;
-      line-height: 1.38rem;
-      text-align: center;
-      font-weight: 500;
+    i {
+      font-size: $text-lg;
       cursor: pointer;
-
-      @include tablet-sm {
-        min-width: 6.88rem;
-        padding: 0.75rem 0.63rem;
-        font-size: $text-lg;
-      }
+      color: var(--text-primary-2);
     }
 
-    .cancel {
-      color: var(--text-primary-1);
-      background: transparent;
-
-      &:hover {
-        color: var(--text-primary-2);
-      }
-    }
-
-    .save {
-      background: var(--primary);
-      margin-left: 0.19rem;
-      color: var(--text-secondary-1);
-
-      &:hover {
-        opacity: 0.8;
-      }
+    .form-body {
+      padding: 0.63rem 0;
+      font-weight: 400;
     }
   }
 }

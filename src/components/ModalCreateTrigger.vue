@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
       <select class="input-text">
         <option name="Option 1">Some message title One</option>
@@ -14,7 +14,7 @@
       </select>
       <label class="input-label">Trigger</label>
     </div>
-    <GlobalInput
+    <AppInput
       title-input="Channel"
       placeholder-input="Enter the channel name..."
     />
@@ -22,14 +22,25 @@
       <input id="active" type="checkbox" name="active" value="Active" />
       <label for="active">Active</label>
     </div>
-  </div>
+    <div class="button-wrapper">
+      <AppButton intent="cancel" title="Cancel" />
+      <AppButton intent="create" title="Save" />
+    </div>
+  </form>
 </template>
 
 <script>
-import GlobalInput from './GlobalInput.vue';
+import AppInput from './AppInput.vue';
+import AppButton from './AppButton.vue';
+
 export default {
   name: 'ModalCreateTrigger',
-  components: { GlobalInput },
+  components: { AppInput, AppButton },
+  methods: {
+    handleFormSubmit() {
+      // handle form
+    },
+  },
 };
 </script>
 
@@ -48,5 +59,13 @@ export default {
 
 .input-checkbox {
   @include input-checkbox;
+}
+
+.button-wrapper {
+  padding-top: 1.1rem;
+  padding-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 </style>

@@ -6,7 +6,6 @@ import {
   SET_MESSAGES,
   SET_PAGINATION,
   REMOVE_MESSAGE,
-  SET_FORM_STATE,
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
 } from './mutation-types';
@@ -23,19 +22,18 @@ export default createStore({
       size: 15,
       total: 0,
     },
-    isFormSubmitted: false,
+    formAction: '',
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
-    getMessages: (state) => {
-      return state.messages;
-    },
+    getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
-    getIsFormSubmitted: (state) => state.isFormSubmitted,
+    getFormAction: (state) => state.formAction,
   },
   mutations: {
-    [OPEN_APP_MODAL]: (state) => {
+    [OPEN_APP_MODAL]: (state, payload) => {
       state.isModalActive = true;
+      state.formAction = payload;
     },
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
@@ -55,9 +53,6 @@ export default createStore({
       state.messages = state.messages.filter((message) => {
         return message.messageId !== id;
       });
-    },
-    [SET_FORM_STATE]: (state) => {
-      state.isFormSubmitted = true;
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;
@@ -84,9 +79,6 @@ export default createStore({
       await MessagesService.deleteMessage(id);
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_MESSAGE, id);
-    },
-    editFormState({ commit }) {
-      commit('SET_FORM_STATE');
     },
   },
   modules: {},
