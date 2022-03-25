@@ -1,5 +1,5 @@
 <template>
-  <button class="wrapper" @click="openAppModal">
+  <button class="wrapper" @click="handleButtonClick">
     <i class="fa-solid fa-plus"></i>
   </button>
 </template>
@@ -12,6 +12,9 @@ export default {
   name: 'TheFloatingButton',
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
+    handleButtonClick() {
+      this.openAppModal('create');
+    },
   },
 };
 </script>

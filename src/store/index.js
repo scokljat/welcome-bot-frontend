@@ -19,17 +19,18 @@ export default createStore({
       size: 15,
       total: 100,
     },
+    formAction: '',
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
-    getMessages: (state) => {
-      return state.messages;
-    },
+    getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
+    getFormAction: (state) => state.formAction,
   },
   mutations: {
-    [OPEN_APP_MODAL]: (state) => {
+    [OPEN_APP_MODAL]: (state, payload) => {
       state.isModalActive = true;
+      state.formAction = payload;
     },
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
