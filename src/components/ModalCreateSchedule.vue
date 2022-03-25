@@ -21,7 +21,7 @@
 
       <label class="input-label">Interval</label>
     </div>
-    <GlobalInput
+    <AppInput
       title-input="Channel"
       placeholder-input="Enter the channel name..."
     />
@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import GlobalInput from './GlobalInput.vue';
+import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { GlobalInput, AppButton },
+  components: { AppInput, AppButton },
   methods: {
     handleFormSubmit() {
       // handle form

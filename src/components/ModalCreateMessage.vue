@@ -1,10 +1,10 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <GlobalInput
+    <AppInput
       title-input="Title"
       placeholder-input="Enter the message title..."
     />
-    <GlobalTextarea />
+    <AppTextarea />
     <div class="button-wrapper">
       <AppButton intent="cancel" title="Cancel" />
       <AppButton intent="create" title="Save" />
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import GlobalInput from './GlobalInput.vue';
-import GlobalTextarea from './GlobalTextarea.vue';
+import AppInput from './AppInput.vue';
+import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateMessage',
-  components: { GlobalInput, GlobalTextarea, AppButton },
+  components: { AppInput, AppTextarea, AppButton },
   methods: {
     handleFormSubmit() {
       // handle form

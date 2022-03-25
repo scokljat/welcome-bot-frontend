@@ -14,7 +14,7 @@
       </select>
       <label class="input-label">Trigger</label>
     </div>
-    <GlobalInput
+    <AppInput
       title-input="Channel"
       placeholder-input="Enter the channel name..."
     />
@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import GlobalInput from './GlobalInput.vue';
+import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateTrigger',
-  components: { GlobalInput, AppButton },
+  components: { AppInput, AppButton },
   methods: {
     handleFormSubmit() {
       // handle form
