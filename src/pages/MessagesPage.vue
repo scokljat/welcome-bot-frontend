@@ -1,7 +1,7 @@
 <template>
   <div class="messages-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateMessage />
+      <ModalCreateMessage :message-id="messageId" />
     </AppModal>
     <DataTable
       :table-data="getMessages"
@@ -41,12 +41,13 @@ export default {
         {
           id: 3,
           label: 'Created At',
-          prop: 'date',
+          prop: 'createdAt',
           isSortable: true,
           width: '135',
         },
       ],
       currentPage: 1,
+      messageId: 0,
     };
   },
   computed: {
@@ -72,10 +73,12 @@ export default {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleEditMessage(row) {
       console.log(row);
+      this.messageId = row.messageId;
       this.openAppModal('update');
     },
     handleDeleteMessage(row) {
       this.deleteMessage(row.messageId);
+      this.messageId = null;
     },
     handlePagination(pageNumber) {
       // this.currentPage = pageNumber;

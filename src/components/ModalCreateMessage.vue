@@ -21,22 +21,48 @@
 import AppInput from './AppInput.vue';
 import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'ModalCreateMessage',
   components: { AppInput, AppTextarea, AppButton },
+  props: {
+    messageId: {
+      type: Number,
+      required: true,
+    },
+  },
   data: () => {
     return {
-      title: null,
-      text: null,
+      title: '',
+      text: '',
     };
   },
+  computed: {
+    ...mapGetters({ getFormAction: 'getFormAction' }),
+  },
+  async mounted() {
+    if (this.messageId > 0 && this.getFormAction === 'update') {
+      const message = await this.fetchMessage(this.messageId);
+      this.title = message.title;
+      this.text = message.text;
+    }
+  },
   methods: {
-    ...mapActions({ createMessage: 'createMessage' }),
+    ...mapActions({
+      createMessage: 'createMessage',
+      fetchMessage: 'fetchMessage',
+      editMessage: 'editMessage',
+    }),
     handleFormSubmit() {
       const message = { title: this.title, text: this.text };
-      this.createMessage(message);
+      if (this.getFormAction === 'create') {
+        this.createMessage(message);
+      } else if (this.getFormAction === 'update') {
+        this.editMessage({ id: this.messageId, message });
+      } else {
+        return;
+      }
     },
   },
 };

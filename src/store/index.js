@@ -8,9 +8,11 @@ import {
   REMOVE_MESSAGE,
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
+  UPDATE_MESSAGE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
+import formatDate from '../utils/formatDate';
 
 export default createStore({
   state: {
@@ -60,6 +62,12 @@ export default createStore({
     [DECREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total -= 1;
     },
+    [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
+      const messageId = state.messages.findIndex((message) => {
+        return message.messageId === id;
+      });
+      state.messages[messageId] = updatedMessage;
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -68,12 +76,16 @@ export default createStore({
     },
     async fetchMessages({ commit }, pageNumber) {
       const response = await MessagesService.fetchMessages(pageNumber);
+      const messages = response.content;
+      messages.forEach((message) => {
+        message.createdAt = formatDate(message.createdAt, 'dd MMM yyyy');
+      });
       // set pagination
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,
         total: response.totalElements,
       });
-      commit(SET_MESSAGES, response.content);
+      commit(SET_MESSAGES, messages);
     },
     async deleteMessage({ commit }, id) {
       await MessagesService.deleteMessage(id);
@@ -84,6 +96,18 @@ export default createStore({
       const response = await MessagesService.createMessage(message);
       console.log(response);
       commit(CLOSE_APP_MODAL);
+    },
+    fetchMessage({ state }, id) {
+      const message = state.messages.filter((message) => {
+        return message.messageId === id;
+      });
+      return message[0];
+    },
+    async editMessage({ commit }, { id, message }) {
+      const response = await MessagesService.editMessage(id, message);
+      commit(UPDATE_MESSAGE, { id, updatedMessage: response });
+      commit(CLOSE_APP_MODAL);
+      console.log(response);
     },
   },
   modules: {},
