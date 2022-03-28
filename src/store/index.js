@@ -1,16 +1,18 @@
 import { createStore } from 'vuex';
-import format from 'date-fns/format';
+import formatDate from '../utils/formatDate';
+//import format from 'date-fns/format';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
   SET_USER,
-  SET_MESSAGES,
-  SET_ALL_MESSAGES,
   SET_PAGINATION,
-  SET_SCHEDULES,
-  REMOVE_SCHEDULE,
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
+  SET_MESSAGES,
+  SET_ALL_MESSAGES,
+  SET_SCHEDULES,
+  REMOVE_SCHEDULE,
+  UPDATE_SCHEDULE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -20,9 +22,9 @@ export default createStore({
   state: {
     isModalActive: false,
     token: localStorage.getItem('token') || null,
-    schedules: [],
     messages: [],
     allMessages: [],
+    schedules: [],
     pagination: {
       page: 1,
       size: 15,
@@ -32,11 +34,11 @@ export default createStore({
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
-    getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
-    getSchedules: (state) => state.schedules,
-    getAllMessages: (state) => state.allMessages,
     getFormAction: (state) => state.formAction,
+    getMessages: (state) => state.messages,
+    getAllMessages: (state) => state.allMessages,
+    getSchedules: (state) => state.schedules,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state, payload) => {
@@ -54,6 +56,12 @@ export default createStore({
       state.pagination.page = page;
       state.pagination.total = total;
     },
+    [INCREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total += 1;
+    },
+    [DECREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total -= 1;
+    },
     [SET_MESSAGES]: (state, payload) => {
       state.messages = payload;
     },
@@ -68,11 +76,11 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
-    [INCREMENT_PAGINATION_TOTAL]: (state) => {
-      state.pagination.total += 1;
-    },
-    [DECREMENT_PAGINATION_TOTAL]: (state) => {
-      state.pagination.total -= 1;
+    [UPDATE_SCHEDULE]: (state, { id, updatedSchedule }) => {
+      const scheduleId = state.schedules.findIndex((schedule) => {
+        return schedule.scheduleId === id;
+      });
+      state.schedules[scheduleId] = updatedSchedule;
     },
   },
   actions: {
@@ -93,14 +101,13 @@ export default createStore({
       const response = await MessagesService.fetchAllMessages();
       commit(SET_ALL_MESSAGES, response);
     },
+
     async fetchSchedules({ commit }, pageNumber) {
       const response = await SchedulesService.fetchSchedules(pageNumber);
-      console.log(response.content);
       const schedules = response.content;
       schedules.forEach((schedule) => {
-        schedule.nextRun = format(new Date(schedule.nextRun), 'dd MMM yyyy');
-        if (schedule.active) schedule.active = 'Active';
-        else schedule.active = 'Inactive';
+        schedule.nextRun = formatDate(schedule.nextRun, 'dd MMM yyyy');
+        schedule.active = schedule.active ? 'Active' : 'Inactive';
       });
       // set pagination
       commit(SET_PAGINATION, {
@@ -117,8 +124,20 @@ export default createStore({
       commit(REMOVE_SCHEDULE, id);
     },
     async createSchedule({ commit }, schedule) {
-      const response = await SchedulesService.createSchedule(schedule);
-      console.log(response);
+      await SchedulesService.createSchedule(schedule);
+      commit(CLOSE_APP_MODAL);
+    },
+    fetchSchedule({ state }, id) {
+      const schedule = state.schedules.filter((schedule) => {
+        return schedule.scheduleId === id;
+      });
+      return schedule[0];
+    },
+    async editSchedule({ commit }, { id, schedule }) {
+      const response = await SchedulesService.editSchedule(id, schedule);
+      response.nextRun = formatDate(response.nextRun, 'dd MMM yyyy');
+      schedule.isActive = schedule.isActive ? 'Active' : 'Inactive';
+      commit(UPDATE_SCHEDULE, { id, updatedSchedule: response });
       commit(CLOSE_APP_MODAL);
     },
   },

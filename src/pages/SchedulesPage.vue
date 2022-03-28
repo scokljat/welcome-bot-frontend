@@ -1,7 +1,7 @@
 <template>
   <div class="schedules-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateSchedule />
+      <ModalCreateSchedule :schedule-id="scheduleId" />
     </AppModal>
     <DataTable
       :table-data="getSchedules"
@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       pageNumber: 1,
+      scheduleId: 0,
       tableColumns: [
         {
           id: 1,
@@ -81,12 +82,11 @@ export default {
       deleteSchedule: 'deleteSchedule',
     }),
     handleEditSchedule(row) {
-      console.log(row);
+      this.scheduleId = row.scheduleId;
       this.openAppModal('update');
     },
     handleDeleteSchedule(row) {
       this.deleteSchedule(row.scheduleId);
-      console.log(row);
     },
     handlePagination(pageNumber) {
       this.fetchSchedules({ pageNumber });

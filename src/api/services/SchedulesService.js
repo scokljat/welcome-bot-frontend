@@ -27,5 +27,13 @@ const SchedulesService = {
       console.log(error);
     }
   },
+  editSchedule: async (id, schedule) => {
+    try {
+      const response = await axios.put(`/schedules/${id}`, schedule);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 export default SchedulesService;

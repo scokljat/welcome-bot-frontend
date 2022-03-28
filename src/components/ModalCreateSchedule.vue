@@ -1,7 +1,7 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
-      <select v-model="id" class="input-text">
+      <select v-model="id" class="input-text" :disabled="disabledMessages">
         <option
           v-for="message in getAllMessages"
           :key="message.messageId"
@@ -36,7 +36,7 @@
         v-model="repeat"
         type="checkbox"
         name="repeat"
-        value="Repeat"
+        :value="repeat"
       />
       <label for="repeat">Repeat</label>
     </div>
@@ -46,7 +46,7 @@
         v-model="active"
         type="checkbox"
         name="active"
-        value="Active"
+        :value="active"
       />
       <label for="active">Active</label>
     </div>
@@ -59,13 +59,20 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import format from 'date-fns/format';
+// import format from 'date-fns/format';
+import formatDate from '../utils/formatDate.js';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateSchedule',
   components: { AppInput, AppButton },
+  props: {
+    scheduleId: {
+      type: Number,
+      required: true,
+    },
+  },
   data: () => {
     return {
       id: null,
@@ -77,28 +84,50 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getAllMessages: 'getAllMessages' }),
+    ...mapGetters({
+      getAllMessages: 'getAllMessages',
+      getFormAction: 'getFormAction',
+    }),
+    disabledMessages() {
+      return this.getFormAction === 'update';
+    },
   },
-  mounted() {
+  async mounted() {
     this.fetchAllMessages();
+    if (this.scheduleId > 0 && this.getFormAction === 'update') {
+      const schedule = await this.fetchSchedule(this.scheduleId);
+      this.id = schedule.message.messageId;
+      this.interval = 'Every ' + schedule.schedulerInterval.toLowerCase();
+      this.runDate = formatDate(schedule.runDate, 'yyyy-MM-dd');
+      this.channel = schedule.channel;
+      this.repeat = schedule.repeat;
+      if (schedule.active === 'Active') this.active = true;
+      else this.active = false;
+    }
   },
   methods: {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
       createSchedule: 'createSchedule',
+      fetchSchedule: 'fetchSchedule',
+      editSchedule: 'editSchedule',
     }),
     handleFormSubmit() {
-      // handle form
       const schedule = {
         channel: this.channel,
         isActive: this.active,
         isRepeat: this.repeat,
         messageId: this.id,
-        runDate: format(new Date(this.runDate), 'yyyy-MM-dd HH:mm:ss'),
+        runDate: formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
       };
-      console.log(schedule);
-      this.createSchedule(schedule);
+      if (this.getFormAction === 'create') {
+        this.createSchedule(schedule);
+      } else if (this.getFormAction === 'update') {
+        this.editSchedule({ id: this.scheduleId, schedule });
+      } else {
+        return;
+      }
     },
   },
 };
