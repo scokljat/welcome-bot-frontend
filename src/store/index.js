@@ -135,7 +135,7 @@ export default createStore({
     async editSchedule({ commit }, { id, schedule }) {
       const response = await SchedulesService.editSchedule(id, schedule);
       response.nextRun = formatDate(response.nextRun, 'dd MMM yyyy');
-      schedule.isActive = schedule.isActive ? 'Active' : 'Inactive';
+      response.active = response.active ? 'Active' : 'Inactive';
       commit(UPDATE_SCHEDULE, { id, updatedSchedule: response });
       commit(CLOSE_APP_MODAL);
     },
