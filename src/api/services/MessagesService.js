@@ -27,5 +27,13 @@ const MessagesService = {
       console.log(e.message);
     }
   },
+  createMessage: async (message) => {
+    try {
+      const response = await axios.post(`/messages`, message);
+      return response.data;
+    } catch (e) {
+      console.log(e.message);
+    }
+  },
 };
 export default MessagesService;

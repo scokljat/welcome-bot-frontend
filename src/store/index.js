@@ -80,6 +80,11 @@ export default createStore({
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_MESSAGE, id);
     },
+    async createMessage({ commit }, message) {
+      const response = await MessagesService.createMessage(message);
+      console.log(response);
+      commit(CLOSE_APP_MODAL);
+    },
   },
   modules: {},
 });
