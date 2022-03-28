@@ -68,7 +68,6 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
-
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;
     },
@@ -116,6 +115,11 @@ export default createStore({
       // set pagination
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
+    },
+    async createSchedule({ commit }, schedule) {
+      const response = await SchedulesService.createSchedule(schedule);
+      console.log(response);
+      commit(CLOSE_APP_MODAL);
     },
   },
   modules: {},

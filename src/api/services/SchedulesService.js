@@ -19,5 +19,13 @@ const SchedulesService = {
       console.log(error);
     }
   },
+  createSchedule: async (schedule) => {
+    try {
+      const response = await axios.post('/schedules', schedule);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 export default SchedulesService;

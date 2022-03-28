@@ -1,7 +1,7 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
-      <select v-model="selectedMessage" class="input-text">
+      <select v-model="id" class="input-text">
         <option
           v-for="message in getAllMessages"
           :key="message.messageId"
@@ -13,15 +13,11 @@
       <label class="input-label">Message</label>
     </div>
     <div class="input-box">
-      <input class="input-text" type="date" name="date" />
+      <input v-model="runDate" class="input-text" type="date" name="date" />
       <label class="input-label">Run At</label>
     </div>
     <div class="input-box">
-      <select
-        v-model="selectedInterval"
-        class="input-text"
-        @change="onChangeInterval($event)"
-      >
+      <select v-model="interval" class="input-text">
         <option name="Option 1">Every minute</option>
         <option name="Option 2">Every hour</option>
         <option name="Option 3">Every day</option>
@@ -29,15 +25,29 @@
       <label class="input-label">Interval</label>
     </div>
     <AppInput
-      title-input="Channel"
-      placeholder-input="Enter the channel name..."
+      :value="channel"
+      title="Channel"
+      placeholder="Enter the channel name..."
+      @update:value="(newValue) => (channel = newValue)"
     />
     <div class="input-checkbox">
-      <input id="repeat" type="checkbox" name="repeat" value="Repeat" />
+      <input
+        id="repeat"
+        v-model="repeat"
+        type="checkbox"
+        name="repeat"
+        value="Repeat"
+      />
       <label for="repeat">Repeat</label>
     </div>
     <div class="input-checkbox">
-      <input id="active" type="checkbox" name="active" value="Active" />
+      <input
+        id="active"
+        v-model="active"
+        type="checkbox"
+        name="active"
+        value="Active"
+      />
       <label for="active">Active</label>
     </div>
     <div class="button-wrapper">
@@ -49,6 +59,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import format from 'date-fns/format';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
@@ -56,7 +67,14 @@ export default {
   name: 'ModalCreateSchedule',
   components: { AppInput, AppButton },
   data: () => {
-    return { selectedMessage: null, selectedInterval: null };
+    return {
+      id: null,
+      interval: '',
+      runDate: '',
+      channel: '',
+      repeat: false,
+      active: false,
+    };
   },
   computed: {
     ...mapGetters({ getAllMessages: 'getAllMessages' }),
@@ -67,14 +85,20 @@ export default {
   methods: {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
+      createSchedule: 'createSchedule',
     }),
-    onChangeInterval(event) {
-      let interval = event.target.value.split(' ')[1].toUpperCase();
-      console.log(interval);
-      return interval;
-    },
     handleFormSubmit() {
       // handle form
+      const schedule = {
+        channel: this.channel,
+        isActive: this.active,
+        isRepeat: this.repeat,
+        messageId: this.id,
+        runDate: format(new Date(this.runDate), 'yyyy-MM-dd HH:mm:ss'),
+        schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
+      };
+      console.log(schedule);
+      this.createSchedule(schedule);
     },
   },
 };
