@@ -59,7 +59,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-// import format from 'date-fns/format';
 import formatDate from '../utils/formatDate.js';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';

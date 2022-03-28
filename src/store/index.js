@@ -1,6 +1,5 @@
 import { createStore } from 'vuex';
 import formatDate from '../utils/formatDate';
-//import format from 'date-fns/format';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
