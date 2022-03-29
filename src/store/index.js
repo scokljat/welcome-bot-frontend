@@ -7,17 +7,20 @@ import {
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
   SET_MESSAGES,
+  SET_ALL_MESSAGES,
   SET_TRIGGERS,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
 import TriggersService from '@/api/services/TriggersService';
+import formatActive from '@/utils/formatActive';
 
 export default createStore({
   state: {
     isModalActive: false,
     token: localStorage.getItem('token') || null,
     messages: [],
+    allMessages: [],
     triggers: [],
     pagination: {
       page: 1,
@@ -31,6 +34,7 @@ export default createStore({
     getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
     getFormAction: (state) => state.formAction,
+    getAllMessages: (state) => state.allMessages,
     getTriggers: (state) => state.triggers,
   },
   mutations: {
@@ -58,6 +62,9 @@ export default createStore({
     [SET_MESSAGES]: (state, payload) => {
       state.messages = payload;
     },
+    [SET_ALL_MESSAGES]: (state, payload) => {
+      state.allMessages = payload;
+    },
     [SET_TRIGGERS]: (state, payload) => {
       state.triggers = payload;
     },
@@ -76,10 +83,30 @@ export default createStore({
       });
       commit(SET_MESSAGES, response.content);
     },
+    async fetchAllMessages({ commit }) {
+      const response = await MessagesService.fetchAllMessages();
+      console.log(response);
+      commit(SET_ALL_MESSAGES, response);
+    },
     async fetchTriggers({ commit }, pageNumber) {
       const response = await TriggersService.fetchTriggers(pageNumber);
       const triggers = response.content;
       console.log(triggers);
+      triggers.forEach((trigger) => {
+        // console.log(trigger.triggerEvent.toLowerCase());
+        switch (trigger.triggerEvent) {
+          case 'APP_MENTION_EVENT':
+            trigger.triggerEvent = 'On app mention';
+            break;
+          case 'CHANNEL_JOINED':
+            trigger.triggerEvent = 'On channel join';
+            break;
+          case 'CHANNEL_LEFT':
+            trigger.triggerEvent = 'On channel left';
+            break;
+        }
+        trigger.isActive = formatActive(trigger.isActive);
+      });
       // set pagination
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,

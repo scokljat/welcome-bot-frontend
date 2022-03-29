@@ -1,16 +1,22 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
-      <select class="input-text">
-        <option name="Option 1">Some message title One</option>
-        <option name="Option 2">Some message title Two</option>
-        <option name="Option 3">Some message title Three</option>
+      <select v-model="id" class="input-text">
+        <option
+          v-for="message in getAllMessages"
+          :key="message.messageId"
+          :value="message.messageId"
+        >
+          {{ message.title }}
+        </option>
       </select>
       <label class="input-label">Message</label>
     </div>
     <div class="input-box">
-      <select class="input-text">
+      <select v-model="trigger" class="input-text">
+        <option name="app-mention">On app mention</option>
         <option name="channel-join">On channel join</option>
+        <option name="channel-left">On channel left</option>
       </select>
       <label class="input-label">Trigger</label>
     </div>
@@ -30,13 +36,26 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
 export default {
   name: 'ModalCreateTrigger',
   components: { AppInput, AppButton },
+  data() {
+    return { id: null, trigger: null };
+  },
+  computed: {
+    ...mapGetters({ getAllMessages: 'getAllMessages' }),
+  },
+  mounted() {
+    this.fetchAllMessages();
+  },
   methods: {
+    ...mapActions({
+      fetchAllMessages: 'fetchAllMessages',
+    }),
     handleFormSubmit() {
       // handle form
     },
