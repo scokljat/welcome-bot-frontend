@@ -65,7 +65,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import formatDate from '../utils/formatDate.js';
+import FormatUtils from '@/utils/FormatUtils';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 
@@ -97,7 +97,7 @@ export default {
       return this.getFormAction === 'update';
     },
     limitDate() {
-      return formatDate(new Date(), 'yyyy-MM-dd');
+      return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
     },
   },
   async mounted() {
@@ -106,7 +106,7 @@ export default {
       const schedule = await this.fetchSchedule(this.scheduleId);
       this.id = schedule.message.messageId;
       this.interval = 'Every ' + schedule.schedulerInterval.toLowerCase();
-      this.runDate = formatDate(schedule.runDate, 'yyyy-MM-dd');
+      this.runDate = FormatUtils.formatDate(schedule.runDate, 'yyyy-MM-dd');
       this.channel = schedule.channel;
       this.repeat = schedule.repeat;
       if (schedule.active === 'Active') this.active = true;
@@ -126,7 +126,7 @@ export default {
         isActive: this.active,
         isRepeat: this.repeat,
         messageId: this.id,
-        runDate: formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
+        runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
       };
       if (this.getFormAction === 'create') {

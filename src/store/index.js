@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import formatDate from '../utils/formatDate';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
@@ -16,6 +15,7 @@ import {
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
 import MessagesService from '@/api/services/MessagesService';
+import FormatUtils from '@/utils/FormatUtils';
 
 export default createStore({
   state: {
@@ -105,7 +105,10 @@ export default createStore({
       const response = await SchedulesService.fetchSchedules(pageNumber);
       const schedules = response.content;
       schedules.forEach((schedule) => {
-        schedule.nextRun = formatDate(schedule.nextRun, 'dd MMM yyyy');
+        schedule.nextRun = FormatUtils.formatDate(
+          schedule.nextRun,
+          'dd MMM yyyy'
+        );
         schedule.active = schedule.active ? 'Active' : 'Inactive';
       });
       // set pagination
@@ -134,7 +137,7 @@ export default createStore({
     },
     async editSchedule({ commit }, { id, schedule }) {
       const updatedSchedule = await SchedulesService.editSchedule(id, schedule);
-      updatedSchedule.nextRun = formatDate(
+      updatedSchedule.nextRun = FormatUtils.formatDate(
         updatedSchedule.nextRun,
         'dd MMM yyyy'
       );
