@@ -109,8 +109,9 @@ export default createStore({
           schedule.nextRun,
           'dd MMM yyyy'
         );
-        schedule.active = schedule.active ? 'Active' : 'Inactive';
+        schedule.active = FormatUtils.formatActive(schedule.active);
       });
+
       // set pagination
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,

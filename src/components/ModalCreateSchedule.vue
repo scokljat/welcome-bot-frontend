@@ -109,8 +109,7 @@ export default {
       this.runDate = FormatUtils.formatDate(schedule.runDate, 'yyyy-MM-dd');
       this.channel = schedule.channel;
       this.repeat = schedule.repeat;
-      if (schedule.active === 'Active') this.active = true;
-      else this.active = false;
+      schedule.active === FormatUtils.formatActive(this.active);
     }
   },
   methods: {
