@@ -133,10 +133,13 @@ export default createStore({
       return schedule[0];
     },
     async editSchedule({ commit }, { id, schedule }) {
-      const response = await SchedulesService.editSchedule(id, schedule);
-      response.nextRun = formatDate(response.nextRun, 'dd MMM yyyy');
-      response.active = response.active ? 'Active' : 'Inactive';
-      commit(UPDATE_SCHEDULE, { id, updatedSchedule: response });
+      const updatedSchedule = await SchedulesService.editSchedule(id, schedule);
+      updatedSchedule.nextRun = formatDate(
+        updatedSchedule.nextRun,
+        'dd MMM yyyy'
+      );
+      updatedSchedule.active = updatedSchedule.active ? 'Active' : 'Inactive';
+      commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
     },
   },
