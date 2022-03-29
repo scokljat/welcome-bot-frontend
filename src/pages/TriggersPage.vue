@@ -78,13 +78,16 @@ export default {
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    ...mapActions({ fetchTriggers: 'fetchTriggers' }),
+    ...mapActions({
+      fetchTriggers: 'fetchTriggers',
+      deleteTrigger: 'deleteTrigger',
+    }),
     handleEditTrigger(row) {
       console.log(row);
       this.openAppModal('update');
     },
     handleDeleteTrigger(row) {
-      console.log(row);
+      this.deleteTrigger(row.triggerId);
     },
     handlePagination(pageNumber) {
       this.fetchTriggers({ pageNumber });

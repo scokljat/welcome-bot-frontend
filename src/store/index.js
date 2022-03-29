@@ -9,6 +9,7 @@ import {
   SET_MESSAGES,
   SET_ALL_MESSAGES,
   SET_TRIGGERS,
+  REMOVE_TRIGGER,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
@@ -68,6 +69,11 @@ export default createStore({
     [SET_TRIGGERS]: (state, payload) => {
       state.triggers = payload;
     },
+    [REMOVE_TRIGGER]: (state, id) => {
+      state.triggers = state.triggers.filter((trigger) => {
+        return trigger.triggerId !== id;
+      });
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -113,6 +119,13 @@ export default createStore({
         total: response.totalElements,
       });
       commit(SET_TRIGGERS, triggers);
+    },
+    async deleteTrigger({ commit }, id) {
+      await TriggersService.deleteTrigger(id);
+
+      // set pagination
+      commit(DECREMENT_PAGINATION_TOTAL);
+      commit(REMOVE_TRIGGER, id);
     },
   },
   modules: {},

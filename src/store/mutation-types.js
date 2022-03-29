@@ -8,3 +8,4 @@ export const SET_FORM_ACTION = 'SET_FORM_ACTION';
 export const SET_MESSAGES = 'SET_MESSAGES';
 export const SET_ALL_MESSAGES = 'SET_ALL_MESSAGES';
 export const SET_TRIGGERS = 'SET_TRIGGERS';
+export const REMOVE_TRIGGER = 'REMOVE_TRIGGER';
