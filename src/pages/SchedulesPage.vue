@@ -1,7 +1,7 @@
 <template>
   <div class="schedules-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateSchedule :schedule-id="scheduleId" />
+      <ModalCreateSchedule :schedule="schedule" />
     </AppModal>
     <DataTable
       :table-data="getSchedules"
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       pageNumber: 1,
-      scheduleId: 0,
+      schedule: {},
       tableColumns: [
         {
           id: 1,
@@ -56,7 +56,7 @@ export default {
         {
           id: 4,
           label: 'Active',
-          prop: 'active',
+          prop: 'activeLabel',
           isSortable: true,
           width: '135',
         },
@@ -82,7 +82,8 @@ export default {
       deleteSchedule: 'deleteSchedule',
     }),
     handleEditSchedule(row) {
-      this.scheduleId = row.scheduleId;
+      this.schedule = row;
+      console.log(this.schedule);
       this.openAppModal('update');
     },
     handleDeleteSchedule(row) {

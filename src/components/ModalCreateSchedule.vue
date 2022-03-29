@@ -73,8 +73,8 @@ export default {
   name: 'ModalCreateSchedule',
   components: { AppInput, AppButton },
   props: {
-    scheduleId: {
-      type: Number,
+    schedule: {
+      type: Object,
       required: true,
     },
   },
@@ -102,14 +102,16 @@ export default {
   },
   async mounted() {
     this.fetchAllMessages();
-    if (this.scheduleId > 0 && this.getFormAction === 'update') {
-      const schedule = await this.fetchSchedule(this.scheduleId);
-      this.id = schedule.message.messageId;
-      this.interval = 'Every ' + schedule.schedulerInterval.toLowerCase();
-      this.runDate = FormatUtils.formatDate(schedule.runDate, 'yyyy-MM-dd');
-      this.channel = schedule.channel;
-      this.repeat = schedule.repeat;
-      schedule.active === FormatUtils.formatActive(this.active);
+    if (this.schedule) {
+      this.id = this.schedule.message.messageId;
+      this.interval = 'Every ' + this.schedule.schedulerInterval.toLowerCase();
+      this.runDate = FormatUtils.formatDate(
+        this.schedule.runDate,
+        'yyyy-MM-dd'
+      );
+      this.channel = this.schedule.channel;
+      this.repeat = this.schedule.repeat;
+      this.active = this.schedule.active;
     }
   },
   methods: {
@@ -128,13 +130,10 @@ export default {
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
       };
-      if (this.getFormAction === 'create') {
-        this.createSchedule(schedule);
-      } else if (this.getFormAction === 'update') {
-        this.editSchedule({ id: this.scheduleId, schedule });
-      } else {
-        return;
-      }
+      console.log(this.schedule);
+      if (this.schedule)
+        this.editSchedule({ id: this.schedule.scheduleId, schedule });
+      else this.createSchedule(schedule);
     },
   },
 };

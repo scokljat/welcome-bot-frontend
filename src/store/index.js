@@ -27,7 +27,7 @@ export default createStore({
     pagination: {
       page: 1,
       size: 15,
-      total: 100,
+      total: 0,
     },
     formAction: '',
   },
@@ -109,7 +109,7 @@ export default createStore({
           schedule.nextRun,
           'dd MMM yyyy'
         );
-        schedule.active = FormatUtils.formatActive(schedule.active);
+        schedule.activeLabel = schedule.active ? 'Active' : 'Inactive';
       });
 
       // set pagination
@@ -142,7 +142,9 @@ export default createStore({
         updatedSchedule.nextRun,
         'dd MMM yyyy'
       );
-      updatedSchedule.active = updatedSchedule.active ? 'Active' : 'Inactive';
+      updatedSchedule.activeLabel = updatedSchedule.active
+        ? 'Active'
+        : 'Inactive';
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
     },
