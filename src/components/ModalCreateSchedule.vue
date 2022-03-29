@@ -13,7 +13,13 @@
       <label class="input-label">Message</label>
     </div>
     <div class="input-box">
-      <input v-model="runDate" class="input-text" type="date" name="date" />
+      <input
+        v-model="runDate"
+        class="input-text"
+        type="date"
+        name="date"
+        :min="limitDate"
+      />
       <label class="input-label">Run At</label>
     </div>
     <div class="input-box">
@@ -89,6 +95,9 @@ export default {
     }),
     disabledMessages() {
       return this.getFormAction === 'update';
+    },
+    limitDate() {
+      return formatDate(new Date(), 'yyyy-MM-dd');
     },
   },
   async mounted() {
