@@ -86,8 +86,8 @@ export default {
     handleDeleteTrigger(row) {
       console.log(row);
     },
-    handlePagination(newPageNumber) {
-      console.log(newPageNumber);
+    handlePagination(pageNumber) {
+      this.fetchTriggers({ pageNumber });
     },
   },
 };
