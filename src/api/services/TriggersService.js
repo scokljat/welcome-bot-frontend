@@ -19,5 +19,13 @@ const TriggersService = {
       console.log(error);
     }
   },
+  createTrigger: async (trigger) => {
+    try {
+      const response = await axios.post('/triggers', trigger);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 export default TriggersService;

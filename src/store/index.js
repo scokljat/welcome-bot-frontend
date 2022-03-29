@@ -14,7 +14,7 @@ import {
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
 import TriggersService from '@/api/services/TriggersService';
-import formatActive from '@/utils/formatActive';
+import { formatActive, formatEvent } from '@/utils/FormatUtils';
 
 export default createStore({
   state: {
@@ -100,17 +100,18 @@ export default createStore({
       console.log(triggers);
       triggers.forEach((trigger) => {
         // console.log(trigger.triggerEvent.toLowerCase());
-        switch (trigger.triggerEvent) {
-          case 'APP_MENTION_EVENT':
-            trigger.triggerEvent = 'On app mention';
-            break;
-          case 'CHANNEL_JOINED':
-            trigger.triggerEvent = 'On channel join';
-            break;
-          case 'CHANNEL_LEFT':
-            trigger.triggerEvent = 'On channel left';
-            break;
-        }
+        // switch (trigger.triggerEvent) {
+        //   case 'APP_MENTION_EVENT':
+        //     trigger.triggerEvent = 'On app mention';
+        //     break;
+        //   case 'CHANNEL_JOINED':
+        //     trigger.triggerEvent = 'On channel join';
+        //     break;
+        //   case 'CHANNEL_LEFT':
+        //     trigger.triggerEvent = 'On channel left';
+        //     break;
+        // }
+        trigger.triggerEvent = formatEvent(trigger.triggerEvent);
         trigger.isActive = formatActive(trigger.isActive);
       });
       // set pagination
@@ -126,6 +127,10 @@ export default createStore({
       // set pagination
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_TRIGGER, id);
+    },
+    async createTrigger({ commit }, trigger) {
+      await TriggersService.createTrigger(trigger);
+      commit(CLOSE_APP_MODAL);
     },
   },
   modules: {},

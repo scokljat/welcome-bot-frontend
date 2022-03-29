@@ -21,11 +21,13 @@
       <label class="input-label">Trigger</label>
     </div>
     <AppInput
-      title-input="Channel"
-      placeholder-input="Enter the channel name..."
+      title="Channel"
+      placeholder="Enter the channel name..."
+      :value="channel"
+      @update:value="(newValue) => (channel = newValue)"
     />
     <div class="input-checkbox">
-      <input id="active" type="checkbox" name="active" value="Active" />
+      <input id="active" type="checkbox" name="active" :value="active" />
       <label for="active">Active</label>
     </div>
     <div class="button-wrapper">
@@ -39,12 +41,13 @@
 import { mapGetters, mapActions } from 'vuex';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
+import { formatEvent } from '../utils/FormatUtils';
 
 export default {
   name: 'ModalCreateTrigger',
   components: { AppInput, AppButton },
   data() {
-    return { id: null, trigger: null };
+    return { id: null, trigger: '', channel: '', active: false };
   },
   computed: {
     ...mapGetters({ getAllMessages: 'getAllMessages' }),
@@ -55,9 +58,17 @@ export default {
   methods: {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
+      createTrigger: 'createTrigger',
     }),
     handleFormSubmit() {
-      // handle form
+      const trigger = {
+        messageId: this.id,
+        triggerEvent: formatEvent(this.trigger),
+        channel: this.channel,
+        isActive: this.active,
+      };
+      console.log(trigger);
+      this.createTrigger(trigger);
     },
   },
 };
