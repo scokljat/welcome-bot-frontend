@@ -7,8 +7,8 @@
       name="text"
       rows="5"
       placeholder="Enter the message text..."
-      :value="value"
-      @input="$emit('update:value', $event.target.value)"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       required: true,
     },
   },
-  emits: ['update:value'],
+  emits: ['update:modelValue'],
 };
 </script>
 

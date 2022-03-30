@@ -1,15 +1,11 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <AppInput
+      v-model="title"
       title="Title"
       placeholder="Enter the message title..."
-      :value="title"
-      @update:value="(newValue) => (title = newValue)"
     />
-    <AppTextarea
-      :value="text"
-      @update:value="(newValue) => (text = newValue)"
-    />
+    <AppTextarea v-model="text" />
     <div class="button-wrapper">
       <AppButton intent="cancel" title="Cancel" />
       <AppButton intent="create" title="Save" />
