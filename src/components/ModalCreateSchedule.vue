@@ -40,23 +40,11 @@
       placeholder="Enter the channel name..."
     />
     <div class="input-checkbox">
-      <input
-        id="repeat"
-        v-model="repeat"
-        type="checkbox"
-        name="repeat"
-        :value="repeat"
-      />
+      <input id="repeat" v-model="repeat" type="checkbox" name="repeat" />
       <label for="repeat">Repeat</label>
     </div>
     <div class="input-checkbox">
-      <input
-        id="active"
-        v-model="active"
-        type="checkbox"
-        name="active"
-        :value="active"
-      />
+      <input id="active" v-model="active" type="checkbox" name="active" />
       <label for="active">Active</label>
     </div>
     <div class="button-wrapper">
