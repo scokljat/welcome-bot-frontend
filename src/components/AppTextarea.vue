@@ -17,7 +17,7 @@
 export default {
   name: 'AppTextarea',
   props: {
-    value: {
+    modelValue: {
       type: String,
       required: true,
     },

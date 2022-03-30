@@ -1,7 +1,10 @@
 <template>
   <div class="messages-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateMessage :message="message" />
+      <ModalCreateMessage
+        :message="message"
+        @reset-message="handleResetMessage"
+      />
     </AppModal>
     <DataTable
       :table-data="getMessages"
@@ -77,6 +80,9 @@ export default {
     },
     handlePagination(pageNumber) {
       this.fetchMessages({ pageNumber });
+    },
+    handleResetMessage() {
+      this.message = null;
     },
   },
 };

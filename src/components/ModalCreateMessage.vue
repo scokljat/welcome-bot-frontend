@@ -25,9 +25,10 @@ export default {
   props: {
     message: {
       type: Object,
-      required: true,
+      default: null,
     },
   },
+  emits: ['resetMessage'],
   data: () => {
     return {
       title: '',
@@ -39,6 +40,9 @@ export default {
       this.title = this.message.title;
       this.text = this.message.text;
     }
+  },
+  unmounted() {
+    this.$emit('resetMessage');
   },
   methods: {
     ...mapActions({
