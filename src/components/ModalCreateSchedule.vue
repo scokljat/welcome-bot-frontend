@@ -28,9 +28,13 @@
     </div>
     <div class="input-box">
       <select v-model="interval" class="input-text">
-        <option name="Option 1">Every minute</option>
-        <option name="Option 2">Every hour</option>
-        <option name="Option 3">Every day</option>
+        <option
+          v-for="intervalOption in intervalOptions"
+          :key="intervalOption.value"
+          :value="intervalOption.value"
+        >
+          {{ intervalOption.label }}
+        </option>
       </select>
       <label class="input-label">Interval</label>
     </div>
@@ -83,6 +87,11 @@ export default {
       channel: '',
       repeat: false,
       active: false,
+      intervalOptions: [
+        { value: 'MINUTE', label: 'Every minute' },
+        { value: 'HOUR', label: 'Every hour' },
+        { value: 'DAY', label: 'Every day' },
+      ],
     };
   },
   computed: {
@@ -100,7 +109,7 @@ export default {
     this.fetchAllMessages();
     if (this.schedule) {
       this.id = this.schedule.message.messageId;
-      this.interval = 'Every ' + this.schedule.schedulerInterval.toLowerCase();
+      this.interval = this.schedule.schedulerInterval;
       this.runDate = FormatUtils.formatDate(
         this.schedule.runDate,
         'yyyy-MM-dd'
@@ -128,7 +137,7 @@ export default {
         isRepeat: this.repeat,
         messageId: this.id,
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
-        schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
+        schedulerInterval: this.interval,
       };
 
       if (this.schedule) {
