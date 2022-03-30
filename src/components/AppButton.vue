@@ -15,7 +15,7 @@ export default {
   emits: ['closeModal'],
   computed: {
     buttonType() {
-      return this.isSubmit === true ? 'submit' : 'button';
+      return this.isSubmit ? 'submit' : 'button';
     },
   },
   methods: {
