@@ -3,7 +3,7 @@
     <div class="input-box">
       <select v-model="id" class="input-text">
         <option
-          v-for="message in getAllMessages"
+          v-for="message in messages"
           :key="message.messageId"
           :value="message.messageId"
         >
@@ -14,17 +14,16 @@
     </div>
     <div class="input-box">
       <select v-model="trigger" class="input-text">
-        <option name="app-mention">On app mention</option>
-        <option name="channel-join">On channel join</option>
-        <option name="channel-left">On channel left</option>
+        <option v-for="event in events" :key="event.value" :value="event.value">
+          {{ event.label }}
+        </option>
       </select>
       <label class="input-label">Trigger</label>
     </div>
     <AppInput
+      v-model="channel"
       title="Channel"
       placeholder="Enter the channel name..."
-      :value="channel"
-      @update:value="(newValue) => (channel = newValue)"
     />
     <div class="input-checkbox">
       <input id="active" type="checkbox" name="active" :value="active" />
@@ -47,10 +46,20 @@ export default {
   name: 'ModalCreateTrigger',
   components: { AppInput, AppButton },
   data() {
-    return { id: null, trigger: '', channel: '', active: false };
+    return {
+      id: null,
+      trigger: '',
+      channel: '',
+      active: false,
+      events: [
+        { value: 'APP_MENTION_EVENT', label: 'On app mention' },
+        { value: 'CHANNEL_JOINED', label: 'On channel join' },
+        { value: 'CHANNEL_LEFT', label: 'On channel left' },
+      ],
+    };
   },
   computed: {
-    ...mapGetters({ getAllMessages: 'getAllMessages' }),
+    ...mapGetters({ messages: 'getAllMessages' }),
   },
   mounted() {
     this.fetchAllMessages();
@@ -67,7 +76,7 @@ export default {
         channel: this.channel,
         isActive: this.active,
       };
-      console.log(trigger);
+
       this.createTrigger(trigger);
     },
   },
