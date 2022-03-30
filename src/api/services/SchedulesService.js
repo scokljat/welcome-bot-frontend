@@ -1,6 +1,6 @@
 import axios from '../http';
 const SchedulesService = {
-  fetchSchedules: async ({ pageNumber }) => {
+  fetchSchedules: async (pageNumber) => {
     try {
       const url = `/schedules?offset=${pageNumber - 1}&pagesize=15`;
       const response = await axios.get(url);

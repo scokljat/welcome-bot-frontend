@@ -73,7 +73,8 @@ export default {
     },
   },
   mounted() {
-    this.fetchSchedules({ pageNumber: this.pagination.page });
+    const pageNumber = this.pagination.page;
+    this.fetchSchedules(pageNumber);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
@@ -89,7 +90,7 @@ export default {
       this.deleteSchedule(row.scheduleId);
     },
     handlePagination(pageNumber) {
-      this.fetchSchedules({ pageNumber });
+      this.fetchSchedules(pageNumber);
     },
     handleResetSchedule() {
       this.schedule = null;

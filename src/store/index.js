@@ -18,7 +18,6 @@ import MessagesService from '@/api/services/MessagesService';
 import FormatUtils from '@/utils/FormatUtils';
 
 function formatSchedules(response) {
-  console.log(response);
   if (response.length > 0) {
     response.forEach((schedule) => {
       schedule.nextRun = FormatUtils.formatDate(
@@ -61,13 +60,13 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, { token }) => {
-      state.token = token;
-      localStorage.setItem('token', token);
+    [SET_USER]: (state, payload) => {
+      state.token = payload.token;
+      localStorage.setItem('token', payload.token);
     },
-    [SET_PAGINATION]: (state, { page, total }) => {
-      state.pagination.page = page;
-      state.pagination.total = total;
+    [SET_PAGINATION]: (state, payload) => {
+      state.pagination.page = payload.page;
+      state.pagination.total = payload.total;
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;
@@ -84,16 +83,16 @@ export default createStore({
     [SET_SCHEDULES]: (state, payload) => {
       state.schedules = payload;
     },
-    [REMOVE_SCHEDULE]: (state, id) => {
+    [REMOVE_SCHEDULE]: (state, payload) => {
       state.schedules = state.schedules.filter((schedule) => {
-        return schedule.scheduleId !== id;
+        return schedule.scheduleId !== payload;
       });
     },
-    [UPDATE_SCHEDULE]: (state, { id, updatedSchedule }) => {
+    [UPDATE_SCHEDULE]: (state, payload) => {
       const index = state.schedules.findIndex((schedule) => {
-        return schedule.scheduleId === id;
+        return schedule.scheduleId === payload.id;
       });
-      state.schedules[index] = updatedSchedule;
+      state.schedules[index] = payload.updatedSchedule;
     },
   },
   actions: {
@@ -110,8 +109,8 @@ export default createStore({
       commit(SET_MESSAGES, response.content);
     },
     async fetchAllMessages({ commit }) {
-      const response = await MessagesService.fetchAllMessages();
-      commit(SET_ALL_MESSAGES, response);
+      const allmessages = await MessagesService.fetchAllMessages();
+      commit(SET_ALL_MESSAGES, allmessages);
     },
     async fetchSchedules({ commit }, pageNumber) {
       const response = await SchedulesService.fetchSchedules(pageNumber);
