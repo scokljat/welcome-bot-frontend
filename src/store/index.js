@@ -15,9 +15,10 @@ import MessagesService from '@/api/services/MessagesService';
 import formatDate from '../utils/formatDate';
 
 const formatMessages = (response) => {
-  return response.content.forEach((message) => {
+  response.forEach((message) => {
     message.createdAt = formatDate(message.createdAt, 'dd MMM yyyy');
   });
+  return response;
 };
 
 export default createStore({
@@ -79,8 +80,7 @@ export default createStore({
     },
     async fetchMessages({ commit }, pageNumber) {
       const response = await MessagesService.fetchMessages(pageNumber);
-      const messages = formatMessages(response);
-      // set pagination
+      const messages = formatMessages(response.content);
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,
         total: response.totalElements,

@@ -7,8 +7,12 @@
     />
     <AppTextarea v-model="text" />
     <div class="button-wrapper">
-      <AppButton intent="cancel" title="Cancel" />
-      <AppButton intent="create" title="Save" />
+      <AppButton
+        theme="secondary"
+        title="Cancel"
+        @close-modal="handleCloseModal"
+      />
+      <AppButton theme="primary" title="Save" is-submit />
     </div>
   </form>
 </template>
@@ -17,7 +21,8 @@
 import AppInput from './AppInput.vue';
 import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'ModalCreateMessage',
@@ -49,6 +54,7 @@ export default {
       createMessage: 'createMessage',
       editMessage: 'editMessage',
     }),
+    ...mapMutations({ closeModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
       const message = { title: this.title, text: this.text };
       if (this.message) {
@@ -56,6 +62,9 @@ export default {
       } else {
         this.createMessage(message);
       }
+    },
+    handleCloseModal() {
+      this.closeModal();
     },
   },
 };
