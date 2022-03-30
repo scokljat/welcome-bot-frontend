@@ -24,18 +24,15 @@ export default createStore({
       size: 15,
       total: 0,
     },
-    formAction: '',
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
     getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
-    getFormAction: (state) => state.formAction,
   },
   mutations: {
-    [OPEN_APP_MODAL]: (state, payload) => {
+    [OPEN_APP_MODAL]: (state) => {
       state.isModalActive = true;
-      state.formAction = payload;
     },
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
@@ -63,10 +60,10 @@ export default createStore({
       state.pagination.total -= 1;
     },
     [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
-      const messageId = state.messages.findIndex((message) => {
+      const index = state.messages.findIndex((message) => {
         return message.messageId === id;
       });
-      state.messages[messageId] = updatedMessage;
+      state.messages[index] = updatedMessage;
     },
   },
   actions: {
@@ -97,17 +94,10 @@ export default createStore({
       console.log(response);
       commit(CLOSE_APP_MODAL);
     },
-    fetchMessage({ state }, id) {
-      const message = state.messages.filter((message) => {
-        return message.messageId === id;
-      });
-      return message[0];
-    },
     async editMessage({ commit }, { id, message }) {
-      const response = await MessagesService.editMessage(id, message);
-      commit(UPDATE_MESSAGE, { id, updatedMessage: response });
+      const updatedMessage = await MessagesService.editMessage(id, message);
+      commit(UPDATE_MESSAGE, { id, updatedMessage });
       commit(CLOSE_APP_MODAL);
-      console.log(response);
     },
   },
   modules: {},

@@ -1,7 +1,7 @@
 <template>
   <div class="messages-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateMessage :message-id="messageId" />
+      <ModalCreateMessage :message="message" />
     </AppModal>
     <DataTable
       :table-data="getMessages"
@@ -47,18 +47,15 @@ export default {
         },
       ],
       currentPage: 1,
-      messageId: 0,
+      message: null,
     };
   },
   computed: {
     ...mapGetters({
       getMessages: 'getMessages',
-      getFormAction: 'getFormAction',
     }),
     modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Message'
-        : 'Update Message';
+      return this.message ? 'Update Message' : 'Create Message';
     },
   },
   mounted() {
@@ -72,16 +69,13 @@ export default {
     }),
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
     handleEditMessage(row) {
-      console.log(row);
-      this.messageId = row.messageId;
-      this.openAppModal('update');
+      this.message = row;
+      this.openAppModal();
     },
     handleDeleteMessage(row) {
       this.deleteMessage(row.messageId);
-      this.messageId = null;
     },
     handlePagination(pageNumber) {
-      // this.currentPage = pageNumber;
       this.fetchMessages({ pageNumber });
     },
   },
