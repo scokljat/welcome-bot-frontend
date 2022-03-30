@@ -14,6 +14,12 @@ import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
 import formatDate from '../utils/formatDate';
 
+const formatMessages = (response) => {
+  return response.content.forEach((message) => {
+    message.createdAt = formatDate(message.createdAt, 'dd MMM yyyy');
+  });
+};
+
 export default createStore({
   state: {
     isModalActive: false,
@@ -73,10 +79,7 @@ export default createStore({
     },
     async fetchMessages({ commit }, pageNumber) {
       const response = await MessagesService.fetchMessages(pageNumber);
-      const messages = response.content;
-      messages.forEach((message) => {
-        message.createdAt = formatDate(message.createdAt, 'dd MMM yyyy');
-      });
+      const messages = formatMessages(response);
       // set pagination
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,
@@ -90,8 +93,7 @@ export default createStore({
       commit(REMOVE_MESSAGE, id);
     },
     async createMessage({ commit }, message) {
-      const response = await MessagesService.createMessage(message);
-      console.log(response);
+      await MessagesService.createMessage(message);
       commit(CLOSE_APP_MODAL);
     },
     async editMessage({ commit }, { id, message }) {
