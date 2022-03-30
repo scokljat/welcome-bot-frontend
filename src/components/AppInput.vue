@@ -1,14 +1,18 @@
 <template>
   <div class="input-box">
-    <label class="input-label">{{ title }}</label>
+    <label class="input-label" :class="{ 'error-label': errors }">{{
+      title
+    }}</label>
     <input
       class="input-text"
+      :class="{ 'error-input': errors }"
       type="text"
       name="title"
       :placeholder="placeholder"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <span v-if="errors" class="error-message">{{ errors }}</span>
   </div>
 </template>
 
@@ -26,7 +30,11 @@ export default {
     },
     modelValue: {
       type: String,
-      required: true,
+      default: undefined,
+    },
+    errors: {
+      type: String,
+      default: null,
     },
   },
   emits: ['update:modelValue'],
@@ -44,5 +52,19 @@ export default {
 
 .input-text {
   @include input-text;
+}
+
+.error-label {
+  color: #d9534f;
+}
+
+.error-message {
+  font-size: $text-md;
+  color: #d9534f;
+}
+
+.error-input {
+  border: 1px solid #d9534f;
+  color: #d9534f;
 }
 </style>

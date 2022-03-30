@@ -1,18 +1,19 @@
 <template>
-  <form class="wrapper" @submit.prevent="handleFormSubmit">
+  <form class="wrapper" @submit.prevent="onSubmit">
     <AppInput
-      v-model="title"
+      v-model="values.title"
       title="Title"
       placeholder="Enter the message title..."
+      :errors="errors.title"
     />
-    <AppTextarea v-model="text" />
+    <AppTextarea v-model="values.text" :errors="errors.text" />
     <div class="button-wrapper">
       <AppButton
         theme="secondary"
         title="Cancel"
         @close-modal="handleCloseModal"
       />
-      <AppButton theme="primary" title="Save" is-submit />
+      <AppButton theme="primary" :title="buttonTitle" is-submit />
     </div>
   </form>
 </template>
@@ -21,8 +22,10 @@
 import AppInput from './AppInput.vue';
 import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapMutations, useStore } from 'vuex';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
+import { useForm } from 'vee-validate';
+import * as Yup from 'yup';
 
 export default {
   name: 'ModalCreateMessage',
@@ -34,16 +37,45 @@ export default {
     },
   },
   emits: ['resetMessage'],
-  data: () => {
+  setup(props) {
+    const store = useStore();
+
+    const schema = Yup.object().shape({
+      title: Yup.string().required().min(5).max(30).label('Message title'),
+      text: Yup.string().required().min(20).label('Message text'),
+    });
+    const { values, handleSubmit, errors, isSubmitting } = useForm({
+      validationSchema: schema,
+      validateOnMount: false,
+      initialErrors: { title: '', text: '' },
+      initialValues: {
+        title: '',
+        text: '',
+      },
+    });
+    const onSubmit = handleSubmit((message) => {
+      if (props.message) {
+        store.dispatch('editMessage', { id: props.message.messageId, message });
+      } else {
+        store.dispatch('createMessage', message);
+      }
+    });
     return {
-      title: '',
-      text: '',
+      values,
+      onSubmit,
+      errors,
+      isSubmitting,
     };
+  },
+  computed: {
+    buttonTitle() {
+      return this.isSubmitting ? 'Processing' : 'Save';
+    },
   },
   async mounted() {
     if (this.message) {
-      this.title = this.message.title;
-      this.text = this.message.text;
+      this.values.title = this.message.title;
+      this.values.text = this.message.text;
     }
   },
   unmounted() {
@@ -55,14 +87,6 @@ export default {
       editMessage: 'editMessage',
     }),
     ...mapMutations({ closeModal: CLOSE_APP_MODAL }),
-    handleFormSubmit() {
-      const message = { title: this.title, text: this.text };
-      if (this.message) {
-        this.editMessage({ id: this.message.messageId, message });
-      } else {
-        this.createMessage(message);
-      }
-    },
     handleCloseModal() {
       this.closeModal();
     },
@@ -77,5 +101,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: right;
+}
+
+.error {
+  color: red;
 }
 </style>

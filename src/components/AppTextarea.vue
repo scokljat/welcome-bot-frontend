@@ -1,8 +1,9 @@
 <template>
   <div class="input-box">
-    <label class="input-label">Text</label>
+    <label class="input-label" :class="{ 'error-label': errors }">Text</label>
     <textarea
       class="input-text"
+      :class="{ 'error-input': errors }"
       type="text"
       name="text"
       rows="5"
@@ -10,6 +11,7 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <span v-if="errors" class="error-message">{{ errors }}</span>
   </div>
 </template>
 
@@ -19,7 +21,11 @@ export default {
   props: {
     modelValue: {
       type: String,
-      required: true,
+      default: null,
+    },
+    errors: {
+      type: String,
+      default: null,
     },
   },
   emits: ['update:modelValue'],
@@ -37,5 +43,19 @@ export default {
 
 .input-text {
   @include input-text;
+}
+
+.error-label {
+  color: #d9534f;
+}
+
+.error-message {
+  font-size: $text-md;
+  color: #d9534f;
+}
+
+.error-input {
+  border: 1px solid #d9534f;
+  color: #d9534f;
 }
 </style>
