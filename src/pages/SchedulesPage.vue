@@ -67,13 +67,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ schedules: 'getSchedules' }),
+    ...mapGetters({ schedules: 'getSchedules', pagination: 'getPagination' }),
     modalTitle() {
       return this.schedule ? 'Update Schedule' : 'Create Schedule';
     },
   },
   mounted() {
-    this.fetchSchedules({ pageNumber: 1 });
+    this.fetchSchedules({ pageNumber: this.pagination.page });
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
