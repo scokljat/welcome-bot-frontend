@@ -1,9 +1,13 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <div class="input-box">
-      <select v-model="id" class="input-text" :disabled="disabledMessages">
+      <select
+        v-model="id"
+        class="input-text"
+        :disabled="isMessagesSelectDisabled"
+      >
         <option
-          v-for="message in getAllMessages"
+          v-for="message in messages"
           :key="message.messageId"
           :value="message.messageId"
         >
@@ -31,10 +35,9 @@
       <label class="input-label">Interval</label>
     </div>
     <AppInput
-      :value="channel"
+      v-model="channel"
       title="Channel"
       placeholder="Enter the channel name..."
-      @update:value="(newValue) => (channel = newValue)"
     />
     <div class="input-checkbox">
       <input
@@ -57,17 +60,22 @@
       <label for="active">Active</label>
     </div>
     <div class="button-wrapper">
-      <AppButton intent="cancel" title="Cancel" />
-      <AppButton intent="create" title="Save" />
+      <AppButton
+        title="Cancel"
+        theme="secondary"
+        @close-modal="handleCloseModal"
+      />
+      <AppButton title="Save" theme="primary" is-submit />
     </div>
   </form>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import FormatUtils from '@/utils/FormatUtils';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'ModalCreateSchedule',
@@ -75,9 +83,10 @@ export default {
   props: {
     schedule: {
       type: Object,
-      required: true,
+      default: null,
     },
   },
+  emits: ['resetSchedule'],
   data: () => {
     return {
       id: null,
@@ -90,11 +99,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getAllMessages: 'getAllMessages',
-      getFormAction: 'getFormAction',
+      messages: 'getAllMessages',
     }),
-    disabledMessages() {
-      return this.getFormAction === 'update';
+    isMessagesSelectDisabled() {
+      return this.schedule;
     },
     limitDate() {
       return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
@@ -114,6 +122,9 @@ export default {
       this.active = this.schedule.active;
     }
   },
+  unmounted() {
+    this.$emit('resetSchedule');
+  },
   methods: {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
@@ -121,6 +132,7 @@ export default {
       fetchSchedule: 'fetchSchedule',
       editSchedule: 'editSchedule',
     }),
+    ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
       const schedule = {
         channel: this.channel,
@@ -130,10 +142,13 @@ export default {
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.interval.split(' ')[1].toUpperCase(),
       };
-      console.log(this.schedule);
-      if (this.schedule)
+
+      if (this.schedule) {
         this.editSchedule({ id: this.schedule.scheduleId, schedule });
-      else this.createSchedule(schedule);
+      } else this.createSchedule(schedule);
+    },
+    handleCloseModal() {
+      this.closeAppModal();
     },
   },
 };

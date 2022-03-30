@@ -1,10 +1,13 @@
 <template>
   <div class="schedules-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateSchedule :schedule="schedule" />
+      <ModalCreateSchedule
+        :schedule="schedule"
+        @reset-schedule="handleResetSchedule"
+      />
     </AppModal>
     <DataTable
-      :table-data="getSchedules"
+      :table-data="schedules"
       :table-columns="tableColumns"
       @edit="handleEditSchedule"
       @delete="handleDeleteSchedule"
@@ -30,7 +33,7 @@ export default {
   data() {
     return {
       pageNumber: 1,
-      schedule: {},
+      schedule: null,
       tableColumns: [
         {
           id: 1,
@@ -64,12 +67,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getSchedules: 'getSchedules' }),
-    ...mapGetters({ getFormAction: 'getFormAction' }),
+    ...mapGetters({ schedules: 'getSchedules' }),
     modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Schedule'
-        : 'Update Schedule';
+      return this.schedule ? 'Update Schedule' : 'Create Schedule';
     },
   },
   mounted() {
@@ -83,14 +83,16 @@ export default {
     }),
     handleEditSchedule(row) {
       this.schedule = row;
-      console.log(this.schedule);
-      this.openAppModal('update');
+      this.openAppModal();
     },
     handleDeleteSchedule(row) {
       this.deleteSchedule(row.scheduleId);
     },
     handlePagination(pageNumber) {
       this.fetchSchedules({ pageNumber });
+    },
+    handleResetSchedule() {
+      this.schedule = null;
     },
   },
 };

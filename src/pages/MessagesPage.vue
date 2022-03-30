@@ -1,6 +1,6 @@
 <template>
   <div class="messages-page">
-    <AppModal :modal-title="modalTitle">
+    <AppModal modal-title="Message">
       <ModalCreateMessage />
     </AppModal>
     <DataTable
@@ -52,13 +52,7 @@ export default {
   computed: {
     ...mapGetters({
       getMessages: 'getMessages',
-      getFormAction: 'getFormAction',
     }),
-    modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Message'
-        : 'Update Message';
-    },
   },
   mounted() {
     // this should be store pagination
