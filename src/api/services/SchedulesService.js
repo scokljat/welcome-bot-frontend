@@ -2,9 +2,8 @@ import axios from '../http';
 const SchedulesService = {
   fetchSchedules: async ({ pageNumber }) => {
     try {
-      const response = await axios.get(
-        `/schedules?offset=${pageNumber - 1}&pagesize=15`
-      );
+      const url = `/schedules?offset=${pageNumber - 1}&pagesize=15`;
+      const response = await axios.get(url);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -12,8 +11,8 @@ const SchedulesService = {
   },
   deleteSchedule: async (id) => {
     try {
-      const response = await axios.delete(`/schedules/${id}`);
-      console.log(response);
+      const url = `/schedules/${id}`;
+      const response = await axios.delete(url);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -21,7 +20,8 @@ const SchedulesService = {
   },
   createSchedule: async (schedule) => {
     try {
-      const response = await axios.post('/schedules', schedule);
+      const url = '/schedules';
+      const response = await axios.post(url, schedule);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -29,7 +29,8 @@ const SchedulesService = {
   },
   editSchedule: async (id, schedule) => {
     try {
-      const response = await axios.put(`/schedules/${id}`, schedule);
+      const url = `/schedules/${id}`;
+      const response = await axios.put(url, schedule);
       return response.data;
     } catch (error) {
       console.log(error);
