@@ -56,14 +56,14 @@ export default {
   computed: {
     ...mapGetters({
       getMessages: 'getMessages',
+      getPagination: 'getPagination',
     }),
     modalTitle() {
       return this.message ? 'Update Message' : 'Create Message';
     },
   },
   mounted() {
-    // this should be store pagination
-    this.fetchMessages({ pageNumber: 1 });
+    this.fetchMessages(this.getPagination.page);
   },
   methods: {
     ...mapActions({
@@ -79,7 +79,7 @@ export default {
       this.deleteMessage(row.messageId);
     },
     handlePagination(pageNumber) {
-      this.fetchMessages({ pageNumber });
+      this.fetchMessages(pageNumber);
     },
     handleResetMessage() {
       this.message = null;

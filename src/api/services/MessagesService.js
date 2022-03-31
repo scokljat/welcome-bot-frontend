@@ -1,7 +1,7 @@
 import axios from '../http';
 
 const MessagesService = {
-  fetchMessages: async ({ pageNumber }) => {
+  fetchMessages: async (pageNumber) => {
     const url = `/messages?offset=${pageNumber - 1}&pagesize=15`;
     try {
       const response = await axios.get(url);
