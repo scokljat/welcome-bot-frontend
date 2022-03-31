@@ -1,25 +1,7 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <div class="input-box">
-      <select v-model="id" class="input-text">
-        <option
-          v-for="message in messages"
-          :key="message.messageId"
-          :value="message.messageId"
-        >
-          {{ message.title }}
-        </option>
-      </select>
-      <label class="input-label">Message</label>
-    </div>
-    <div class="input-box">
-      <select v-model="trigger" class="input-text">
-        <option v-for="event in events" :key="event.value" :value="event.value">
-          {{ event.label }}
-        </option>
-      </select>
-      <label class="input-label">Trigger</label>
-    </div>
+    <AppSelect v-model="id" :items="messages" is-messages-select />
+    <AppSelect v-model="trigger" :items="events" :is-messages-select="false" />
     <AppInput
       v-model="channel"
       title="Channel"
@@ -40,10 +22,11 @@
 import { mapGetters, mapActions } from 'vuex';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
+import AppSelect from './AppSelect.vue';
 
 export default {
   name: 'ModalCreateTrigger',
-  components: { AppInput, AppButton },
+  components: { AppInput, AppButton, AppSelect },
   data() {
     return {
       id: null,
@@ -83,18 +66,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input-box {
-  @include input-box;
-}
-
-.input-label {
-  @include input-label;
-}
-
-.input-text {
-  @include input-text;
-}
-
 .input-checkbox {
   @include input-checkbox;
 }
