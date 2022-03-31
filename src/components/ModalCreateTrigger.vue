@@ -40,7 +40,6 @@
 import { mapGetters, mapActions } from 'vuex';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
-import { formatEvent } from '../utils/FormatUtils';
 
 export default {
   name: 'ModalCreateTrigger',
@@ -72,7 +71,7 @@ export default {
     handleFormSubmit() {
       const trigger = {
         messageId: this.id,
-        triggerEvent: formatEvent(this.trigger),
+        triggerEvent: this.trigger,
         channel: this.channel,
         isActive: this.active,
       };
