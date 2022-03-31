@@ -1,6 +1,6 @@
 <template>
   <div class="triggers-page">
-    <AppModal :modal-title="modalTitle">
+    <AppModal :modal-title="Triggers">
       <ModalCreateTrigger />
     </AppModal>
     <DataTable
@@ -41,7 +41,7 @@ export default {
         {
           id: 2,
           label: 'Event',
-          prop: 'triggerEvent',
+          prop: 'event',
           isSortable: true,
           width: '135',
         },
@@ -55,7 +55,7 @@ export default {
         {
           id: 4,
           label: 'Active',
-          prop: 'isActive',
+          prop: 'activeLabel',
           isSortable: true,
           width: '135',
         },
@@ -64,17 +64,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getFormAction: 'getFormAction',
       getTriggers: 'getTriggers',
+      pagination: 'getPagination',
     }),
-    modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Trigger'
-        : 'Update Trigger';
-    },
   },
   mounted() {
-    this.fetchTriggers({ pageNumber: 1 });
+    const pageNumber = this.pagination.page;
+    this.fetchTriggers(pageNumber);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
@@ -84,13 +80,13 @@ export default {
     }),
     handleEditTrigger(row) {
       console.log(row);
-      this.openAppModal('update');
+      this.openAppModal();
     },
     handleDeleteTrigger(row) {
       this.deleteTrigger(row.triggerId);
     },
     handlePagination(pageNumber) {
-      this.fetchTriggers({ pageNumber });
+      this.fetchTriggers(pageNumber);
     },
   },
 };

@@ -14,8 +14,24 @@ import {
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
 import TriggersService from '@/api/services/TriggersService';
-import { formatActive, formatEvent } from '@/utils/FormatUtils';
 
+function formatTriggers(response) {
+  response.forEach((trigger) => {
+    trigger.activeLabel = trigger.active ? 'Active' : 'Inactive';
+    switch (trigger.triggerEvent) {
+      case 'APP_MENTION_EVENT':
+        trigger.event = 'On app mention';
+        break;
+      case 'CHANNEL_JOINED':
+        trigger.event = 'On channel join';
+        break;
+      case 'CHANNEL_LEFT':
+        trigger.event = 'On channel left';
+        break;
+    }
+  });
+  return response;
+}
 export default createStore({
   state: {
     isModalActive: false,
@@ -26,7 +42,7 @@ export default createStore({
     pagination: {
       page: 1,
       size: 15,
-      total: 100,
+      total: 0,
     },
     formAction: '',
   },
@@ -39,20 +55,19 @@ export default createStore({
     getTriggers: (state) => state.triggers,
   },
   mutations: {
-    [OPEN_APP_MODAL]: (state, payload) => {
+    [OPEN_APP_MODAL]: (state) => {
       state.isModalActive = true;
-      state.formAction = payload;
     },
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, { token }) => {
-      state.token = token;
-      localStorage.setItem('token', token);
+    [SET_USER]: (state, payload) => {
+      state.token = payload.token;
+      localStorage.setItem('token', payload.token);
     },
-    [SET_PAGINATION]: (state, { page, total }) => {
-      state.pagination.page = page;
-      state.pagination.total = total;
+    [SET_PAGINATION]: (state, payload) => {
+      state.pagination.page = payload.page;
+      state.pagination.total = payload.total;
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;
@@ -69,9 +84,9 @@ export default createStore({
     [SET_TRIGGERS]: (state, payload) => {
       state.triggers = payload;
     },
-    [REMOVE_TRIGGER]: (state, id) => {
+    [REMOVE_TRIGGER]: (state, payload) => {
       state.triggers = state.triggers.filter((trigger) => {
-        return trigger.triggerId !== id;
+        return trigger.triggerId !== payload;
       });
     },
   },
@@ -82,7 +97,6 @@ export default createStore({
     },
     async fetchMessages({ commit }, pageNumber) {
       const response = await MessagesService.fetchMessages(pageNumber);
-      // set pagination
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,
         total: response.totalElements,
@@ -90,31 +104,12 @@ export default createStore({
       commit(SET_MESSAGES, response.content);
     },
     async fetchAllMessages({ commit }) {
-      const response = await MessagesService.fetchAllMessages();
-      console.log(response);
-      commit(SET_ALL_MESSAGES, response);
+      const allmessages = await MessagesService.fetchAllMessages();
+      commit(SET_ALL_MESSAGES, allmessages);
     },
     async fetchTriggers({ commit }, pageNumber) {
       const response = await TriggersService.fetchTriggers(pageNumber);
-      const triggers = response.content;
-      console.log(triggers);
-      triggers.forEach((trigger) => {
-        // console.log(trigger.triggerEvent.toLowerCase());
-        // switch (trigger.triggerEvent) {
-        //   case 'APP_MENTION_EVENT':
-        //     trigger.triggerEvent = 'On app mention';
-        //     break;
-        //   case 'CHANNEL_JOINED':
-        //     trigger.triggerEvent = 'On channel join';
-        //     break;
-        //   case 'CHANNEL_LEFT':
-        //     trigger.triggerEvent = 'On channel left';
-        //     break;
-        // }
-        trigger.triggerEvent = formatEvent(trigger.triggerEvent);
-        trigger.isActive = formatActive(trigger.isActive);
-      });
-      // set pagination
+      const triggers = formatTriggers(response.content);
       commit(SET_PAGINATION, {
         page: response.pageable.pageNumber + 1,
         total: response.totalElements,
@@ -123,8 +118,6 @@ export default createStore({
     },
     async deleteTrigger({ commit }, id) {
       await TriggersService.deleteTrigger(id);
-
-      // set pagination
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_TRIGGER, id);
     },
