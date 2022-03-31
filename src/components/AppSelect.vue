@@ -7,13 +7,13 @@
     >
       <option
         v-for="item in items"
-        :key="handleValue(item)"
-        :value="handleValue(item)"
+        :key="handleOptionValue(item)"
+        :value="handleOptionValue(item)"
       >
         {{ handleOptionProperty(item) }}
       </option>
     </select>
-    <label class="input-label">Trigger</label>
+    <label class="input-label">{{ title }}</label>
   </div>
 </template>
 <script>
@@ -28,6 +28,10 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
     isMessagesSelect: {
       type: Boolean,
       required: true,
@@ -35,7 +39,7 @@ export default {
   },
   emits: ['update:modelValue'],
   methods: {
-    handleValue(item) {
+    handleOptionValue(item) {
       return this.isMessagesSelect ? item.messageId : item.value;
     },
     handleOptionProperty(item) {

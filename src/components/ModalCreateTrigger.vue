@@ -1,7 +1,17 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <AppSelect v-model="id" :items="messages" is-messages-select />
-    <AppSelect v-model="trigger" :items="events" :is-messages-select="false" />
+    <AppSelect
+      v-model="id"
+      :items="messages"
+      is-messages-select
+      title="Message"
+    />
+    <AppSelect
+      v-model="trigger"
+      :items="events"
+      :is-messages-select="false"
+      title="Trigger"
+    />
     <AppInput
       v-model="channel"
       title="Channel"
