@@ -1,21 +1,12 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <div class="input-box">
-      <select
-        v-model="id"
-        class="input-text"
-        :disabled="isMessagesSelectDisabled"
-      >
-        <option
-          v-for="message in messages"
-          :key="message.messageId"
-          :value="message.messageId"
-        >
-          {{ message.title }}
-        </option>
-      </select>
-      <label class="input-label">Message</label>
-    </div>
+    <AppSelect
+      v-model="id"
+      :items="messages"
+      is-messages
+      :disabled="isMessagesSelectDisabled"
+      title="Message"
+    />
     <div class="input-box">
       <input
         v-model="runDate"
@@ -26,18 +17,12 @@
       />
       <label class="input-label">Run At</label>
     </div>
-    <div class="input-box">
-      <select v-model="interval" class="input-text">
-        <option
-          v-for="intervalOption in intervalOptions"
-          :key="intervalOption.value"
-          :value="intervalOption.value"
-        >
-          {{ intervalOption.label }}
-        </option>
-      </select>
-      <label class="input-label">Interval</label>
-    </div>
+    <AppSelect
+      v-model="interval"
+      :items="intervalOptions"
+      :is-messages="false"
+      title="Interval"
+    />
     <AppInput
       v-model="channel"
       title="Channel"
@@ -68,10 +53,11 @@ import FormatUtils from '@/utils/FormatUtils';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
+import AppSelect from './AppSelect.vue';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { AppInput, AppButton },
+  components: { AppInput, AppButton, AppSelect },
   props: {
     schedule: {
       type: Object,
