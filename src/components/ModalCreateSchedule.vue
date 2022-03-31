@@ -2,8 +2,7 @@
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <AppSelect
       v-model="id"
-      :items="messages"
-      is-messages
+      :items="filterMessages"
       :disabled="isMessagesSelectDisabled"
       title="Message"
     />
@@ -17,12 +16,7 @@
       />
       <label class="input-label">Run At</label>
     </div>
-    <AppSelect
-      v-model="interval"
-      :items="intervalOptions"
-      :is-messages="false"
-      title="Interval"
-    />
+    <AppSelect v-model="interval" :items="intervalOptions" title="Interval" />
     <AppInput
       v-model="channel"
       title="Channel"
@@ -74,21 +68,33 @@ export default {
       repeat: false,
       active: false,
       intervalOptions: [
-        { value: 'MINUTE', label: 'Every minute' },
-        { value: 'HOUR', label: 'Every hour' },
-        { value: 'DAY', label: 'Every day' },
+        { id: 1, value: 'MINUTE', label: 'Every minute' },
+        { id: 2, value: 'HOUR', label: 'Every hour' },
+        { id: 3, value: 'DAY', label: 'Every day' },
       ],
+      filteredMessages: [],
     };
   },
   computed: {
     ...mapGetters({
       messages: 'getAllMessages',
     }),
+
     isMessagesSelectDisabled() {
-      return this.schedule;
+      return this.schedule ? true : false;
     },
     limitDate() {
       return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
+    },
+    filterMessages() {
+      this.messages.forEach((message) => {
+        this.filteredMessages.push({
+          id: message.messageId,
+          value: message.messageId,
+          label: message.text,
+        });
+      });
+      return this.filteredMessages;
     },
   },
   async mounted() {

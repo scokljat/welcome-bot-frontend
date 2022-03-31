@@ -3,14 +3,11 @@
     <select
       :value="modelValue"
       class="input-text"
+      :disabled="disabled"
       @input="$emit('update:modelValue', $event.target.value)"
     >
-      <option
-        v-for="item in items"
-        :key="handleOptionValue(item)"
-        :value="handleOptionValue(item)"
-      >
-        {{ handleOptionProperty(item) }}
+      <option v-for="item in items" :key="item.id" :value="item.value">
+        {{ item.label }}
       </option>
     </select>
     <label class="input-label">{{ title }}</label>
@@ -25,27 +22,19 @@ export default {
       required: true,
     },
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: null,
-    },
-    isMessages: {
-      type: Boolean,
-      default: false,
     },
     title: {
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
-  methods: {
-    handleOptionValue(item) {
-      return this.isMessages ? item.messageId : item.value;
-    },
-    handleOptionProperty(item) {
-      return this.isMessages ? item.title : item.label;
-    },
-  },
 };
 </script>
 
