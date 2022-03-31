@@ -1,11 +1,10 @@
 import axios from '../http';
 
 const TriggersService = {
-  fetchTriggers: async ({ pageNumber }) => {
+  fetchTriggers: async (pageNumber) => {
     try {
-      const response = await axios.get(
-        `/triggers?offset=${pageNumber - 1}&pagesize=15`
-      );
+      const url = `/triggers?offset=${pageNumber - 1}&pagesize=15`;
+      const response = await axios.get(url);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -13,7 +12,8 @@ const TriggersService = {
   },
   deleteTrigger: async (id) => {
     try {
-      const response = await axios.delete(`/triggers/${id}`);
+      const url = `/triggers/${id}`;
+      const response = await axios.delete(url);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -21,7 +21,8 @@ const TriggersService = {
   },
   createTrigger: async (trigger) => {
     try {
-      const response = await axios.post('/triggers', trigger);
+      const url = '/triggers';
+      const response = await axios.post(url, trigger);
       return response.data;
     } catch (error) {
       console.log(error);
