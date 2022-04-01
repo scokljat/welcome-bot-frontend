@@ -23,10 +23,6 @@ export default {
       type: String,
       required: true,
     },
-    actionType: {
-      type: String,
-      required: true,
-    },
   },
   computed: {
     ...mapState({

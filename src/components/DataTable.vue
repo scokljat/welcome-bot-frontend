@@ -26,7 +26,7 @@
     layout="prev, pager, next"
     :total="pagination.total"
     :current-page="pagination.page"
-    :page-size="pageSize"
+    :page-size="pagination.size"
     @current-change="handlePageChange"
   >
   </el-pagination>
@@ -55,12 +55,6 @@ export default {
     },
   },
   emits: ['edit', 'delete', 'pageChange'],
-  data: () => {
-    return {
-      currentPage: 1,
-      pageSize: 15,
-    };
-  },
   computed: {
     ...mapGetters({ pagination: 'getPagination' }),
   },
