@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
@@ -31,11 +31,6 @@ export default {
   },
   methods: {
     ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
-    ...mapActions({ editFormState: 'editFormState' }),
-    handleForm() {
-      this.$store.dispatch(this.actionType);
-      this.editFormState();
-    },
   },
 };
 </script>
