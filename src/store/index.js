@@ -40,22 +40,11 @@ function formatSchedules(schedules) {
   return schedules;
 }
 
-function formatTriggers(response) {
-  response.forEach((trigger) => {
+function formatTriggers(triggers) {
+  triggers.forEach((trigger) => {
     trigger.activeLabel = trigger.active ? 'Active' : 'Inactive';
-    switch (trigger.triggerEvent) {
-      case 'APP_MENTION_EVENT':
-        trigger.event = 'On app mention';
-        break;
-      case 'CHANNEL_JOINED':
-        trigger.event = 'On channel join';
-        break;
-      case 'CHANNEL_LEFT':
-        trigger.event = 'On channel left';
-        break;
-    }
   });
-  return response;
+  return triggers;
 }
 
 export default createStore({
@@ -209,12 +198,12 @@ export default createStore({
       commit(CLOSE_APP_MODAL);
     },
     async fetchTriggers({ commit }, pageNumber) {
-      const response = await TriggersService.fetchTriggers(pageNumber);
-      const triggers = formatTriggers(response.content);
+      const data = await TriggersService.fetchTriggers(pageNumber);
+      const triggers = formatTriggers(data.content);
 
       commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
       });
       commit(SET_TRIGGERS, triggers);
     },

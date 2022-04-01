@@ -66,19 +66,19 @@ export default {
         return {
           id: message.messageId,
           value: message.messageId,
-          label: message.text,
+          label: message.title,
         };
       });
     },
   },
   async mounted() {
     this.fetchAllMessages();
-
+    console.log(this.trigger);
     if (this.trigger) {
       this.id = this.trigger.message.messageId;
-      this.triggerEvent = this.trigger.message.triggerEvent;
-      this.channel = this.trigger.message.channel;
-      this.active = this.trigger.message.isActive;
+      this.triggerEvent = this.trigger.triggerEvent;
+      this.channel = this.trigger.channel;
+      this.active = this.trigger.isActive;
     }
   },
   unmounted() {
