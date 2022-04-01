@@ -16,27 +16,27 @@
       />
       <label class="input-label">Run At</label>
     </div>
-    <AppSelect v-model="interval" :items="intervalOptions" title="Interval" />
+    <AppSelect
+      v-if="repeat"
+      v-model="interval"
+      :items="intervalOptions"
+      title="Interval"
+    />
     <AppInput
       v-model="channel"
       title="Channel"
       placeholder="Enter the channel name..."
     />
-    <div class="input-checkbox">
-      <input id="repeat" v-model="repeat" type="checkbox" name="repeat" />
-      <label for="repeat">Repeat</label>
-    </div>
-    <div class="input-checkbox">
-      <input id="active" v-model="active" type="checkbox" name="active" />
-      <label for="active">Active</label>
-    </div>
+    <AppCheckbox id="repeat" v-model="repeat" name="repeat" label="Repeat" />
+    <AppCheckbox id="active" v-model="active" name="active" label="Active" />
     <div class="button-wrapper">
       <AppButton
+        type="button"
         title="Cancel"
-        theme="secondary"
+        class="secondary"
         @close-modal="handleCloseModal"
       />
-      <AppButton title="Save" theme="primary" is-submit />
+      <AppButton type="submit" title="Save" class="primary" />
     </div>
   </form>
 </template>
@@ -48,10 +48,11 @@ import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 import AppSelect from './AppSelect.vue';
+import AppCheckbox from './AppCheckbox.vue';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { AppInput, AppButton, AppSelect },
+  components: { AppInput, AppButton, AppSelect, AppCheckbox },
   props: {
     schedule: {
       type: Object,
@@ -68,7 +69,7 @@ export default {
       repeat: false,
       active: false,
       intervalOptions: [
-        { id: 1, value: 'MINUTE', label: 'Every minute' },
+        { id: 1, value: 'MINUTE', label: 'Every 5 minutes' },
         { id: 2, value: 'HOUR', label: 'Every hour' },
         { id: 3, value: 'DAY', label: 'Every day' },
       ],
@@ -79,7 +80,6 @@ export default {
     ...mapGetters({
       messages: 'getAllMessages',
     }),
-
     isMessagesSelectDisabled() {
       return this.schedule ? true : false;
     },
@@ -131,7 +131,6 @@ export default {
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.interval,
       };
-
       if (this.schedule) {
         this.editSchedule({ id: this.schedule.scheduleId, schedule });
       } else this.createSchedule(schedule);
@@ -154,10 +153,6 @@ export default {
 
 .input-text {
   @include input-text;
-}
-
-.input-checkbox {
-  @include input-checkbox;
 }
 
 .button-wrapper {
