@@ -9,11 +9,11 @@
     <div class="button-wrapper">
       <AppButton
         type="button"
-        theme="secondary"
+        class="secondary"
         title="Cancel"
         @close-modal="handleCloseModal"
       />
-      <AppButton type="submit" theme="primary" title="Save" />
+      <AppButton type="submit" class="primary" title="Save" />
     </div>
   </form>
 </template>

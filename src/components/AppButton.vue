@@ -1,5 +1,5 @@
 <template>
-  <button :type="type" :class="theme" @click="handleButtonClick">
+  <button @click="handleButtonClick">
     {{ title }}
   </button>
 </template>
@@ -8,23 +8,12 @@
 export default {
   name: 'AppButton',
   props: {
-    type: {
-      type: String,
-      default: 'button',
-    },
-    theme: {
-      type: String,
-      required: true,
-      validator: (val) => ['primary', 'secondary'].includes(val),
-    },
     title: { type: String, required: true },
   },
   emits: ['closeModal'],
   methods: {
     handleButtonClick() {
-      if (!this.isSubmit) {
-        this.$emit('closeModal');
-      }
+      this.$emit('closeModal');
     },
   },
 };
