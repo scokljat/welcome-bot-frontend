@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      pageNumber: 1,
       schedule: null,
       tableColumns: [
         {
