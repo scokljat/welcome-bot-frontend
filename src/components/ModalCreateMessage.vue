@@ -1,11 +1,21 @@
 <template>
-  <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <AppInput
-      v-model="title"
-      title="Title"
-      placeholder="Enter the message title..."
-    />
-    <AppTextarea v-model="text" />
+  <Form
+    v-slot="{ errors }"
+    :validation-schema="schema"
+    autocomplete="off"
+    @submit="handleFormSubmit"
+  >
+    <Field v-slot="{ field }" v-model="title" name="title"
+      ><AppInput
+        v-bind="field"
+        v-model="title"
+        title="Title"
+        placeholder="Enter the message title..."
+        :errors="errors.title"
+    /></Field>
+    <Field v-slot="{ field }" v-model="text" name="text"
+      ><AppTextarea v-bind="field" v-model="text" :errors="errors.text"
+    /></Field>
     <div class="button-wrapper">
       <AppButton
         type="button"
@@ -15,7 +25,7 @@
       />
       <AppButton type="submit" class="primary" title="Save" />
     </div>
-  </form>
+  </Form>
 </template>
 
 <script>
@@ -24,10 +34,12 @@ import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
 import { mapActions, mapMutations } from 'vuex';
 import { CLOSE_APP_MODAL } from '@/store/mutation-types';
+import { Form, Field } from 'vee-validate';
+import * as yup from 'yup';
 
 export default {
   name: 'ModalCreateMessage',
-  components: { AppInput, AppTextarea, AppButton },
+  components: { AppInput, AppTextarea, AppButton, Form, Field },
   props: {
     message: {
       type: Object,
@@ -36,7 +48,12 @@ export default {
   },
   emits: ['close'],
   data: () => {
+    const schema = yup.object().shape({
+      title: yup.string().required().min(5).max(30).label('Message title'),
+      text: yup.string().required().min(20).label('Message text'),
+    });
     return {
+      schema,
       title: '',
       text: '',
     };
@@ -56,8 +73,7 @@ export default {
       editMessage: 'editMessage',
     }),
     ...mapMutations({ closeModal: CLOSE_APP_MODAL }),
-    handleFormSubmit() {
-      const message = { title: this.title, text: this.text };
+    handleFormSubmit(message) {
       if (this.message) {
         this.editMessage({ id: this.message.messageId, message });
       } else {

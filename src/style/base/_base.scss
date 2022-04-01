@@ -11,3 +11,15 @@ button {
   color: var(--text-secondary-1);
   cursor: pointer;
 }
+
+.error-label {
+  color: #d9534f !important;
+}
+.error-message {
+  font-size: $text-md;
+  color: #d9534f !important;
+}
+.error-input {
+  border: 1px solid #d9534f !important;
+  color: #d9534f !important;
+}
