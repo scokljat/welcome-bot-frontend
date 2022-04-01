@@ -17,20 +17,12 @@ import SchedulesService from '@/api/services/SchedulesService';
 import MessagesService from '@/api/services/MessagesService';
 import FormatUtils from '@/utils/FormatUtils';
 
-function formatSchedules(response) {
-  if (response.length > 0) {
-    response.forEach((schedule) => {
-      schedule.nextRun = FormatUtils.formatDate(
-        schedule.nextRun,
-        'dd MMM yyyy'
-      );
-      schedule.activeLabel = schedule.active ? 'Active' : 'Inactive';
-    });
-  } else {
-    response.nextRun = FormatUtils.formatDate(response.nextRun, 'dd MMM yyyy');
-    response.activeLabel = response.active ? 'Active' : 'Inactive';
-  }
-  return response;
+function formatSchedules(schedules) {
+  schedules.forEach((schedule) => {
+    schedule.nextRun = FormatUtils.formatDate(schedule.nextRun, 'dd MMM yyyy');
+    schedule.activeLabel = schedule.active ? 'Active' : 'Inactive';
+  });
+  return schedules;
 }
 
 export default createStore({
@@ -64,9 +56,9 @@ export default createStore({
       state.token = payload.token;
       localStorage.setItem('token', payload.token);
     },
-    [SET_PAGINATION]: (state, payload) => {
-      state.pagination.page = payload.page;
-      state.pagination.total = payload.total;
+    [SET_PAGINATION]: (state, { page, total }) => {
+      state.pagination.page = page;
+      state.pagination.total = total;
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;
@@ -74,14 +66,14 @@ export default createStore({
     [DECREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total -= 1;
     },
-    [SET_MESSAGES]: (state, payload) => {
-      state.messages = payload;
+    [SET_MESSAGES]: (state, messages) => {
+      state.messages = messages;
     },
-    [SET_ALL_MESSAGES]: (state, payload) => {
-      state.allMessages = payload;
+    [SET_ALL_MESSAGES]: (state, allMessages) => {
+      state.allMessages = allMessages;
     },
-    [SET_SCHEDULES]: (state, payload) => {
-      state.schedules = payload;
+    [SET_SCHEDULES]: (state, schedules) => {
+      state.schedules = schedules;
     },
     [REMOVE_SCHEDULE]: (state, id) => {
       state.schedules = state.schedules.filter((schedule) => {
@@ -98,6 +90,7 @@ export default createStore({
   actions: {
     login({ commit }, token) {
       const response = AuthService.login(token);
+
       commit(SET_USER, response);
     },
     async fetchMessages({ commit }, pageNumber) {
@@ -109,30 +102,35 @@ export default createStore({
       commit(SET_MESSAGES, response.content);
     },
     async fetchAllMessages({ commit }) {
-      const allmessages = await MessagesService.fetchAllMessages();
-      commit(SET_ALL_MESSAGES, allmessages);
+      const allMessages = await MessagesService.fetchAllMessages();
+
+      commit(SET_ALL_MESSAGES, allMessages);
     },
     async fetchSchedules({ commit }, pageNumber) {
-      const response = await SchedulesService.fetchSchedules(pageNumber);
-      const schedules = formatSchedules(response.content);
+      const data = await SchedulesService.fetchSchedules(pageNumber);
+      const schedules = formatSchedules(data.content);
+
       commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
       });
       commit(SET_SCHEDULES, schedules);
     },
     async deleteSchedule({ commit }, id) {
       await SchedulesService.deleteSchedule(id);
+
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
     },
     async createSchedule({ commit }, schedule) {
       await SchedulesService.createSchedule(schedule);
+
       commit(CLOSE_APP_MODAL);
     },
     async editSchedule({ commit }, { id, schedule }) {
-      const response = await SchedulesService.editSchedule(id, schedule);
-      const updatedSchedule = formatSchedules(response);
+      const data = await SchedulesService.editSchedule(id, schedule);
+      const updatedSchedule = formatSchedules([data])[0];
+
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
     },

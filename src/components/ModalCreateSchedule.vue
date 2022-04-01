@@ -44,9 +44,9 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import FormatUtils from '@/utils/FormatUtils';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
-import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 import AppSelect from './AppSelect.vue';
 import AppCheckbox from './AppCheckbox.vue';
 
@@ -59,7 +59,7 @@ export default {
       default: null,
     },
   },
-  emits: ['resetSchedule'],
+  emits: ['close'],
   data: () => {
     return {
       id: null,
@@ -86,19 +86,18 @@ export default {
       return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
     },
     filterMessages() {
-      const filteredMessages = [];
-      this.messages.forEach((message) => {
-        filteredMessages.push({
+      return this.messages.map((message) => {
+        return {
           id: message.messageId,
           value: message.messageId,
           label: message.text,
-        });
+        };
       });
-      return filteredMessages;
     },
   },
   async mounted() {
     this.fetchAllMessages();
+
     if (this.schedule) {
       this.id = this.schedule.message.messageId;
       this.interval = this.schedule.schedulerInterval;
@@ -112,7 +111,7 @@ export default {
     }
   },
   unmounted() {
-    this.$emit('resetSchedule');
+    this.$emit('close');
   },
   methods: {
     ...mapActions({
@@ -131,9 +130,10 @@ export default {
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
         schedulerInterval: this.repeat ? this.interval : null,
       };
-      if (this.schedule) {
+
+      if (this.schedule)
         this.editSchedule({ id: this.schedule.scheduleId, schedule });
-      } else this.createSchedule(schedule);
+      else this.createSchedule(schedule);
     },
     handleCloseModal() {
       this.closeAppModal();

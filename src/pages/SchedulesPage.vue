@@ -1,15 +1,12 @@
 <template>
   <div class="schedules-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateSchedule
-        :schedule="schedule"
-        @reset-schedule="handleResetSchedule"
-      />
+      <ModalCreateSchedule :schedule="schedule" @close="handleClose" />
     </AppModal>
     <DataTable
       :table-data="schedules"
       :table-columns="tableColumns"
-      @edit="handleEditSchedule"
+      @edit="handleEditIconClick"
       @delete="handleDeleteSchedule"
       @page-change="handlePagination"
     />
@@ -81,7 +78,7 @@ export default {
       fetchSchedules: 'fetchSchedules',
       deleteSchedule: 'deleteSchedule',
     }),
-    handleEditSchedule(row) {
+    handleEditIconClick(row) {
       this.schedule = row;
       this.openAppModal();
     },
@@ -91,7 +88,7 @@ export default {
     handlePagination(pageNumber) {
       this.fetchSchedules(pageNumber);
     },
-    handleResetSchedule() {
+    handleClose() {
       this.schedule = null;
     },
   },
