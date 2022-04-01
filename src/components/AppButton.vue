@@ -1,5 +1,5 @@
 <template>
-  <button @click="handleButtonClick">
+  <button>
     {{ title }}
   </button>
 </template>
@@ -9,12 +9,6 @@ export default {
   name: 'AppButton',
   props: {
     title: { type: String, required: true },
-  },
-  emits: ['closeModal'],
-  methods: {
-    handleButtonClick() {
-      this.$emit('closeModal');
-    },
   },
 };
 </script>

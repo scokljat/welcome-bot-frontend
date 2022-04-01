@@ -11,7 +11,7 @@
         type="button"
         class="secondary"
         title="Cancel"
-        @close-modal="handleCloseModal"
+        @click="handleCloseModal"
       />
       <AppButton type="submit" class="primary" title="Save" />
     </div>
