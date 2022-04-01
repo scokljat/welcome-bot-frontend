@@ -43,7 +43,7 @@ function formatSchedules(schedules) {
 
 function formatTriggers(triggers) {
   triggers.forEach((trigger) => {
-    trigger.activeLabel = trigger.active ? 'Active' : 'Inactive';
+    trigger.activeLabel = trigger.isActive ? 'Active' : 'Inactive';
   });
   return triggers;
 }
