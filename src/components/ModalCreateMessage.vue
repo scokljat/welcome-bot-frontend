@@ -1,35 +1,46 @@
 <template>
-  <form class="wrapper" @submit.prevent="onSubmit">
-    <AppInput
-      v-model="values.title"
-      title="Title"
-      placeholder="Enter the message title..."
-      :errors="errors.title"
-    />
-    <AppTextarea v-model="values.text" :errors="errors.text" />
+  <Form
+    v-slot="{ errors }"
+    :validation-schema="schema"
+    autocomplete="off"
+    @submit="handleFormSubmit"
+  >
+    <Field v-slot="{ field }" v-model="title" name="title"
+      ><AppInput
+        v-bind="field"
+        v-model="title"
+        title="Title"
+        placeholder="Enter the message title..."
+        :errors="errors.title"
+      />
+    </Field>
+    <Field v-slot="{ field }" v-model="text" name="text"
+      ><AppTextarea v-bind="field" v-model="text" :errors="errors.text" />
+    </Field>
     <div class="button-wrapper">
       <AppButton
+        type="button"
         theme="secondary"
         title="Cancel"
         @close-modal="handleCloseModal"
       />
-      <AppButton theme="primary" :title="buttonTitle" is-submit />
+      <AppButton type="submit" theme="primary" title="Save" />
     </div>
-  </form>
+  </Form>
 </template>
 
 <script>
 import AppInput from './AppInput.vue';
+import { mapActions, mapMutations } from 'vuex';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
+import { Form, Field } from 'vee-validate';
+import * as yup from 'yup';
 import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
-import { mapActions, mapMutations, useStore } from 'vuex';
-import { CLOSE_APP_MODAL } from '@/store/mutation-types';
-import { useForm } from 'vee-validate';
-import * as Yup from 'yup';
 
 export default {
   name: 'ModalCreateMessage',
-  components: { AppInput, AppTextarea, AppButton },
+  components: { AppInput, Form, Field, AppTextarea, AppButton },
   props: {
     message: {
       type: Object,
@@ -37,45 +48,21 @@ export default {
     },
   },
   emits: ['resetMessage'],
-  setup(props) {
-    const store = useStore();
-
-    const schema = Yup.object().shape({
-      title: Yup.string().required().min(5).max(30).label('Message title'),
-      text: Yup.string().required().min(20).label('Message text'),
-    });
-    const { values, handleSubmit, errors, isSubmitting } = useForm({
-      validationSchema: schema,
-      validateOnMount: false,
-      initialErrors: { title: '', text: '' },
-      initialValues: {
-        title: '',
-        text: '',
-      },
-    });
-    const onSubmit = handleSubmit((message) => {
-      if (props.message) {
-        store.dispatch('editMessage', { id: props.message.messageId, message });
-      } else {
-        store.dispatch('createMessage', message);
-      }
+  data() {
+    const schema = yup.object().shape({
+      title: yup.string().required().min(5).max(30).label('Message title'),
+      text: yup.string().required().min(20).label('Message text'),
     });
     return {
-      values,
-      onSubmit,
-      errors,
-      isSubmitting,
+      schema,
+      title: '',
+      text: '',
     };
-  },
-  computed: {
-    buttonTitle() {
-      return this.isSubmitting ? 'Processing' : 'Save';
-    },
   },
   async mounted() {
     if (this.message) {
-      this.values.title = this.message.title;
-      this.values.text = this.message.text;
+      this.title = this.message.title;
+      this.text = this.message.text;
     }
   },
   unmounted() {
@@ -89,6 +76,13 @@ export default {
     ...mapMutations({ closeModal: CLOSE_APP_MODAL }),
     handleCloseModal() {
       this.closeModal();
+    },
+    handleFormSubmit(message) {
+      if (this.message) {
+        this.editMessage({ id: this.message.messageId, message });
+      } else {
+        this.createMessage(message);
+      }
     },
   },
 };

@@ -44,20 +44,20 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, { token }) => {
-      state.token = token;
-      localStorage.setItem('token', token);
+    [SET_USER]: (state, payload) => {
+      state.token = payload.token;
+      localStorage.setItem('token', payload.token);
     },
-    [SET_PAGINATION]: (state, { page, total }) => {
-      state.pagination.page = page;
-      state.pagination.total = total;
+    [SET_PAGINATION]: (state, payload) => {
+      state.pagination.page = payload.page;
+      state.pagination.total = payload.total;
     },
     [SET_MESSAGES]: (state, payload) => {
       state.messages = payload;
     },
-    [REMOVE_MESSAGE]: (state, id) => {
+    [REMOVE_MESSAGE]: (state, payload) => {
       state.messages = state.messages.filter((message) => {
-        return message.messageId !== id;
+        return message.messageId !== payload;
       });
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
@@ -66,11 +66,15 @@ export default createStore({
     [DECREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total -= 1;
     },
-    [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
+    [UPDATE_MESSAGE]: (state, payload) => {
       const index = state.messages.findIndex((message) => {
-        return message.messageId === id;
+        return message.messageId === payload.id;
       });
-      state.messages[index] = updatedMessage;
+      payload.updatedMessage.createdAt = formatDate(
+        payload.updatedMessage.createdAt,
+        'dd MMM yyyy'
+      );
+      state.messages[index] = payload.updatedMessage;
     },
   },
   actions: {
