@@ -34,7 +34,7 @@
         type="button"
         title="Cancel"
         class="secondary"
-        @close-modal="handleCloseModal"
+        @click="handleCloseModal"
       />
       <AppButton type="submit" title="Save" class="primary" />
     </div>
@@ -73,7 +73,6 @@ export default {
         { id: 2, value: 'HOUR', label: 'Every hour' },
         { id: 3, value: 'DAY', label: 'Every day' },
       ],
-      filteredMessages: [],
     };
   },
   computed: {
@@ -87,14 +86,15 @@ export default {
       return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
     },
     filterMessages() {
+      const filteredMessages = [];
       this.messages.forEach((message) => {
-        this.filteredMessages.push({
+        filteredMessages.push({
           id: message.messageId,
           value: message.messageId,
           label: message.text,
         });
       });
-      return this.filteredMessages;
+      return filteredMessages;
     },
   },
   async mounted() {
@@ -129,7 +129,7 @@ export default {
         isRepeat: this.repeat,
         messageId: this.id,
         runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
-        schedulerInterval: this.interval,
+        schedulerInterval: this.repeat ? this.interval : null,
       };
       if (this.schedule) {
         this.editSchedule({ id: this.schedule.scheduleId, schedule });
