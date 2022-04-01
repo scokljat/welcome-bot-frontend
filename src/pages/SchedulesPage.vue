@@ -73,8 +73,7 @@ export default {
     },
   },
   mounted() {
-    const pageNumber = this.pagination.page;
-    this.fetchSchedules(pageNumber);
+    this.fetchSchedules(this.pagination.page);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
