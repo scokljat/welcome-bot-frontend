@@ -8,11 +8,12 @@
     <AppTextarea v-model="text" />
     <div class="button-wrapper">
       <AppButton
+        type="button"
         theme="secondary"
         title="Cancel"
         @close-modal="handleCloseModal"
       />
-      <AppButton theme="primary" title="Save" is-submit />
+      <AppButton type="submit" theme="primary" title="Save" />
     </div>
   </form>
 </template>
