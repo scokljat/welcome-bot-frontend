@@ -70,6 +70,10 @@ export default createStore({
       const index = state.messages.findIndex((message) => {
         return message.messageId === id;
       });
+      updatedMessage.createdAt = formatDate(
+        updatedMessage.createdAt,
+        'dd MMM yyyy'
+      );
       state.messages[index] = updatedMessage;
     },
   },
