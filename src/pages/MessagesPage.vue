@@ -1,15 +1,12 @@
 <template>
   <div class="messages-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateMessage
-        :message="message"
-        @reset-message="handleResetMessage"
-      />
+      <ModalCreateMessage :message="message" @close="handleClose" />
     </AppModal>
     <DataTable
       :table-data="getMessages"
       :table-columns="tableColumns"
-      @edit="handleEditMessage"
+      @edit="handleEditIconClick"
       @delete="handleDeleteMessage"
       @page-change="handlePagination"
     />
@@ -71,7 +68,7 @@ export default {
       deleteMessage: 'deleteMessage',
     }),
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    handleEditMessage(row) {
+    handleEditIconClick(row) {
       this.message = row;
       this.openAppModal();
     },
@@ -81,7 +78,7 @@ export default {
     handlePagination(pageNumber) {
       this.fetchMessages(pageNumber);
     },
-    handleResetMessage() {
+    handleClose() {
       this.message = null;
     },
   },

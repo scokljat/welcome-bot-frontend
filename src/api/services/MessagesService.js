@@ -5,6 +5,7 @@ const MessagesService = {
     const url = `/messages?offset=${pageNumber - 1}&pagesize=15`;
     try {
       const response = await axios.get(url);
+
       return response.data;
     } catch (e) {
       console.log(e.message);
@@ -14,6 +15,7 @@ const MessagesService = {
     const url = '/messages';
     try {
       const response = await axios.get(url);
+
       return response.data;
     } catch (e) {
       console.log(e.message);
@@ -23,6 +25,7 @@ const MessagesService = {
     const url = `/messages/${id}`;
     try {
       const response = await axios.delete(url);
+
       return response.data;
     } catch (e) {
       console.log(e.message);
@@ -32,6 +35,7 @@ const MessagesService = {
     const url = `/messages`;
     try {
       const response = await axios.post(url, message);
+
       return response.data;
     } catch (e) {
       console.log(e.message);
@@ -41,6 +45,7 @@ const MessagesService = {
     const url = `/messages/${id}`;
     try {
       const response = await axios.put(url, message);
+
       return response.data;
     } catch (e) {
       console.log(e.message);

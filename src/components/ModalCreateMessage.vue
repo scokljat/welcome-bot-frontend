@@ -34,7 +34,7 @@ export default {
       default: null,
     },
   },
-  emits: ['resetMessage'],
+  emits: ['close'],
   data: () => {
     return {
       title: '',
@@ -48,7 +48,7 @@ export default {
     }
   },
   unmounted() {
-    this.$emit('resetMessage');
+    this.$emit('close');
   },
   methods: {
     ...mapActions({
