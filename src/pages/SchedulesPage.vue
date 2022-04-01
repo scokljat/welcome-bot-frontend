@@ -1,12 +1,12 @@
 <template>
   <div class="schedules-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateSchedule />
+      <ModalCreateSchedule :schedule="schedule" @close="handleClose" />
     </AppModal>
     <DataTable
-      :table-data="tableData"
+      :table-data="schedules"
       :table-columns="tableColumns"
-      @edit="handleEditSchedule"
+      @edit="handleEditIconClick"
       @delete="handleDeleteSchedule"
       @page-change="handlePagination"
     />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateSchedule from '@/components/ModalCreateSchedule.vue';
@@ -29,107 +29,19 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          message:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-          next_run: '2016-04-03',
-          channel: 'First channel',
-          active: 'Active',
-        },
-        {
-          message: 'Second Message',
-          next_run: '2016-11-03',
-          active: 'Inactive',
-        },
-        {
-          message: 'Third Message',
-          next_run: '2015-08-07',
-          active: 'Active',
-        },
-        {
-          message: 'Fourth Message',
-          next_run: '2016-01-03',
-          active: 'Active',
-        },
-        {
-          message: 'Fifth Message',
-          next_run: '2012-09-09',
-          active: 'Active',
-        },
-        {
-          message: 'Sixth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Seventh Message',
-          next_run: '2015-08-07',
-          active: 'Active',
-        },
-        {
-          message: 'Eight Message',
-          next_run: '2016-01-03',
-          active: 'Active',
-        },
-        {
-          message: 'Nineth Message',
-          next_run: '2012-09-09',
-          active: 'Inactive',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          next_run: '2017-02-04',
-          active: 'Active',
-        },
-      ],
+      schedule: null,
       tableColumns: [
         {
           id: 1,
           label: 'Message',
-          prop: 'message',
+          prop: 'message.text',
           isSortable: true,
           width: '350',
         },
         {
           id: 2,
           label: 'Next Run',
-          prop: 'next_run',
+          prop: 'nextRun',
           isSortable: true,
           width: '135',
         },
@@ -143,7 +55,7 @@ export default {
         {
           id: 4,
           label: 'Active',
-          prop: 'active',
+          prop: 'activeLabel',
           isSortable: true,
           width: '135',
         },
@@ -151,24 +63,32 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getFormAction: 'getFormAction' }),
+    ...mapGetters({ schedules: 'getSchedules', pagination: 'getPagination' }),
     modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Schedule'
-        : 'Update Schedule';
+      return this.schedule ? 'Update Schedule' : 'Create Schedule';
     },
+  },
+  mounted() {
+    this.fetchSchedules(this.pagination.page);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    handleEditSchedule(row) {
-      console.log(row);
-      this.openAppModal('update');
+    ...mapActions({
+      fetchSchedules: 'fetchSchedules',
+      deleteSchedule: 'deleteSchedule',
+    }),
+    handleEditIconClick(row) {
+      this.schedule = row;
+      this.openAppModal();
     },
     handleDeleteSchedule(row) {
-      console.log(row);
+      this.deleteSchedule(row.scheduleId);
     },
-    handlePagination: (newPageNumber) => {
-      console.log(newPageNumber);
+    handlePagination(pageNumber) {
+      this.fetchSchedules(pageNumber);
+    },
+    handleClose() {
+      this.schedule = null;
     },
   },
 };

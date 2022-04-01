@@ -1,55 +1,142 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
+    <AppSelect
+      v-model="id"
+      :items="filterMessages"
+      :disabled="isMessagesSelectDisabled"
+      title="Message"
+    />
     <div class="input-box">
-      <select class="input-text">
-        <option name="Option 1">Some message title One</option>
-        <option name="Option 2">Some message title Two</option>
-        <option name="Option 3">Some message title Three</option>
-      </select>
-      <label class="input-label">Message</label>
-    </div>
-    <div class="input-box">
-      <input class="input-text" type="date" name="date" />
+      <input
+        v-model="runDate"
+        class="input-text"
+        type="date"
+        name="date"
+        :min="limitDate"
+      />
       <label class="input-label">Run At</label>
     </div>
-    <div class="input-box">
-      <select class="input-text">
-        <option name="Option 1">Every minute</option>
-        <option name="Option 2">Every hour</option>
-        <option name="Option 3">Every day</option>
-      </select>
-
-      <label class="input-label">Interval</label>
-    </div>
-    <AppInput
-      title-input="Channel"
-      placeholder-input="Enter the channel name..."
+    <AppSelect
+      v-if="repeat"
+      v-model="interval"
+      :items="intervalOptions"
+      title="Interval"
     />
-    <div class="input-checkbox">
-      <input id="repeat" type="checkbox" name="repeat" value="Repeat" />
-      <label for="repeat">Repeat</label>
-    </div>
-    <div class="input-checkbox">
-      <input id="active" type="checkbox" name="active" value="Active" />
-      <label for="active">Active</label>
-    </div>
+    <AppInput
+      v-model="channel"
+      title="Channel"
+      placeholder="Enter the channel name..."
+    />
+    <AppCheckbox id="repeat" v-model="repeat" name="repeat" label="Repeat" />
+    <AppCheckbox id="active" v-model="active" name="active" label="Active" />
     <div class="button-wrapper">
-      <AppButton intent="cancel" title="Cancel" />
-      <AppButton intent="create" title="Save" />
+      <AppButton
+        type="button"
+        title="Cancel"
+        class="secondary"
+        @click="handleCloseModal"
+      />
+      <AppButton type="submit" title="Save" class="primary" />
     </div>
   </form>
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import FormatUtils from '@/utils/FormatUtils';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
+import AppSelect from './AppSelect.vue';
+import AppCheckbox from './AppCheckbox.vue';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { AppInput, AppButton },
+  components: { AppInput, AppButton, AppSelect, AppCheckbox },
+  props: {
+    schedule: {
+      type: Object,
+      default: null,
+    },
+  },
+  emits: ['close'],
+  data: () => {
+    return {
+      id: null,
+      interval: '',
+      runDate: '',
+      channel: '',
+      repeat: false,
+      active: false,
+      intervalOptions: [
+        { id: 1, value: 'MINUTE', label: 'Every 5 minutes' },
+        { id: 2, value: 'HOUR', label: 'Every hour' },
+        { id: 3, value: 'DAY', label: 'Every day' },
+      ],
+    };
+  },
+  computed: {
+    ...mapGetters({
+      messages: 'getAllMessages',
+    }),
+    isMessagesSelectDisabled() {
+      return this.schedule ? true : false;
+    },
+    limitDate() {
+      return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
+    },
+    filterMessages() {
+      return this.messages.map((message) => {
+        return {
+          id: message.messageId,
+          value: message.messageId,
+          label: message.text,
+        };
+      });
+    },
+  },
+  async mounted() {
+    this.fetchAllMessages();
+
+    if (this.schedule) {
+      this.id = this.schedule.message.messageId;
+      this.interval = this.schedule.schedulerInterval;
+      this.runDate = FormatUtils.formatDate(
+        this.schedule.runDate,
+        'yyyy-MM-dd'
+      );
+      this.channel = this.schedule.channel;
+      this.repeat = this.schedule.repeat;
+      this.active = this.schedule.active;
+    }
+  },
+  unmounted() {
+    this.$emit('close');
+  },
   methods: {
+    ...mapActions({
+      fetchAllMessages: 'fetchAllMessages',
+      createSchedule: 'createSchedule',
+      fetchSchedule: 'fetchSchedule',
+      editSchedule: 'editSchedule',
+    }),
+    ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
-      // handle form
+      const schedule = {
+        channel: this.channel,
+        isActive: this.active,
+        isRepeat: this.repeat,
+        messageId: this.id,
+        runDate: FormatUtils.formatDate(this.runDate, 'yyyy-MM-dd HH:mm:ss'),
+        schedulerInterval: this.repeat ? this.interval : null,
+      };
+
+      if (this.schedule)
+        this.editSchedule({ id: this.schedule.scheduleId, schedule });
+      else this.createSchedule(schedule);
+    },
+    handleCloseModal() {
+      this.closeAppModal();
     },
   },
 };
@@ -66,10 +153,6 @@ export default {
 
 .input-text {
   @include input-text;
-}
-
-.input-checkbox {
-  @include input-checkbox;
 }
 
 .button-wrapper {
