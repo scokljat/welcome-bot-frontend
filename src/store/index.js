@@ -83,16 +83,16 @@ export default createStore({
     [SET_SCHEDULES]: (state, payload) => {
       state.schedules = payload;
     },
-    [REMOVE_SCHEDULE]: (state, payload) => {
+    [REMOVE_SCHEDULE]: (state, id) => {
       state.schedules = state.schedules.filter((schedule) => {
-        return schedule.scheduleId !== payload;
+        return schedule.scheduleId !== id;
       });
     },
-    [UPDATE_SCHEDULE]: (state, payload) => {
+    [UPDATE_SCHEDULE]: (state, { id, updatedSchedule }) => {
       const index = state.schedules.findIndex((schedule) => {
-        return schedule.scheduleId === payload.id;
+        return schedule.scheduleId === id;
       });
-      state.schedules[index] = payload.updatedSchedule;
+      state.schedules[index] = updatedSchedule;
     },
   },
   actions: {
