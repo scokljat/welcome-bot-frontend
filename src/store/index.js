@@ -15,6 +15,7 @@ import {
   UPDATE_SCHEDULE,
   SET_TRIGGERS,
   REMOVE_TRIGGER,
+  UPDATE_TRIGGER,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -129,6 +130,12 @@ export default createStore({
         return trigger.triggerId !== payload;
       });
     },
+    [UPDATE_TRIGGER]: (state, { id, updatedTrigger }) => {
+      const index = state.triggers.findIndex((trigger) => {
+        return trigger.triggerId === id;
+      });
+      state.triggers[index] = updatedTrigger;
+    },
   },
   actions: {
     login({ commit }, token) {
@@ -216,6 +223,13 @@ export default createStore({
     async createTrigger({ commit }, trigger) {
       await TriggersService.createTrigger(trigger);
 
+      commit(CLOSE_APP_MODAL);
+    },
+    async editTrigger({ commit }, { id, trigger }) {
+      const data = await TriggersService.editTrigger(id, trigger);
+      const updatedTrigger = formatTriggers([data])[0];
+
+      commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
     },
   },

@@ -73,7 +73,7 @@ export default {
   },
   async mounted() {
     this.fetchAllMessages();
-    console.log(this.trigger);
+
     if (this.trigger) {
       this.id = this.trigger.message.messageId;
       this.triggerEvent = this.trigger.triggerEvent;
@@ -88,6 +88,7 @@ export default {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
       createTrigger: 'createTrigger',
+      editTrigger: 'editTrigger',
     }),
     ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
@@ -98,7 +99,9 @@ export default {
         isActive: this.active,
       };
 
-      this.createTrigger(trigger);
+      if (this.trigger)
+        this.editTrigger({ id: this.trigger.triggerId, trigger });
+      else this.createTrigger(trigger);
     },
     handleCloseModal() {
       this.closeAppModal();
