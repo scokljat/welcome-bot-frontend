@@ -14,11 +14,11 @@ import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
 import formatDate from '../utils/formatDate';
 
-const formatMessages = (response) => {
-  response.forEach((message) => {
+const formatMessages = (messages) => {
+  messages.forEach((message) => {
     message.createdAt = formatDate(message.createdAt, 'dd MMM yyyy');
   });
-  return response;
+  return messages;
 };
 
 export default createStore({
@@ -55,9 +55,9 @@ export default createStore({
     [SET_MESSAGES]: (state, payload) => {
       state.messages = payload;
     },
-    [REMOVE_MESSAGE]: (state, payload) => {
+    [REMOVE_MESSAGE]: (state, id) => {
       state.messages = state.messages.filter((message) => {
-        return message.messageId !== payload;
+        return message.messageId !== id;
       });
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
@@ -66,11 +66,11 @@ export default createStore({
     [DECREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total -= 1;
     },
-    [UPDATE_MESSAGE]: (state, payload) => {
+    [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
       const index = state.messages.findIndex((message) => {
-        return message.messageId === payload.id;
+        return message.messageId === id;
       });
-      state.messages[index] = payload.updatedMessage;
+      state.messages[index] = updatedMessage;
     },
   },
   actions: {
