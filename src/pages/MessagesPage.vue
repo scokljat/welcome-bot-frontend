@@ -1,12 +1,12 @@
 <template>
   <div class="messages-page">
-    <AppModal modal-title="Message">
-      <ModalCreateMessage />
+    <AppModal :modal-title="modalTitle">
+      <ModalCreateMessage :message="message" @close="handleClose" />
     </AppModal>
     <DataTable
       :table-data="getMessages"
       :table-columns="tableColumns"
-      @edit="handleEditMessage"
+      @edit="handleEditIconClick"
       @delete="handleDeleteMessage"
       @page-change="handlePagination"
     />
@@ -41,36 +41,44 @@ export default {
         {
           id: 3,
           label: 'Created At',
-          prop: 'date',
+          prop: 'createdAt',
           isSortable: true,
           width: '135',
         },
       ],
-      currentPage: 1,
+      message: null,
     };
   },
   computed: {
     ...mapGetters({
       getMessages: 'getMessages',
+      getPagination: 'getPagination',
     }),
+    modalTitle() {
+      return this.message ? 'Update Message' : 'Create Message';
+    },
   },
   mounted() {
-    // this should be store pagination
-    this.fetchMessages({ pageNumber: 1 });
+    this.fetchMessages(this.getPagination.page);
   },
   methods: {
-    ...mapActions({ fetchMessages: 'fetchMessages' }),
+    ...mapActions({
+      fetchMessages: 'fetchMessages',
+      deleteMessage: 'deleteMessage',
+    }),
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    handleEditMessage(row) {
-      console.log(row);
-      this.openAppModal('update');
+    handleEditIconClick(row) {
+      this.message = row;
+      this.openAppModal();
     },
     handleDeleteMessage(row) {
-      console.log(row);
+      this.deleteMessage(row.messageId);
     },
     handlePagination(pageNumber) {
-      // this.currentPage = pageNumber;
-      this.fetchMessages({ pageNumber });
+      this.fetchMessages(pageNumber);
+    },
+    handleClose() {
+      this.message = null;
     },
   },
 };

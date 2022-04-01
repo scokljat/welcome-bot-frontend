@@ -1,13 +1,19 @@
 <template>
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <AppInput
-      title-input="Title"
-      placeholder-input="Enter the message title..."
+      v-model="title"
+      title="Title"
+      placeholder="Enter the message title..."
     />
-    <AppTextarea />
+    <AppTextarea v-model="text" />
     <div class="button-wrapper">
-      <AppButton intent="cancel" title="Cancel" />
-      <AppButton intent="create" title="Save" />
+      <AppButton
+        type="button"
+        class="secondary"
+        title="Cancel"
+        @click="handleCloseModal"
+      />
+      <AppButton type="submit" class="primary" title="Save" />
     </div>
   </form>
 </template>
@@ -16,13 +22,50 @@
 import AppInput from './AppInput.vue';
 import AppTextarea from './AppTextarea.vue';
 import AppButton from './AppButton.vue';
+import { mapActions, mapMutations } from 'vuex';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'ModalCreateMessage',
   components: { AppInput, AppTextarea, AppButton },
+  props: {
+    message: {
+      type: Object,
+      default: null,
+    },
+  },
+  emits: ['close'],
+  data: () => {
+    return {
+      title: '',
+      text: '',
+    };
+  },
+  async mounted() {
+    if (this.message) {
+      this.title = this.message.title;
+      this.text = this.message.text;
+    }
+  },
+  unmounted() {
+    this.$emit('close');
+  },
   methods: {
+    ...mapActions({
+      createMessage: 'createMessage',
+      editMessage: 'editMessage',
+    }),
+    ...mapMutations({ closeModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
-      // handle form
+      const message = { title: this.title, text: this.text };
+      if (this.message) {
+        this.editMessage({ id: this.message.messageId, message });
+      } else {
+        this.createMessage(message);
+      }
+    },
+    handleCloseModal() {
+      this.closeModal();
     },
   },
 };

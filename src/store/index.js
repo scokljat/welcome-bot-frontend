@@ -8,6 +8,8 @@ import {
   DECREMENT_PAGINATION_TOTAL,
   SET_MESSAGES,
   SET_ALL_MESSAGES,
+  REMOVE_MESSAGE,
+  UPDATE_MESSAGE,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
   UPDATE_SCHEDULE,
@@ -16,6 +18,16 @@ import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
 import MessagesService from '@/api/services/MessagesService';
 import FormatUtils from '@/utils/FormatUtils';
+
+const formatMessages = (messages) => {
+  messages.forEach((message) => {
+    message.createdAt = FormatUtils.formatDate(
+      message.createdAt,
+      'dd MMM yyyy'
+    );
+  });
+  return messages;
+};
 
 function formatSchedules(schedules) {
   schedules.forEach((schedule) => {
@@ -72,6 +84,17 @@ export default createStore({
     [SET_ALL_MESSAGES]: (state, allMessages) => {
       state.allMessages = allMessages;
     },
+    [REMOVE_MESSAGE]: (state, id) => {
+      state.messages = state.messages.filter((message) => {
+        return message.messageId !== id;
+      });
+    },
+    [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
+      const index = state.messages.findIndex((message) => {
+        return message.messageId === id;
+      });
+      state.messages[index] = updatedMessage;
+    },
     [SET_SCHEDULES]: (state, schedules) => {
       state.schedules = schedules;
     },
@@ -94,17 +117,37 @@ export default createStore({
       commit(SET_USER, response);
     },
     async fetchMessages({ commit }, pageNumber) {
-      const response = await MessagesService.fetchMessages(pageNumber);
+      const data = await MessagesService.fetchMessages(pageNumber);
+      const messages = formatMessages(data.content);
+
       commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
       });
-      commit(SET_MESSAGES, response.content);
+      commit(SET_MESSAGES, messages);
     },
     async fetchAllMessages({ commit }) {
       const allMessages = await MessagesService.fetchAllMessages();
 
       commit(SET_ALL_MESSAGES, allMessages);
+    },
+    async deleteMessage({ commit }, id) {
+      await MessagesService.deleteMessage(id);
+
+      commit(DECREMENT_PAGINATION_TOTAL);
+      commit(REMOVE_MESSAGE, id);
+    },
+    async createMessage({ commit }, message) {
+      await MessagesService.createMessage(message);
+
+      commit(CLOSE_APP_MODAL);
+    },
+    async editMessage({ commit }, { id, message }) {
+      const data = await MessagesService.editMessage(id, message);
+      const updatedMessage = formatMessages([data])[0];
+
+      commit(UPDATE_MESSAGE, { id, updatedMessage });
+      commit(CLOSE_APP_MODAL);
     },
     async fetchSchedules({ commit }, pageNumber) {
       const data = await SchedulesService.fetchSchedules(pageNumber);

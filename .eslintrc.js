@@ -16,6 +16,15 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     // prefer single quotes
     'prettier/prettier': ['error', { singleQuote: true }],
+
+    'vue/no-unused-properties': [
+      'error',
+      {
+        groups: ['props', 'computed', 'data', 'methods'],
+        deepData: false,
+        ignorePublicMembers: false,
+      },
+    ],
   },
   overrides: [
     {
