@@ -46,7 +46,6 @@ export default {
           width: '135',
         },
       ],
-      currentPage: 1,
       message: null,
     };
   },
