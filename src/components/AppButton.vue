@@ -1,34 +1,14 @@
 <template>
-  <button :type="buttonType" :class="buttonIntent" @click="handleButtonClick">
+  <button>
     {{ title }}
   </button>
 </template>
 
 <script>
-import { CLOSE_APP_MODAL } from '@/store/mutation-types';
-import { mapMutations } from 'vuex';
-
 export default {
   name: 'AppButton',
   props: {
-    intent: { type: String, required: true },
     title: { type: String, required: true },
-  },
-  computed: {
-    buttonIntent() {
-      return this.intent === 'cancel' ? 'cancel' : 'save';
-    },
-    buttonType() {
-      return this.intent === 'create' ? 'submit' : 'button';
-    },
-  },
-  methods: {
-    ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
-    handleButtonClick() {
-      if (this.intent === 'cancel') {
-        this.closeAppModal();
-      }
-    },
   },
 };
 </script>
@@ -53,7 +33,7 @@ button {
   }
 }
 
-.cancel {
+.secondary {
   color: var(--text-primary-1);
   background: transparent;
 
@@ -62,7 +42,7 @@ button {
   }
 }
 
-.save {
+.primary {
   background: var(--primary);
   margin-left: 0.19rem;
   color: var(--text-secondary-1);

@@ -5,9 +5,24 @@ import {
   SET_USER,
   SET_MESSAGES,
   SET_PAGINATION,
+  REMOVE_MESSAGE,
+  INCREMENT_PAGINATION_TOTAL,
+  DECREMENT_PAGINATION_TOTAL,
+  UPDATE_MESSAGE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import MessagesService from '@/api/services/MessagesService';
+import FormatUtils from '../utils/FormatUtils';
+
+const formatMessages = (messages) => {
+  messages.forEach((message) => {
+    message.createdAt = FormatUtils.formatDate(
+      message.createdAt,
+      'dd MMM yyyy'
+    );
+  });
+  return messages;
+};
 
 export default createStore({
   state: {
@@ -17,50 +32,85 @@ export default createStore({
     pagination: {
       page: 1,
       size: 15,
-      total: 100,
+      total: 0,
     },
-    formAction: '',
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
     getMessages: (state) => state.messages,
     getPagination: (state) => state.pagination,
-    getFormAction: (state) => state.formAction,
   },
   mutations: {
-    [OPEN_APP_MODAL]: (state, payload) => {
+    [OPEN_APP_MODAL]: (state) => {
       state.isModalActive = true;
-      state.formAction = payload;
     },
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, { token }) => {
-      state.token = token;
-      localStorage.setItem('token', token);
+    [SET_USER]: (state, payload) => {
+      state.token = payload.token;
+      localStorage.setItem('token', payload.token);
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
       state.pagination.total = total;
     },
-    [SET_MESSAGES]: (state, payload) => {
-      state.messages = payload;
+    [SET_MESSAGES]: (state, messages) => {
+      state.messages = messages;
+    },
+    [REMOVE_MESSAGE]: (state, id) => {
+      state.messages = state.messages.filter((message) => {
+        return message.messageId !== id;
+      });
+    },
+    [INCREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total += 1;
+    },
+    [DECREMENT_PAGINATION_TOTAL]: (state) => {
+      state.pagination.total -= 1;
+    },
+    [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
+      const index = state.messages.findIndex((message) => {
+        return message.messageId === id;
+      });
+      state.messages[index] = updatedMessage;
     },
   },
   actions: {
     login({ commit }, token) {
       const response = AuthService.login(token);
+
       commit(SET_USER, response);
     },
     async fetchMessages({ commit }, pageNumber) {
-      const response = await MessagesService.fetchMessages(pageNumber);
-      // set pagination
+      const data = await MessagesService.fetchMessages(pageNumber);
+      const messages = formatMessages(data.content);
+
       commit(SET_PAGINATION, {
-        page: response.pageable.pageNumber + 1,
-        total: response.totalElements,
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
       });
-      commit(SET_MESSAGES, response.content);
+      commit(SET_MESSAGES, messages);
+    },
+    async deleteMessage({ commit }, id) {
+      await MessagesService.deleteMessage(id);
+
+      commit(DECREMENT_PAGINATION_TOTAL);
+      commit(REMOVE_MESSAGE, id);
+    },
+    async createMessage({ commit }, message) {
+      await MessagesService.createMessage(message);
+
+      commit(CLOSE_APP_MODAL);
+    },
+    async editMessage({ commit }, { id, message }) {
+      const data = await MessagesService.editMessage(id, message);
+      const updatedMessage = formatMessages([data])[0];
+
+      commit(UPDATE_MESSAGE, { id, updatedMessage });
+      commit(CLOSE_APP_MODAL);
     },
   },
+
   modules: {},
 });

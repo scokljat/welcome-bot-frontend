@@ -7,6 +7,8 @@
       name="text"
       rows="5"
       placeholder="Enter the message text..."
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
   </div>
 </template>
@@ -14,6 +16,13 @@
 <script>
 export default {
   name: 'AppTextarea',
+  props: {
+    modelValue: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['update:modelValue'],
 };
 </script>
 

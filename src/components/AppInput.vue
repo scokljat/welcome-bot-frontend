@@ -1,11 +1,13 @@
 <template>
   <div class="input-box">
-    <label class="input-label">{{ titleInput }}</label>
+    <label class="input-label">{{ title }}</label>
     <input
       class="input-text"
       type="text"
       name="title"
-      :placeholder="placeholderInput"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
   </div>
 </template>
@@ -14,15 +16,20 @@
 export default {
   name: 'AppInput',
   props: {
-    titleInput: {
+    title: {
       type: String,
       required: true,
     },
-    placeholderInput: {
+    placeholder: {
+      type: String,
+      required: true,
+    },
+    modelValue: {
       type: String,
       required: true,
     },
   },
+  emits: ['update:modelValue'],
 };
 </script>
 

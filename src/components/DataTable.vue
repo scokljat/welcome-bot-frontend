@@ -26,6 +26,7 @@
     layout="prev, pager, next"
     :total="pagination.total"
     :current-page="pagination.page"
+    :page-size="pageSize"
     @current-change="handlePageChange"
   >
   </el-pagination>
@@ -57,6 +58,7 @@ export default {
   data: () => {
     return {
       currentPage: 1,
+      pageSize: 15,
     };
   },
   computed: {
