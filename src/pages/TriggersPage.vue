@@ -1,12 +1,12 @@
 <template>
   <div class="triggers-page">
-    <AppModal :modal-title="Triggers">
-      <ModalCreateTrigger />
+    <AppModal :modal-title="modalTitle">
+      <ModalCreateTrigger :trigger="trigger" @close="handleClose" />
     </AppModal>
     <DataTable
-      :table-data="getTriggers"
+      :table-data="triggers"
       :table-columns="tableColumns"
-      @edit="handleEditTrigger"
+      @edit="handleEditIconClick"
       @delete="handleDeleteTrigger"
       @page-change="handlePagination"
     />
@@ -15,10 +15,10 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateTrigger from '@/components/ModalCreateTrigger.vue';
 import DataTable from '@/components/DataTable.vue';
-import { OPEN_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'TriggersPage',
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      pageNumber: 1,
+      trigger: null,
       tableColumns: [
         {
           id: 1,
@@ -64,13 +64,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getTriggers: 'getTriggers',
+      triggers: 'getTriggers',
       pagination: 'getPagination',
     }),
+    modalTitle() {
+      return this.trigger ? 'Update Trigger' : 'Create Trigger';
+    },
   },
   mounted() {
-    const pageNumber = this.pagination.page;
-    this.fetchTriggers(pageNumber);
+    this.fetchTriggers(this.pagination.page);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
@@ -78,8 +80,8 @@ export default {
       fetchTriggers: 'fetchTriggers',
       deleteTrigger: 'deleteTrigger',
     }),
-    handleEditTrigger(row) {
-      console.log(row);
+    handleEditIconClick(row) {
+      this.trigger = row;
       this.openAppModal();
     },
     handleDeleteTrigger(row) {
@@ -87,6 +89,9 @@ export default {
     },
     handlePagination(pageNumber) {
       this.fetchTriggers(pageNumber);
+    },
+    handleClose() {
+      this.schedule = null;
     },
   },
 };

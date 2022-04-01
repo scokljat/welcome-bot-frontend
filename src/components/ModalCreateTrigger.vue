@@ -2,74 +2,106 @@
   <form class="wrapper" @submit.prevent="handleFormSubmit">
     <AppSelect
       v-model="id"
-      :items="messages"
-      is-messages-select
+      :items="filterMessages"
+      :disabled="isMessagesSelectDisabled"
       title="Message"
     />
-    <AppSelect
-      v-model="trigger"
-      :items="events"
-      :is-messages-select="false"
-      title="Trigger"
-    />
+    <AppSelect v-model="triggerEvent" :items="events" title="Trigger" />
     <AppInput
       v-model="channel"
       title="Channel"
       placeholder="Enter the channel name..."
     />
-    <div class="input-checkbox">
-      <input id="active" type="checkbox" name="active" :value="active" />
-      <label for="active">Active</label>
-    </div>
+    <AppCheckbox id="active" v-model="active" name="active" label="Active" />
     <div class="button-wrapper">
-      <AppButton intent="cancel" title="Cancel" />
-      <AppButton intent="create" title="Save" />
+      <AppButton
+        type="button"
+        title="Cancel"
+        class="secondary"
+        @click="handleCloseModal"
+      />
+      <AppButton type="submit" title="Save" class="primary" />
     </div>
   </form>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { CLOSE_APP_MODAL } from '@/store/mutation-types';
 import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 import AppSelect from './AppSelect.vue';
+import AppCheckbox from './AppCheckbox.vue';
 
 export default {
   name: 'ModalCreateTrigger',
-  components: { AppInput, AppButton, AppSelect },
+  components: { AppInput, AppButton, AppSelect, AppCheckbox },
+  props: {
+    trigger: {
+      type: Object,
+      default: null,
+    },
+  },
+  emits: ['close'],
   data() {
     return {
       id: null,
-      trigger: '',
+      triggerEvent: '',
       channel: '',
       active: false,
       events: [
-        { value: 'APP_MENTION_EVENT', label: 'On app mention' },
-        { value: 'CHANNEL_JOINED', label: 'On channel join' },
-        { value: 'CHANNEL_LEFT', label: 'On channel left' },
+        { id: 1, value: 'APP_MENTION_EVENT', label: 'On app mention' },
+        { id: 2, value: 'CHANNEL_JOINED', label: 'On channel join' },
+        { id: 3, value: 'CHANNEL_LEFT', label: 'On channel left' },
       ],
     };
   },
   computed: {
     ...mapGetters({ messages: 'getAllMessages' }),
+    isMessagesSelectDisabled() {
+      return this.trigger ? true : false;
+    },
+    filterMessages() {
+      return this.messages.map((message) => {
+        return {
+          id: message.messageId,
+          value: message.messageId,
+          label: message.text,
+        };
+      });
+    },
   },
-  mounted() {
+  async mounted() {
     this.fetchAllMessages();
+
+    if (this.trigger) {
+      this.id = this.trigger.message.messageId;
+      this.triggerEvent = this.trigger.message.triggerEvent;
+      this.channel = this.trigger.message.channel;
+      this.active = this.trigger.message.isActive;
+    }
+  },
+  unmounted() {
+    this.$emit('close');
   },
   methods: {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
       createTrigger: 'createTrigger',
     }),
+    ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),
     handleFormSubmit() {
       const trigger = {
         messageId: this.id,
-        triggerEvent: this.trigger,
+        triggerEvent: this.triggerEvent,
         channel: this.channel,
         isActive: this.active,
       };
 
       this.createTrigger(trigger);
+    },
+    handleCloseModal() {
+      this.closeAppModal();
     },
   },
 };
