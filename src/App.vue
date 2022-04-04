@@ -40,6 +40,10 @@ export default {
   padding-right: 0.4rem;
 }
 
+.page {
+  padding-top: 0.2rem;
+}
+
 @include tablet-md {
   .container {
     display: grid;
