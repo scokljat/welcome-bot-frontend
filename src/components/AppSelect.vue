@@ -3,6 +3,7 @@
     <select
       :value="modelValue"
       class="input-text"
+      :class="{ 'error-input': errors }"
       :disabled="disabled"
       @input="$emit('update:modelValue', $event.target.value)"
     >
@@ -10,7 +11,10 @@
         {{ item.label }}
       </option>
     </select>
-    <label class="input-label">{{ title }}</label>
+    <span v-if="errors" class="error-message">{{ errors }}</span>
+    <label class="input-label" :class="{ 'error-label': errors }">{{
+      title
+    }}</label>
   </div>
 </template>
 <script>
@@ -32,6 +36,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    errors: {
+      type: String,
+      default: null,
     },
   },
   emits: ['update:modelValue'],

@@ -1,11 +1,19 @@
 <template>
-  <form class="wrapper" @submit.prevent="handleFormSubmit">
-    <AppSelect
-      v-model="id"
-      :items="filterMessages"
-      :disabled="isMessagesSelectDisabled"
-      title="Message"
-    />
+  <Form
+    v-slot="{ errors }"
+    :validation-schema="schema"
+    autocomplete="off"
+    @submit="handleFormSubmit"
+  >
+    <Field v-slot="{ field }" v-model="id" name="message"
+      ><AppSelect
+        v-bind="field"
+        v-model="id"
+        :items="filterMessages"
+        :disabled="isMessagesSelectDisabled"
+        title="Message"
+        :errors="errors.message"
+    /></Field>
     <div class="input-box">
       <input
         v-model="runDate"
@@ -16,17 +24,23 @@
       />
       <label class="input-label">Run At</label>
     </div>
-    <AppSelect
-      v-if="repeat"
-      v-model="interval"
-      :items="intervalOptions"
-      title="Interval"
-    />
-    <AppInput
-      v-model="channel"
-      title="Channel"
-      placeholder="Enter the channel name..."
-    />
+    <Field v-slot="{ field }" v-model="interval" name="interval"
+      ><AppSelect
+        v-if="repeat"
+        v-bind="field"
+        v-model="interval"
+        :items="intervalOptions"
+        title="Interval"
+        :errors="errors.interval"
+    /></Field>
+    <Field v-slot="{ field }" v-model="channel" name="channel"
+      ><AppInput
+        v-bind="field"
+        v-model="channel"
+        title="Channel"
+        placeholder="Enter the channel name..."
+        :errors="errors.channel"
+    /></Field>
     <AppCheckbox id="repeat" v-model="repeat" name="repeat" label="Repeat" />
     <AppCheckbox id="active" v-model="active" name="active" label="Active" />
     <div class="button-wrapper">
@@ -38,7 +52,7 @@
       />
       <AppButton type="submit" title="Save" class="primary" />
     </div>
-  </form>
+  </Form>
 </template>
 
 <script>
@@ -49,10 +63,12 @@ import AppInput from './AppInput.vue';
 import AppButton from './AppButton.vue';
 import AppSelect from './AppSelect.vue';
 import AppCheckbox from './AppCheckbox.vue';
+import { Form, Field } from 'vee-validate';
+import * as yup from 'yup';
 
 export default {
   name: 'ModalCreateSchedule',
-  components: { AppInput, AppButton, AppSelect, AppCheckbox },
+  components: { AppInput, AppButton, AppSelect, AppCheckbox, Form, Field },
   props: {
     schedule: {
       type: Object,
@@ -61,7 +77,15 @@ export default {
   },
   emits: ['close'],
   data: () => {
+    const schema = yup.object().shape({
+      message: yup.string().required().label('Message'),
+      interval: yup.string().required().label('Interval'),
+      channel: yup.string().required().label('Channel name'),
+      repeat: yup.bool().label('Repeat option'),
+      active: yup.bool().label('Active option'),
+    });
     return {
+      schema,
       id: null,
       interval: '',
       runDate: '',
