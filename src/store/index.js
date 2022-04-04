@@ -44,6 +44,17 @@ function formatSchedules(schedules) {
 function formatTriggers(triggers) {
   triggers.forEach((trigger) => {
     trigger.activeLabel = trigger.isActive ? 'Active' : 'Inactive';
+    switch (trigger.triggerEvent) {
+      case 'APP_MENTION_EVENT':
+        trigger.event = 'On app mention';
+        break;
+      case 'CHANNEL_JOINED':
+        trigger.event = 'On channel join';
+        break;
+      case 'CHANNEL_LEFT':
+        trigger.event = 'On channel left';
+        break;
+    }
   });
   return triggers;
 }
@@ -66,14 +77,15 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    filterMessages: (state) =>
-      state.messages.map((message) => {
+    filterMessages: (state) => {
+      return state.allMessages.map((message) => {
         return {
           id: message.messageId,
           value: message.messageId,
           label: message.title,
         };
-      }),
+      });
+    },
     getSchedules: (state) => state.schedules,
     getTriggers: (state) => state.triggers,
   },
