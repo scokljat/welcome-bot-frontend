@@ -6,11 +6,13 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'LoginPage',
-
+  computed: {
+    ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
+  },
   methods: {
     ...mapActions({ login: 'login' }),
 
@@ -20,11 +22,13 @@ export default {
         if (!googleUser) {
           return null;
         }
-        const token = googleUser.wc.id_token;
-        this.login({ token });
-        this.$router.push({ name: 'messages' });
+        const idToken = googleUser.wc.id_token;
+        this.login(idToken);
+
+        if (this.isLoggedIn) this.$router.push({ name: 'messages' });
+        else localStorage.setItem('token', null);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     },
   },
@@ -41,10 +45,10 @@ export default {
   min-height: 80vh;
 
   h1 {
-    font-size: 3.4rem;
+    font-size: 4.8rem;
 
     @include tablet-md {
-      font-size: 4.4rem;
+      font-size: 6.25rem;
     }
   }
 

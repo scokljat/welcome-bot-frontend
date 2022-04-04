@@ -65,8 +65,8 @@ export default createStore({
       state.isModalActive = false;
     },
     [SET_USER]: (state, payload) => {
-      state.token = payload.token;
-      localStorage.setItem('token', payload.token);
+      state.token = payload.idToken;
+      localStorage.setItem('token', payload.idToken);
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -111,8 +111,8 @@ export default createStore({
     },
   },
   actions: {
-    login({ commit }, token) {
-      const response = AuthService.login(token);
+    async login({ commit }, idToken) {
+      const response = await AuthService.login(idToken);
 
       commit(SET_USER, response);
     },
