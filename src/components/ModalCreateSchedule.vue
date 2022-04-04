@@ -21,6 +21,7 @@
         type="date"
         name="date"
         :min="limitDate"
+        required
       />
       <label class="input-label">Run At</label>
     </div>
@@ -78,7 +79,10 @@ export default {
   emits: ['close'],
   data: () => {
     const schema = yup.object().shape({
-      message: yup.string().required().label('Message'),
+      message: yup
+        .number()
+        .required('Message is a required field')
+        .nullable('Message is a required field'),
       interval: yup.string().required().label('Interval'),
       channel: yup.string().required().label('Channel name'),
       repeat: yup.bool().label('Repeat option'),
