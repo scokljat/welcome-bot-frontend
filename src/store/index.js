@@ -66,7 +66,14 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    getAllMessages: (state) => state.allMessages,
+    filterMessages: (state) =>
+      state.messages.map((message) => {
+        return {
+          id: message.messageId,
+          value: message.messageId,
+          label: message.title,
+        };
+      }),
     getSchedules: (state) => state.schedules,
     getTriggers: (state) => state.triggers,
   },
@@ -81,9 +88,9 @@ export default createStore({
       state.token = payload.token;
       localStorage.setItem('token', payload.token);
     },
-    [SET_PAGINATION]: (state, payload) => {
-      state.pagination.page = payload.page;
-      state.pagination.total = payload.total;
+    [SET_PAGINATION]: (state, { page, total }) => {
+      state.pagination.page = page;
+      state.pagination.total = total;
     },
     [INCREMENT_PAGINATION_TOTAL]: (state) => {
       state.pagination.total += 1;

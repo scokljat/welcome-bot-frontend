@@ -57,18 +57,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ messages: 'getAllMessages' }),
+    ...mapGetters({
+      messages: 'getAllMessages',
+      filterMessages: 'filterMessages',
+    }),
     isMessagesSelectDisabled() {
       return this.trigger ? true : false;
-    },
-    filterMessages() {
-      return this.messages.map((message) => {
-        return {
-          id: message.messageId,
-          value: message.messageId,
-          label: message.title,
-        };
-      });
     },
   },
   async mounted() {
