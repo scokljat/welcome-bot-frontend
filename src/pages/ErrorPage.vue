@@ -20,14 +20,26 @@
 
   h1 {
     font-size: 6.25rem;
+
+    @include tablet-md {
+      font-size: 9.4rem;
+    }
   }
 
   h2 {
     font-size: 1.5rem;
+
+    @include tablet-md {
+      font-size: 1.9rem;
+    }
   }
 
   p {
     font-size: 1.3rem;
+
+    @include tablet-md {
+      font-size: 1.5rem;
+    }
   }
 
   .redirect-link {
@@ -37,27 +49,6 @@
     padding: 1.25rem 1.9rem;
     margin: 1.25rem;
     border-radius: 0.25rem;
-  }
-}
-
-@include tablet-md {
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    h1 {
-      font-size: 9.4rem;
-    }
-
-    h2 {
-      font-size: 1.9rem;
-    }
-
-    p {
-      font-size: 1.5rem;
-    }
   }
 }
 </style>
