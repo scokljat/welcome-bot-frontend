@@ -1,10 +1,6 @@
 .el-table {
   --el-border-color-lighter: var(--border-color-1);
-  height: 85vh !important;
-
-  @include tablet-md {
-    height: 88vh !important;
-  }
+  height: 88vh !important;
 }
 
 .el-table__body,

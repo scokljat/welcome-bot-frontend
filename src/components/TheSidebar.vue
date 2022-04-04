@@ -29,7 +29,7 @@ export default {
   name: 'TheSidebar',
   setup() {
     const target = ref(null);
-    let collapsed = ref(false);
+    let collapsed = ref(true);
 
     onClickOutside(target, () => {
       collapsed.value = true;

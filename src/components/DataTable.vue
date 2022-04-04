@@ -9,7 +9,7 @@
       :column-key="col.prop"
       :width="col.width"
     />
-    <el-table-column prop="action" label="">
+    <el-table-column prop="action" label="" width="120px">
       <template #default="table">
         <div class="action-icons">
           <button @click.stop="handleEditAction(table.row)">
