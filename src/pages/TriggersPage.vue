@@ -91,7 +91,7 @@ export default {
       this.fetchTriggers(pageNumber);
     },
     handleClose() {
-      this.schedule = null;
+      this.trigger = null;
     },
   },
 };
