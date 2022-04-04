@@ -13,10 +13,14 @@ import {
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
   UPDATE_SCHEDULE,
+  SET_TRIGGERS,
+  REMOVE_TRIGGER,
+  UPDATE_TRIGGER,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
 import MessagesService from '@/api/services/MessagesService';
+import TriggersService from '@/api/services/TriggersService';
 import FormatUtils from '@/utils/FormatUtils';
 
 const formatMessages = (messages) => {
@@ -37,6 +41,13 @@ function formatSchedules(schedules) {
   return schedules;
 }
 
+function formatTriggers(triggers) {
+  triggers.forEach((trigger) => {
+    trigger.activeLabel = trigger.isActive ? 'Active' : 'Inactive';
+  });
+  return triggers;
+}
+
 export default createStore({
   state: {
     isModalActive: false,
@@ -44,6 +55,7 @@ export default createStore({
     messages: [],
     allMessages: [],
     schedules: [],
+    triggers: [],
     pagination: {
       page: 1,
       size: 15,
@@ -54,8 +66,16 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    getAllMessages: (state) => state.allMessages,
+    filterMessages: (state) =>
+      state.messages.map((message) => {
+        return {
+          id: message.messageId,
+          value: message.messageId,
+          label: message.title,
+        };
+      }),
     getSchedules: (state) => state.schedules,
+    getTriggers: (state) => state.triggers,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -108,6 +128,20 @@ export default createStore({
         return schedule.scheduleId === id;
       });
       state.schedules[index] = updatedSchedule;
+    },
+    [SET_TRIGGERS]: (state, payload) => {
+      state.triggers = payload;
+    },
+    [REMOVE_TRIGGER]: (state, payload) => {
+      state.triggers = state.triggers.filter((trigger) => {
+        return trigger.triggerId !== payload;
+      });
+    },
+    [UPDATE_TRIGGER]: (state, { id, updatedTrigger }) => {
+      const index = state.triggers.findIndex((trigger) => {
+        return trigger.triggerId === id;
+      });
+      state.triggers[index] = updatedTrigger;
     },
   },
   actions: {
@@ -175,6 +209,34 @@ export default createStore({
       const updatedSchedule = formatSchedules([data])[0];
 
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
+      commit(CLOSE_APP_MODAL);
+    },
+    async fetchTriggers({ commit }, pageNumber) {
+      const data = await TriggersService.fetchTriggers(pageNumber);
+      const triggers = formatTriggers(data.content);
+
+      commit(SET_PAGINATION, {
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
+      });
+      commit(SET_TRIGGERS, triggers);
+    },
+    async deleteTrigger({ commit }, id) {
+      await TriggersService.deleteTrigger(id);
+
+      commit(DECREMENT_PAGINATION_TOTAL);
+      commit(REMOVE_TRIGGER, id);
+    },
+    async createTrigger({ commit }, trigger) {
+      await TriggersService.createTrigger(trigger);
+
+      commit(CLOSE_APP_MODAL);
+    },
+    async editTrigger({ commit }, { id, trigger }) {
+      const data = await TriggersService.editTrigger(id, trigger);
+      const updatedTrigger = formatTriggers([data])[0];
+
+      commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
     },
   },

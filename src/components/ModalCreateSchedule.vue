@@ -77,22 +77,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      messages: 'getAllMessages',
+      filterMessages: 'filterMessages',
     }),
     isMessagesSelectDisabled() {
       return this.schedule ? true : false;
     },
     limitDate() {
       return FormatUtils.formatDate(new Date(), 'yyyy-MM-dd');
-    },
-    filterMessages() {
-      return this.messages.map((message) => {
-        return {
-          id: message.messageId,
-          value: message.messageId,
-          label: message.text,
-        };
-      });
     },
   },
   async mounted() {
@@ -117,7 +108,6 @@ export default {
     ...mapActions({
       fetchAllMessages: 'fetchAllMessages',
       createSchedule: 'createSchedule',
-      fetchSchedule: 'fetchSchedule',
       editSchedule: 'editSchedule',
     }),
     ...mapMutations({ closeAppModal: CLOSE_APP_MODAL }),

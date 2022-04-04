@@ -71,9 +71,6 @@ export default {
       this.$emit('delete', row);
     },
     handlePageChange(newPageNumber) {
-      // if (newPageNumber === 1) {
-      //   return;
-      // }
       this.$emit('pageChange', newPageNumber);
     },
   },
