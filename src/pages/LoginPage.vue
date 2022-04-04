@@ -23,10 +23,14 @@ export default {
           return null;
         }
         const idToken = googleUser.wc.id_token;
-        this.login(idToken);
+        await this.login(idToken);
 
-        if (this.isLoggedIn) this.$router.push({ name: 'messages' });
-        else localStorage.setItem('token', null);
+        if (this.isLoggedIn) {
+          this.$router.push({ name: 'messages' });
+        } else {
+          localStorage.setItem('token', null);
+          this.$router.push({ name: 'login' });
+        }
       } catch (error) {
         console.log(error);
       }
