@@ -58,7 +58,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      messages: 'getAllMessages',
       filterMessages: 'filterMessages',
     }),
     isMessagesSelectDisabled() {
