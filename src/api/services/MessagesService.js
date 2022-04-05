@@ -4,51 +4,51 @@ const MessagesService = {
   fetchMessages: async (pageNumber) => {
     const url = `/messages?offset=${pageNumber - 1}&pagesize=15`;
     try {
-      const response = await axios.get(url);
+      const { data } = await axios.get(url);
 
-      return response.data;
-    } catch (e) {
-      console.log(e.message);
+      return { data };
+    } catch (error) {
+      return { error };
     }
   },
   fetchAllMessages: async () => {
     const url = '/messages';
     try {
-      const response = await axios.get(url);
+      const { data } = await axios.get(url);
 
-      return response.data;
-    } catch (e) {
-      console.log(e.message);
+      return { data };
+    } catch (error) {
+      return { error };
     }
   },
   deleteMessage: async (id) => {
     const url = `/messages/${id}`;
     try {
-      const response = await axios.delete(url);
+      const { data } = await axios.delete(url);
 
-      return response.data;
-    } catch (e) {
-      console.log(e.message);
+      return { data };
+    } catch (error) {
+      return { error };
     }
   },
   createMessage: async (message) => {
-    const url = `/messages`;
+    const url = `/message`;
     try {
-      const response = await axios.post(url, message);
+      const { data } = await axios.post(url, message);
 
-      return response.data;
-    } catch (e) {
-      console.log(e.message);
+      return { data };
+    } catch (error) {
+      return { error };
     }
   },
   editMessage: async (id, message) => {
     const url = `/messages/${id}`;
     try {
-      const response = await axios.put(url, message);
+      const { data } = await axios.put(url, message);
 
-      return response.data;
-    } catch (e) {
-      console.log(e.message);
+      return { data };
+    } catch (error) {
+      return { error };
     }
   },
 };
