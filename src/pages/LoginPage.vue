@@ -25,8 +25,8 @@ export default {
         }
 
         const token = googleUser.wc.id_token;
-        const expiryDate = googleUser.wc.expires_at;
-        await this.login({ token, expiryDate });
+
+        await this.login({ token });
 
         if (this.isLoggedIn) {
           this.$router.push({ name: 'messages' });

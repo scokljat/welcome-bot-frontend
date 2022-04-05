@@ -24,18 +24,6 @@ import MessagesService from '@/api/services/MessagesService';
 import TriggersService from '@/api/services/TriggersService';
 import FormatUtils from '@/utils/FormatUtils';
 
-function verifyToken() {
-  const token = JSON.parse(localStorage.getItem('token'));
-  if (!token) return;
-  const currentDate = Math.floor(new Date().getTime() / 1000);
-  if (currentDate > token.expiryDate) {
-    console.log('Istekao token');
-    localStorage.setItem('token', null);
-    return null;
-  }
-  return token;
-}
-
 const formatMessages = (messages) => {
   messages.forEach((message) => {
     message.createdAt = FormatUtils.formatDate(
@@ -75,7 +63,7 @@ function formatTriggers(triggers) {
 export default createStore({
   state: {
     isModalActive: false,
-    token: verifyToken(),
+    token: localStorage.getItem('token') || null,
     messages: [],
     allMessages: [],
     schedules: [],
@@ -115,12 +103,9 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, { idToken, expiryDate }) => {
+    [SET_USER]: (state, idToken) => {
       state.token = idToken;
-      localStorage.setItem(
-        'token',
-        JSON.stringify({ token: idToken, expiryDate })
-      );
+      localStorage.setItem('token', idToken);
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -184,9 +169,9 @@ export default createStore({
     },
   },
   actions: {
-    async login({ commit }, { token, expiryDate }) {
+    async login({ commit }, { token }) {
       const { idToken } = await AuthService.login(token);
-      commit(SET_USER, { idToken, expiryDate });
+      commit(SET_USER, idToken);
     },
     async fetchMessages({ commit }, pageNumber) {
       const data = await MessagesService.fetchMessages(pageNumber);
