@@ -5,6 +5,7 @@
       <TheSidebar v-if="isLoggedIn" />
       <ThemeSwitcher />
       <TheFloatingButton v-if="isLoggedIn" />
+      <AppAlert v-if="alert.active" />
       <div class="page" :class="pageClass">
         <router-view />
       </div>
@@ -18,12 +19,19 @@ import TheHeader from './components/TheHeader.vue';
 import TheSidebar from './components/TheSidebar.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
 import TheFloatingButton from './components/TheFloatingButton.vue';
+import AppAlert from './components/AppAlert.vue';
 
 export default {
   name: 'App',
-  components: { TheSidebar, TheHeader, ThemeSwitcher, TheFloatingButton },
+  components: {
+    TheSidebar,
+    TheHeader,
+    ThemeSwitcher,
+    TheFloatingButton,
+    AppAlert,
+  },
   computed: {
-    ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
+    ...mapGetters({ isLoggedIn: 'isLoggedIn', alert: 'getAlert' }),
     pageClass() {
       return this.isLoggedIn && 'logged-in';
     },

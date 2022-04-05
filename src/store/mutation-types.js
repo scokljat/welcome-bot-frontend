@@ -14,3 +14,4 @@ export const UPDATE_SCHEDULE = 'UPDATE_SCHEDULE';
 export const SET_TRIGGERS = 'SET_TRIGGERS';
 export const REMOVE_TRIGGER = 'REMOVE_TRIGGER';
 export const UPDATE_TRIGGER = 'UPDATE_TRIGGER';
+export const SET_ALERT = 'SET_ALERT';
