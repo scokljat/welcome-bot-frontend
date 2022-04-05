@@ -1,8 +1,9 @@
 <template>
   <div class="input-box">
-    <label class="input-label">Text</label>
+    <label class="input-label" :class="{ 'error-label': error }">Text</label>
     <textarea
       class="input-text"
+      :class="{ 'error-input': error }"
       type="text"
       name="text"
       rows="5"
@@ -10,6 +11,7 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <span v-if="error" class="error-message">{{ error }}</span>
   </div>
 </template>
 
@@ -20,6 +22,10 @@ export default {
     modelValue: {
       type: String,
       required: true,
+    },
+    error: {
+      type: String,
+      default: null,
     },
   },
   emits: ['update:modelValue'],
