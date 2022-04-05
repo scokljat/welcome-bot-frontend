@@ -13,6 +13,7 @@
     <label class="input-label">{{ title }}</label>
   </div>
 </template>
+
 <script>
 export default {
   name: 'AppSelect',

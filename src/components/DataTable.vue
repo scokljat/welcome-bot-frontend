@@ -9,7 +9,7 @@
       :column-key="col.prop"
       :width="col.width"
     />
-    <el-table-column prop="action" label="">
+    <el-table-column prop="action" label="" width="120px">
       <template #default="table">
         <div class="action-icons">
           <button @click.stop="handleEditAction(table.row)">
@@ -71,9 +71,6 @@ export default {
       this.$emit('delete', row);
     },
     handlePageChange(newPageNumber) {
-      // if (newPageNumber === 1) {
-      //   return;
-      // }
       this.$emit('pageChange', newPageNumber);
     },
   },

@@ -1,12 +1,12 @@
 <template>
   <div class="triggers-page">
     <AppModal :modal-title="modalTitle">
-      <ModalCreateTrigger />
+      <ModalCreateTrigger :trigger="trigger" @close="handleClose" />
     </AppModal>
     <DataTable
-      :table-data="tableData"
+      :table-data="triggers"
       :table-columns="tableColumns"
-      @edit="handleEditTrigger"
+      @edit="handleEditIconClick"
       @delete="handleDeleteTrigger"
       @page-change="handlePagination"
     />
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { OPEN_APP_MODAL } from '@/store/mutation-types';
 import AppModal from '@/components/AppModal.vue';
 import ModalCreateTrigger from '@/components/ModalCreateTrigger.vue';
 import DataTable from '@/components/DataTable.vue';
-import { OPEN_APP_MODAL } from '@/store/mutation-types';
 
 export default {
   name: 'TriggersPage',
@@ -29,134 +29,19 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          message: 'First Message',
-          trigger: '2016-04-03',
-          channel: 'Channel 1',
-          active: 'Active',
-        },
-        {
-          message: 'Second Message',
-          trigger: '2016-11-03',
-          channel: 'Channel 2',
-          active: 'Active',
-        },
-        {
-          message: 'Third Message',
-          trigger: '2015-08-07',
-          channel: 'Channel 3',
-          active: 'Active',
-        },
-        {
-          message: 'Fourth Message',
-          trigger: '2016-01-03',
-          channel: 'Channel 4',
-          active: 'Active',
-        },
-        {
-          message: 'Fifth Message',
-          trigger: '2012-09-09',
-          channel: 'Channel 5',
-          active: 'Active',
-        },
-        {
-          message: 'Sixth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 6',
-          active: 'Active',
-        },
-        {
-          message: 'Seventh Message',
-          trigger: '2015-08-07',
-          channel: 'Channel 7',
-          active: 'Active',
-        },
-        {
-          message: 'Eight Message',
-          trigger: '2016-01-03',
-          channel: 'Channel 8',
-          active: 'Active',
-        },
-        {
-          message: 'NIneth Message',
-          trigger: '2012-09-09',
-          channel: 'Channel 9',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-        {
-          message: 'Tenth Message',
-          trigger: '2017-02-04',
-          channel: 'Channel 10',
-          active: 'Active',
-        },
-      ],
+      trigger: null,
       tableColumns: [
         {
           id: 1,
           label: 'Message',
-          prop: 'message',
+          prop: 'message.text',
           isSortable: true,
           width: '350',
         },
         {
           id: 2,
-          label: 'Trigger',
-          prop: 'trigger',
+          label: 'Event',
+          prop: 'event',
           isSortable: true,
           width: '135',
         },
@@ -170,7 +55,7 @@ export default {
         {
           id: 4,
           label: 'Active',
-          prop: 'active',
+          prop: 'activeLabel',
           isSortable: true,
           width: '135',
         },
@@ -178,24 +63,35 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ getFormAction: 'getFormAction' }),
+    ...mapGetters({
+      triggers: 'getTriggers',
+      pagination: 'getPagination',
+    }),
     modalTitle() {
-      return this.getFormAction === 'create'
-        ? 'Create Trigger'
-        : 'Update Trigger';
+      return this.trigger ? 'Update Trigger' : 'Create Trigger';
     },
+  },
+  mounted() {
+    this.fetchTriggers(this.pagination.page);
   },
   methods: {
     ...mapMutations({ openAppModal: OPEN_APP_MODAL }),
-    handleEditTrigger(row) {
-      console.log(row);
-      this.openAppModal('update');
+    ...mapActions({
+      fetchTriggers: 'fetchTriggers',
+      deleteTrigger: 'deleteTrigger',
+    }),
+    handleEditIconClick(row) {
+      this.trigger = row;
+      this.openAppModal();
     },
     handleDeleteTrigger(row) {
-      console.log(row);
+      this.deleteTrigger(row.triggerId);
     },
-    handlePagination(newPageNumber) {
-      console.log(newPageNumber);
+    handlePagination(pageNumber) {
+      this.fetchTriggers(pageNumber);
+    },
+    handleClose() {
+      this.trigger = null;
     },
   },
 };

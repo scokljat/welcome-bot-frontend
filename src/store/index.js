@@ -13,11 +13,28 @@ import {
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
   UPDATE_SCHEDULE,
+  SET_TRIGGERS,
+  REMOVE_TRIGGER,
+  UPDATE_TRIGGER,
+  SET_ALERT,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
 import MessagesService from '@/api/services/MessagesService';
+import TriggersService from '@/api/services/TriggersService';
 import FormatUtils from '@/utils/FormatUtils';
+
+function verifyToken() {
+  const token = JSON.parse(localStorage.getItem('token'));
+  if (!token) return;
+  const currentDate = Math.floor(new Date().getTime() / 1000);
+  if (currentDate > token.expiryDate) {
+    console.log('Istekao token');
+    localStorage.setItem('token', null);
+    return null;
+  }
+  return token;
+}
 
 const formatMessages = (messages) => {
   messages.forEach((message) => {
@@ -37,16 +54,22 @@ function formatSchedules(schedules) {
   return schedules;
 }
 
-function verifyToken() {
-  const token = JSON.parse(localStorage.getItem('token'));
-  if (!token) return;
-  const currentDate = Math.floor(new Date().getTime() / 1000);
-  if (currentDate > token.expiryDate) {
-    console.log('Istekao token');
-    localStorage.setItem('token', null);
-    return null;
-  }
-  return token;
+function formatTriggers(triggers) {
+  triggers.forEach((trigger) => {
+    trigger.activeLabel = trigger.isActive ? 'Active' : 'Inactive';
+    switch (trigger.triggerEvent) {
+      case 'APP_MENTION_EVENT':
+        trigger.event = 'On app mention';
+        break;
+      case 'CHANNEL_JOINED':
+        trigger.event = 'On channel join';
+        break;
+      case 'CHANNEL_LEFT':
+        trigger.event = 'On channel left';
+        break;
+    }
+  });
+  return triggers;
 }
 
 export default createStore({
@@ -56,18 +79,34 @@ export default createStore({
     messages: [],
     allMessages: [],
     schedules: [],
+    triggers: [],
     pagination: {
       page: 1,
       size: 15,
       total: 0,
+    },
+    alert: {
+      active: false,
+      success: false,
+      message: '',
     },
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    getAllMessages: (state) => state.allMessages,
+    filterMessages: (state) => {
+      return state.allMessages.map((message) => {
+        return {
+          id: message.messageId,
+          value: message.messageId,
+          label: message.title,
+        };
+      });
+    },
     getSchedules: (state) => state.schedules,
+    getTriggers: (state) => state.triggers,
+    getAlert: (state) => state.alert,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -123,6 +162,25 @@ export default createStore({
         return schedule.scheduleId === id;
       });
       state.schedules[index] = updatedSchedule;
+    },
+    [SET_TRIGGERS]: (state, payload) => {
+      state.triggers = payload;
+    },
+    [REMOVE_TRIGGER]: (state, payload) => {
+      state.triggers = state.triggers.filter((trigger) => {
+        return trigger.triggerId !== payload;
+      });
+    },
+    [UPDATE_TRIGGER]: (state, { id, updatedTrigger }) => {
+      const index = state.triggers.findIndex((trigger) => {
+        return trigger.triggerId === id;
+      });
+      state.triggers[index] = updatedTrigger;
+    },
+    [SET_ALERT]: (state, { active, success, message }) => {
+      state.alert.active = active;
+      state.alert.success = success;
+      state.alert.message = message;
     },
   },
   actions: {
@@ -190,6 +248,37 @@ export default createStore({
 
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
+    },
+    async fetchTriggers({ commit }, pageNumber) {
+      const data = await TriggersService.fetchTriggers(pageNumber);
+      const triggers = formatTriggers(data.content);
+
+      commit(SET_PAGINATION, {
+        page: data.pageable.pageNumber + 1,
+        total: data.totalElements,
+      });
+      commit(SET_TRIGGERS, triggers);
+    },
+    async deleteTrigger({ commit }, id) {
+      await TriggersService.deleteTrigger(id);
+
+      commit(DECREMENT_PAGINATION_TOTAL);
+      commit(REMOVE_TRIGGER, id);
+    },
+    async createTrigger({ commit }, trigger) {
+      await TriggersService.createTrigger(trigger);
+
+      commit(CLOSE_APP_MODAL);
+    },
+    async editTrigger({ commit }, { id, trigger }) {
+      const data = await TriggersService.editTrigger(id, trigger);
+      const updatedTrigger = formatTriggers([data])[0];
+
+      commit(UPDATE_TRIGGER, { id, updatedTrigger });
+      commit(CLOSE_APP_MODAL);
+    },
+    showAlert({ commit }, { active, success, message }) {
+      commit(SET_ALERT, { active, success, message });
     },
   },
   modules: {},
