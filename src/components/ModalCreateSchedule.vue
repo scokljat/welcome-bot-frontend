@@ -14,17 +14,24 @@
         title="Message"
         :error="errors.message"
     /></Field>
-    <div class="input-box">
-      <input
-        v-model="runDate"
-        class="input-text"
-        type="date"
-        name="date"
-        :min="limitDate"
-        required
-      />
-      <label class="input-label">Run At</label>
-    </div>
+    <Field v-slot="{ field }" v-model="runDate" name="date"
+      ><div class="input-box">
+        <input
+          v-bind="field"
+          v-model="runDate"
+          class="input-text"
+          :class="{ 'error-input': errors.date }"
+          type="date"
+          name="date"
+          :min="limitDate"
+          required
+        />
+        <span v-if="errors.date" class="error-message">{{ errors.date }}</span>
+        <label class="input-label" :class="{ 'error-label': errors.date }"
+          >Run At</label
+        >
+      </div></Field
+    >
     <Field v-slot="{ field }" v-model="interval" name="interval"
       ><AppSelect
         v-if="repeat"
@@ -87,6 +94,7 @@ export default {
       channel: yup.string().required().label('Channel name'),
       repeat: yup.bool().label('Repeat option'),
       active: yup.bool().label('Active option'),
+      date: yup.string().required().label('Date'),
     });
     return {
       schema,
