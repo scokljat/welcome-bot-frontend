@@ -12,7 +12,7 @@
         :items="filterMessages"
         :disabled="isMessagesSelectDisabled"
         title="Message"
-        :errors="errors.message"
+        :error="errors.message"
     /></Field>
     <div class="input-box">
       <input
@@ -32,7 +32,7 @@
         v-model="interval"
         :items="intervalOptions"
         title="Interval"
-        :errors="errors.interval"
+        :error="errors.interval"
     /></Field>
     <Field v-slot="{ field }" v-model="channel" name="channel"
       ><AppInput
@@ -40,7 +40,7 @@
         v-model="channel"
         title="Channel"
         placeholder="Enter the channel name..."
-        :errors="errors.channel"
+        :error="errors.channel"
     /></Field>
     <AppCheckbox id="repeat" v-model="repeat" name="repeat" label="Repeat" />
     <AppCheckbox id="active" v-model="active" name="active" label="Active" />

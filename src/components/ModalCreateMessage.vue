@@ -11,10 +11,10 @@
         v-model="title"
         title="Title"
         placeholder="Enter the message title..."
-        :errors="errors.title"
+        :error="errors.title"
     /></Field>
     <Field v-slot="{ field }" v-model="text" name="text"
-      ><AppTextarea v-bind="field" v-model="text" :errors="errors.text"
+      ><AppTextarea v-bind="field" v-model="text" :error="errors.text"
     /></Field>
     <div class="button-wrapper">
       <AppButton

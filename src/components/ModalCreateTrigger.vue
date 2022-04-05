@@ -12,7 +12,7 @@
         :items="filterMessages"
         :disabled="isMessagesSelectDisabled"
         title="Message"
-        :errors="errors.message"
+        :error="errors.message"
     /></Field>
     <Field v-slot="{ field }" v-model="triggerEvent" name="triggerEvent"
       ><AppSelect
@@ -20,7 +20,7 @@
         v-model="triggerEvent"
         :items="events"
         title="Trigger"
-        :errors="errors.triggerEvent"
+        :error="errors.triggerEvent"
     /></Field>
     <Field v-slot="{ field }" v-model="channel" name="channel"
       ><AppInput
@@ -28,7 +28,7 @@
         v-model="channel"
         title="Channel"
         placeholder="Enter the channel name..."
-        :errors="errors.channel"
+        :error="errors.channel"
     /></Field>
     <AppCheckbox id="active" v-model="active" name="active" label="Active" />
     <div class="button-wrapper">

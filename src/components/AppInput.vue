@@ -1,18 +1,18 @@
 <template>
   <div class="input-box">
-    <label class="input-label" :class="{ 'error-label': errors }">{{
+    <label class="input-label" :class="{ 'error-label': error }">{{
       title
     }}</label>
     <input
       class="input-text"
-      :class="{ 'error-input': errors }"
+      :class="{ 'error-input': error }"
       type="text"
       name="title"
       :placeholder="placeholder"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <span v-if="errors" class="error-message">{{ errors }}</span>
+    <span v-if="error" class="error-message">{{ error }}</span>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       type: String,
       required: true,
     },
-    errors: {
+    error: {
       type: String,
       default: null,
     },
