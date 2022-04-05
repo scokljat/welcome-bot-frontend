@@ -37,10 +37,22 @@ function formatSchedules(schedules) {
   return schedules;
 }
 
+function verifyToken() {
+  const token = JSON.parse(localStorage.getItem('token'));
+  if (!token) return;
+  const currentDate = Math.floor(new Date().getTime() / 1000);
+  if (currentDate > token.expiryDate) {
+    console.log('Istekao token');
+    localStorage.setItem('token', null);
+    return null;
+  }
+  return token;
+}
+
 export default createStore({
   state: {
     isModalActive: false,
-    token: localStorage.getItem('token') || null,
+    token: verifyToken(),
     messages: [],
     allMessages: [],
     schedules: [],
@@ -64,9 +76,12 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, payload) => {
-      state.token = payload.idToken;
-      localStorage.setItem('token', payload.idToken);
+    [SET_USER]: (state, { idToken, expiryDate }) => {
+      state.token = idToken;
+      localStorage.setItem(
+        'token',
+        JSON.stringify({ token: idToken, expiryDate })
+      );
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -111,10 +126,9 @@ export default createStore({
     },
   },
   actions: {
-    async login({ commit }, { token }) {
-      const user = await AuthService.login(token);
-
-      commit(SET_USER, user);
+    async login({ commit }, { token, expiryDate }) {
+      const { idToken } = await AuthService.login(token);
+      commit(SET_USER, { idToken, expiryDate });
     },
     async fetchMessages({ commit }, pageNumber) {
       const data = await MessagesService.fetchMessages(pageNumber);

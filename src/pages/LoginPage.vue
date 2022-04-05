@@ -19,11 +19,14 @@ export default {
     async handleSignIn() {
       try {
         const googleUser = await this.$gAuth.signIn();
+
         if (!googleUser) {
           return null;
         }
+
         const token = googleUser.wc.id_token;
-        await this.login({ token });
+        const expiryDate = googleUser.wc.expires_at;
+        await this.login({ token, expiryDate });
 
         if (this.isLoggedIn) {
           this.$router.push({ name: 'messages' });
