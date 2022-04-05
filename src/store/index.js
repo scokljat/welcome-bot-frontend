@@ -16,6 +16,7 @@ import {
   SET_TRIGGERS,
   REMOVE_TRIGGER,
   UPDATE_TRIGGER,
+  SET_ALERT,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -72,6 +73,11 @@ export default createStore({
       size: 15,
       total: 0,
     },
+    alert: {
+      active: false,
+      success: false,
+      message: '',
+    },
   },
   getters: {
     isLoggedIn: (state) => Boolean(state.token),
@@ -88,6 +94,7 @@ export default createStore({
     },
     getSchedules: (state) => state.schedules,
     getTriggers: (state) => state.triggers,
+    getAlert: (state) => state.alert,
   },
   mutations: {
     [OPEN_APP_MODAL]: (state) => {
@@ -154,6 +161,11 @@ export default createStore({
         return trigger.triggerId === id;
       });
       state.triggers[index] = updatedTrigger;
+    },
+    [SET_ALERT]: (state, { active, success, message }) => {
+      state.alert.active = active;
+      state.alert.success = success;
+      state.alert.message = message;
     },
   },
   actions: {
@@ -250,6 +262,9 @@ export default createStore({
 
       commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
+    },
+    showAlert({ commit }, { active, success, message }) {
+      commit(SET_ALERT, { active, success, message });
     },
   },
   modules: {},
