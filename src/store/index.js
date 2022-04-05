@@ -17,6 +17,7 @@ import {
   REMOVE_TRIGGER,
   UPDATE_TRIGGER,
   SET_ALERT,
+  SET_ALERT_VISIBILITY,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -162,8 +163,11 @@ export default createStore({
       });
       state.triggers[index] = updatedTrigger;
     },
-    [SET_ALERT]: (state, { active, success, message }) => {
+    [SET_ALERT_VISIBILITY]: (state, active) => {
       state.alert.active = active;
+    },
+    [SET_ALERT]: (state, { success, message }) => {
+      state.alert.active = true;
       state.alert.success = success;
       state.alert.message = message;
     },
@@ -212,7 +216,6 @@ export default createStore({
 
       if (error) {
         commit(SET_ALERT, {
-          active: true,
           success: false,
           message: 'Error occurred while fetching schedules',
         });
@@ -232,7 +235,6 @@ export default createStore({
 
       if (error) {
         commit(SET_ALERT, {
-          active: true,
           success: false,
           message: 'Error occurred while deleting the schedule',
         });
@@ -242,7 +244,6 @@ export default createStore({
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
       commit(SET_ALERT, {
-        active: true,
         success: true,
         message: 'Schedule has been successfully deleted',
       });
@@ -252,7 +253,6 @@ export default createStore({
 
       if (error) {
         commit(SET_ALERT, {
-          active: true,
           success: false,
           message: 'Error occurred while creating the schedule',
         });
@@ -261,7 +261,6 @@ export default createStore({
 
       commit(CLOSE_APP_MODAL);
       commit(SET_ALERT, {
-        active: true,
         success: true,
         message: 'Schedule has been successfully created',
       });
@@ -271,7 +270,6 @@ export default createStore({
 
       if (error) {
         commit(SET_ALERT, {
-          active: true,
           success: false,
           message: 'Error occurred while editing the schedule',
         });
@@ -282,7 +280,6 @@ export default createStore({
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
       commit(SET_ALERT, {
-        active: true,
         success: true,
         message: 'Schedule has been successfully edited',
       });
@@ -315,8 +312,8 @@ export default createStore({
       commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
     },
-    showAlert({ commit }, { active, success, message }) {
-      commit(SET_ALERT, { active, success, message });
+    hideAlert({ commit }, { active }) {
+      commit(SET_ALERT_VISIBILITY, active);
     },
   },
   modules: {},
