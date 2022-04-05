@@ -32,7 +32,7 @@ const MessagesService = {
     }
   },
   createMessage: async (message) => {
-    const url = `/message`;
+    const url = `/messages`;
     try {
       const { data } = await axios.post(url, message);
 

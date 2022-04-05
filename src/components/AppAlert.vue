@@ -19,13 +19,10 @@ export default {
     },
   },
   mounted() {
-    setTimeout(
-      () => this.showAlert({ active: false, success: false, message: '' }),
-      3000
-    );
+    setTimeout(() => this.hideAlert({ active: false }), 3000);
   },
   methods: {
-    ...mapActions({ showAlert: 'showAlert' }),
+    ...mapActions({ hideAlert: 'hideAlert' }),
   },
 };
 </script>
