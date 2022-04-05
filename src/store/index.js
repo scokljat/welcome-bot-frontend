@@ -111,10 +111,10 @@ export default createStore({
     },
   },
   actions: {
-    async login({ commit }, idToken) {
-      const response = await AuthService.login(idToken);
+    async login({ commit }, { token }) {
+      const user = await AuthService.login(token);
 
-      commit(SET_USER, response);
+      commit(SET_USER, user);
     },
     async fetchMessages({ commit }, pageNumber) {
       const data = await MessagesService.fetchMessages(pageNumber);

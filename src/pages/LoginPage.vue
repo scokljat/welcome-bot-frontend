@@ -22,8 +22,8 @@ export default {
         if (!googleUser) {
           return null;
         }
-        const idToken = googleUser.wc.id_token;
-        await this.login(idToken);
+        const token = googleUser.wc.id_token;
+        await this.login({ token });
 
         if (this.isLoggedIn) {
           this.$router.push({ name: 'messages' });
