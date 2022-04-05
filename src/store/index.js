@@ -83,7 +83,7 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    filterMessages: (state) => {
+    parsedMessages: (state) => {
       return state.allMessages.map((message) => {
         return {
           id: message.messageId,
