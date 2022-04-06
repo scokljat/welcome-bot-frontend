@@ -179,7 +179,15 @@ export default createStore({
       commit(SET_USER, response);
     },
     async fetchMessages({ commit }, pageNumber) {
-      const data = await MessagesService.fetchMessages(pageNumber);
+      const { data, error } = await MessagesService.fetchMessages(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching messages',
+        });
+        return;
+      }
       const messages = formatMessages(data.content);
 
       commit(SET_PAGINATION, {
@@ -189,27 +197,72 @@ export default createStore({
       commit(SET_MESSAGES, messages);
     },
     async fetchAllMessages({ commit }) {
-      const allMessages = await MessagesService.fetchAllMessages();
+      const { data, error } = await MessagesService.fetchAllMessages();
 
-      commit(SET_ALL_MESSAGES, allMessages);
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching all messages',
+        });
+        return;
+      }
+
+      commit(SET_ALL_MESSAGES, data);
     },
     async deleteMessage({ commit }, id) {
-      await MessagesService.deleteMessage(id);
+      const { error } = await MessagesService.deleteMessage(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the message',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_MESSAGE, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully deleted',
+      });
     },
     async createMessage({ commit }, message) {
-      await MessagesService.createMessage(message);
+      const { error } = await MessagesService.createMessage(message);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the message',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully created',
+      });
     },
     async editMessage({ commit }, { id, message }) {
-      const data = await MessagesService.editMessage(id, message);
+      const { data, error } = await MessagesService.editMessage(id, message);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the message',
+        });
+        return;
+      }
+
       const updatedMessage = formatMessages([data])[0];
 
       commit(UPDATE_MESSAGE, { id, updatedMessage });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully edited',
+      });
     },
     async fetchSchedules({ commit }, pageNumber) {
       const { data, error } = await SchedulesService.fetchSchedules(pageNumber);
