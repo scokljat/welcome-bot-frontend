@@ -9,15 +9,20 @@ import {
   SET_MESSAGES,
   SET_ALL_MESSAGES,
   REMOVE_MESSAGE,
+  ADD_MESSAGE,
   UPDATE_MESSAGE,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
+  ADD_SCHEDULE,
   UPDATE_SCHEDULE,
   SET_TRIGGERS,
   REMOVE_TRIGGER,
+  ADD_TRIGGER,
   UPDATE_TRIGGER,
   SET_ALERT,
   SET_ALERT_VISIBILITY,
+  ADD_MESSAGE,
+  ADD_SCHEDULE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -129,6 +134,9 @@ export default createStore({
         return message.messageId !== id;
       });
     },
+    [ADD_MESSAGE]: (state, message) => {
+      state.messages = [...state.messages, message];
+    },
     [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
       const index = state.messages.findIndex((message) => {
         return message.messageId === id;
@@ -143,6 +151,9 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
+    [ADD_SCHEDULE]: (state, schedule) => {
+      state.schedules = [...state.schedules, schedule];
+    },
     [UPDATE_SCHEDULE]: (state, { id, updatedSchedule }) => {
       const index = state.schedules.findIndex((schedule) => {
         return schedule.scheduleId === id;
@@ -156,6 +167,9 @@ export default createStore({
       state.triggers = state.triggers.filter((trigger) => {
         return trigger.triggerId !== payload;
       });
+    },
+    [ADD_TRIGGER]: (state, trigger) => {
+      state.triggers = [...state.triggers, trigger];
     },
     [UPDATE_TRIGGER]: (state, { id, updatedTrigger }) => {
       const index = state.triggers.findIndex((trigger) => {
