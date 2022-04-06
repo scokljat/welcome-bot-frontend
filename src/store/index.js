@@ -84,7 +84,7 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    filterMessages: (state) => {
+    parsedMessages: (state) => {
       return state.allMessages.map((message) => {
         return {
           id: message.messageId,
@@ -163,8 +163,8 @@ export default createStore({
       });
       state.triggers[index] = updatedTrigger;
     },
-    [SET_ALERT_VISIBILITY]: (state, active) => {
-      state.alert.active = active;
+    [SET_ALERT_VISIBILITY]: (state) => {
+      state.alert.active = false;
     },
     [SET_ALERT]: (state, { success, message }) => {
       state.alert.active = true;
@@ -265,7 +265,16 @@ export default createStore({
       });
     },
     async fetchSchedules({ commit }, pageNumber) {
-      const data = await SchedulesService.fetchSchedules(pageNumber);
+      const { data, error } = await SchedulesService.fetchSchedules(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching schedules',
+        });
+        return;
+      }
+
       const schedules = formatSchedules(data.content);
 
       commit(SET_PAGINATION, {
@@ -275,22 +284,58 @@ export default createStore({
       commit(SET_SCHEDULES, schedules);
     },
     async deleteSchedule({ commit }, id) {
-      await SchedulesService.deleteSchedule(id);
+      const { error } = await SchedulesService.deleteSchedule(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the schedule',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully deleted',
+      });
     },
     async createSchedule({ commit }, schedule) {
-      await SchedulesService.createSchedule(schedule);
+      const { error } = await SchedulesService.createSchedule(schedule);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the schedule',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully created',
+      });
     },
     async editSchedule({ commit }, { id, schedule }) {
-      const data = await SchedulesService.editSchedule(id, schedule);
+      const { data, error } = await SchedulesService.editSchedule(id, schedule);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the schedule',
+        });
+        return;
+      }
       const updatedSchedule = formatSchedules([data])[0];
 
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully edited',
+      });
     },
     async fetchTriggers({ commit }, pageNumber) {
       const data = await TriggersService.fetchTriggers(pageNumber);
@@ -320,8 +365,8 @@ export default createStore({
       commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
     },
-    hideAlert({ commit }, { active }) {
-      commit(SET_ALERT_VISIBILITY, active);
+    hideAlert({ commit }) {
+      commit(SET_ALERT_VISIBILITY);
     },
   },
   modules: {},
