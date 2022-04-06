@@ -282,7 +282,7 @@ export default createStore({
       if (error) {
         commit(SET_ALERT, {
           success: false,
-          message: 'Error occurred while creating the schedule',
+          message: 'Error occurred while creating the trigger',
         });
         return;
       }
@@ -290,7 +290,7 @@ export default createStore({
       commit(CLOSE_APP_MODAL);
       commit(SET_ALERT, {
         success: true,
-        message: 'Schedule has been successfully created',
+        message: 'Trigger has been successfully created',
       });
     },
     async editTrigger({ commit }, { id, trigger }) {
