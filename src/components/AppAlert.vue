@@ -19,7 +19,7 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => this.hideAlert({ active: false }), 3000);
+    setTimeout(() => this.hideAlert(), 3000);
   },
   methods: {
     ...mapActions({ hideAlert: 'hideAlert' }),
