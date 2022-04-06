@@ -17,6 +17,7 @@ import {
   REMOVE_TRIGGER,
   UPDATE_TRIGGER,
   SET_ALERT,
+  SET_ALERT_VISIBILITY,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -162,8 +163,11 @@ export default createStore({
       });
       state.triggers[index] = updatedTrigger;
     },
-    [SET_ALERT]: (state, { active, success, message }) => {
+    [SET_ALERT_VISIBILITY]: (state, active) => {
       state.alert.active = active;
+    },
+    [SET_ALERT]: (state, { success, message }) => {
+      state.alert.active = true;
       state.alert.success = success;
       state.alert.message = message;
     },
@@ -236,7 +240,16 @@ export default createStore({
       commit(CLOSE_APP_MODAL);
     },
     async fetchTriggers({ commit }, pageNumber) {
-      const data = await TriggersService.fetchTriggers(pageNumber);
+      const { data, error } = await TriggersService.fetchTriggers(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching triggers',
+        });
+        return;
+      }
+
       const triggers = formatTriggers(data.content);
 
       commit(SET_PAGINATION, {
@@ -246,25 +259,62 @@ export default createStore({
       commit(SET_TRIGGERS, triggers);
     },
     async deleteTrigger({ commit }, id) {
-      await TriggersService.deleteTrigger(id);
+      const { error } = await TriggersService.deleteTrigger(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the schedules',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_TRIGGER, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Trigger has been successfully deleted',
+      });
     },
     async createTrigger({ commit }, trigger) {
-      await TriggersService.createTrigger(trigger);
+      const { error } = await TriggersService.createTrigger(trigger);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the schedule',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully created',
+      });
     },
     async editTrigger({ commit }, { id, trigger }) {
-      const data = await TriggersService.editTrigger(id, trigger);
+      const { data, error } = await TriggersService.editTrigger(id, trigger);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the trigger',
+        });
+        return;
+      }
+
       const updatedTrigger = formatTriggers([data])[0];
 
       commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Trigger has been successfully edited',
+      });
     },
-    showAlert({ commit }, { active, success, message }) {
-      commit(SET_ALERT, { active, success, message });
+    hideAlert({ commit }, { active }) {
+      commit(SET_ALERT_VISIBILITY, active);
     },
   },
   modules: {},
