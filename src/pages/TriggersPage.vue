@@ -41,7 +41,7 @@ export default {
         {
           id: 2,
           label: 'Event',
-          prop: 'triggerEvent',
+          prop: 'event',
           isSortable: true,
           width: '135',
         },
