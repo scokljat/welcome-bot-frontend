@@ -1,5 +1,11 @@
 <template>
-  <el-table :data="tableData" height="88vh" @cell-click="handleCellClick">
+  <el-table
+    :data="tableData"
+    height="88vh"
+    @cell-click="handleCellClick"
+    @cell-mouse-enter="handleCellMouseEnter"
+    @cell-mouse-leave="handleCellMouseLeave"
+  >
     <el-table-column
       v-for="col in tableColumns"
       :key="col.id"
@@ -72,6 +78,12 @@ export default {
     },
     handlePageChange(newPageNumber) {
       this.$emit('pageChange', newPageNumber);
+    },
+    handleCellMouseEnter(row, column, cell) {
+      cell.parentElement.classList.add('active');
+    },
+    handleCellMouseLeave(row, column, cell) {
+      cell.parentElement.classList.remove('active');
     },
   },
 };

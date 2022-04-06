@@ -81,6 +81,7 @@ export default {
   color: var(--text-secondary-2);
   text-decoration: none;
   padding: 1.25rem;
+  transition: all 0.25s ease-in-out;
 }
 
 .fas {
@@ -92,6 +93,19 @@ span {
 }
 
 .sidebar-link.router-link-active {
+  color: var(--text-secondary-1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--text-secondary-1);
+    opacity: 0.1;
+    z-index: 100;
+  }
+}
+
+.sidebar-link:hover {
   color: var(--text-secondary-1);
 
   &::after {
