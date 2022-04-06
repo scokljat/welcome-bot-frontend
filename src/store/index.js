@@ -21,8 +21,6 @@ import {
   UPDATE_TRIGGER,
   SET_ALERT,
   SET_ALERT_VISIBILITY,
-  ADD_MESSAGE,
-  ADD_SCHEDULE,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -241,8 +239,8 @@ export default createStore({
         message: 'Message has been successfully deleted',
       });
     },
-    async createMessage({ commit }, message) {
-      const { error } = await MessagesService.createMessage(message);
+    async createMessage({ commit, state }, message) {
+      const { data, error } = await MessagesService.createMessage(message);
 
       if (error) {
         commit(SET_ALERT, {
@@ -250,6 +248,14 @@ export default createStore({
           message: 'Error occurred while creating the message',
         });
         return;
+      }
+
+      const newMessage = formatMessages([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.messages.length < state.pagination.size) {
+        commit(ADD_MESSAGE, newMessage);
       }
 
       commit(CLOSE_APP_MODAL);
@@ -315,8 +321,8 @@ export default createStore({
         message: 'Schedule has been successfully deleted',
       });
     },
-    async createSchedule({ commit }, schedule) {
-      const { error } = await SchedulesService.createSchedule(schedule);
+    async createSchedule({ commit, state }, schedule) {
+      const { data, error } = await SchedulesService.createSchedule(schedule);
 
       if (error) {
         commit(SET_ALERT, {
@@ -324,6 +330,14 @@ export default createStore({
           message: 'Error occurred while creating the schedule',
         });
         return;
+      }
+
+      const newSchedule = formatSchedules([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.schedules.length < state.pagination.size) {
+        commit(ADD_SCHEDULE, newSchedule);
       }
 
       commit(CLOSE_APP_MODAL);
@@ -388,8 +402,8 @@ export default createStore({
         message: 'Trigger has been successfully deleted',
       });
     },
-    async createTrigger({ commit }, trigger) {
-      const { error } = await TriggersService.createTrigger(trigger);
+    async createTrigger({ commit, state }, trigger) {
+      const { data, error } = await TriggersService.createTrigger(trigger);
 
       if (error) {
         commit(SET_ALERT, {
@@ -397,6 +411,14 @@ export default createStore({
           message: 'Error occurred while creating the trigger',
         });
         return;
+      }
+
+      const newTrigger = formatTriggers([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.triggers.length < state.pagination.size) {
+        commit(ADD_TRIGGER, newTrigger);
       }
 
       commit(CLOSE_APP_MODAL);
