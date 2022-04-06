@@ -2,7 +2,8 @@ import { createStore } from 'vuex';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
-  SET_USER,
+  LOGIN,
+  LOGOUT,
   SET_PAGINATION,
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
@@ -103,9 +104,13 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, idToken) => {
+    [LOGIN]: (state, idToken) => {
       state.token = idToken;
       localStorage.setItem('token', idToken);
+    },
+    [LOGOUT]: (state) => {
+      state.token = null;
+      localStorage.removeItem('token');
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -171,7 +176,10 @@ export default createStore({
   actions: {
     async login({ commit }, { token }) {
       const { idToken } = await AuthService.login(token);
-      commit(SET_USER, idToken);
+      commit(LOGIN, idToken);
+    },
+    logout({ commit }) {
+      commit(LOGOUT);
     },
     async fetchMessages({ commit }, pageNumber) {
       const data = await MessagesService.fetchMessages(pageNumber);
