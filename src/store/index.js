@@ -163,8 +163,8 @@ export default createStore({
       });
       state.triggers[index] = updatedTrigger;
     },
-    [SET_ALERT_VISIBILITY]: (state) => {
-      state.alert.active = false;
+    [SET_ALERT_VISIBILITY]: (state, active) => {
+      state.alert.active = active;
     },
     [SET_ALERT]: (state, { success, message }) => {
       state.alert.active = true;
@@ -412,7 +412,7 @@ export default createStore({
       });
     },
     hideAlert({ commit }) {
-      commit(SET_ALERT_VISIBILITY);
+      commit(SET_ALERT_VISIBILITY, false);
     },
   },
   modules: {},
