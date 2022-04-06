@@ -190,6 +190,10 @@ export default createStore({
       }
 
       commit(LOGIN, data.idToken);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'You are successfully log in',
+      });
     },
     logout({ commit }) {
       commit(LOGOUT);
