@@ -3,11 +3,11 @@ const AuthService = {
   login: async (token) => {
     const url = 'auth/login';
     try {
-      const response = await axios.post(url, { idToken: token });
+      const { data } = await axios.post(url, { idToken: token });
 
-      return response.data;
+      return { data };
     } catch (error) {
-      console.log(error);
+      return { error };
     }
   },
 };

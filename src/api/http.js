@@ -12,7 +12,6 @@ instance.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
-
     return config;
   },
 
@@ -27,8 +26,7 @@ instance.interceptors.response.use(
   },
 
   (error) => {
-    if (error.response.status === 403);
-    {
+    if (error.response.status === 403) {
       store.dispatch('logout');
       router.push({ name: 'login' });
     }

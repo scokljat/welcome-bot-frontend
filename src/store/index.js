@@ -179,8 +179,17 @@ export default createStore({
   },
   actions: {
     async login({ commit }, { token }) {
-      const { idToken } = await AuthService.login(token);
-      commit(LOGIN, idToken);
+      const { data, error } = await AuthService.login(token);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'You are not authorized to access this website',
+        });
+        return;
+      }
+
+      commit(LOGIN, data.idToken);
     },
     logout({ commit }) {
       commit(LOGOUT);
