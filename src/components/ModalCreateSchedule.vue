@@ -9,7 +9,7 @@
       ><AppSelect
         v-bind="field"
         v-model="id"
-        :items="filterMessages"
+        :items="parsedMessages"
         :disabled="isMessagesSelectDisabled"
         title="Message"
         :error="errors.message"
@@ -113,7 +113,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      filterMessages: 'filterMessages',
+      parsedMessages: 'parsedMessages',
     }),
     isMessagesSelectDisabled() {
       return this.schedule ? true : false;
