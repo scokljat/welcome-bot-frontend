@@ -18,6 +18,7 @@ import {
   REMOVE_TRIGGER,
   UPDATE_TRIGGER,
   SET_ALERT,
+  SET_ALERT_VISIBILITY,
 } from './mutation-types';
 import AuthService from '@/api/services/AuthService';
 import SchedulesService from '@/api/services/SchedulesService';
@@ -84,7 +85,7 @@ export default createStore({
     isLoggedIn: (state) => Boolean(state.token),
     getPagination: (state) => state.pagination,
     getMessages: (state) => state.messages,
-    filterMessages: (state) => {
+    parsedMessages: (state) => {
       return state.allMessages.map((message) => {
         return {
           id: message.messageId,
@@ -167,8 +168,11 @@ export default createStore({
       });
       state.triggers[index] = updatedTrigger;
     },
-    [SET_ALERT]: (state, { active, success, message }) => {
+    [SET_ALERT_VISIBILITY]: (state, active) => {
       state.alert.active = active;
+    },
+    [SET_ALERT]: (state, { success, message }) => {
+      state.alert.active = true;
       state.alert.success = success;
       state.alert.message = message;
     },
@@ -182,7 +186,15 @@ export default createStore({
       commit(LOGOUT);
     },
     async fetchMessages({ commit }, pageNumber) {
-      const data = await MessagesService.fetchMessages(pageNumber);
+      const { data, error } = await MessagesService.fetchMessages(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching messages',
+        });
+        return;
+      }
       const messages = formatMessages(data.content);
 
       commit(SET_PAGINATION, {
@@ -192,30 +204,84 @@ export default createStore({
       commit(SET_MESSAGES, messages);
     },
     async fetchAllMessages({ commit }) {
-      const allMessages = await MessagesService.fetchAllMessages();
+      const { data, error } = await MessagesService.fetchAllMessages();
 
-      commit(SET_ALL_MESSAGES, allMessages);
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching all messages',
+        });
+        return;
+      }
+
+      commit(SET_ALL_MESSAGES, data);
     },
     async deleteMessage({ commit }, id) {
-      await MessagesService.deleteMessage(id);
+      const { error } = await MessagesService.deleteMessage(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the message',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_MESSAGE, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully deleted',
+      });
     },
     async createMessage({ commit }, message) {
-      await MessagesService.createMessage(message);
+      const { error } = await MessagesService.createMessage(message);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the message',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully created',
+      });
     },
     async editMessage({ commit }, { id, message }) {
-      const data = await MessagesService.editMessage(id, message);
+      const { data, error } = await MessagesService.editMessage(id, message);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the message',
+        });
+        return;
+      }
+
       const updatedMessage = formatMessages([data])[0];
 
       commit(UPDATE_MESSAGE, { id, updatedMessage });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Message has been successfully edited',
+      });
     },
     async fetchSchedules({ commit }, pageNumber) {
-      const data = await SchedulesService.fetchSchedules(pageNumber);
+      const { data, error } = await SchedulesService.fetchSchedules(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching schedules',
+        });
+        return;
+      }
+
       const schedules = formatSchedules(data.content);
 
       commit(SET_PAGINATION, {
@@ -225,25 +291,70 @@ export default createStore({
       commit(SET_SCHEDULES, schedules);
     },
     async deleteSchedule({ commit }, id) {
-      await SchedulesService.deleteSchedule(id);
+      const { error } = await SchedulesService.deleteSchedule(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the schedule',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_SCHEDULE, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully deleted',
+      });
     },
     async createSchedule({ commit }, schedule) {
-      await SchedulesService.createSchedule(schedule);
+      const { error } = await SchedulesService.createSchedule(schedule);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the schedule',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully created',
+      });
     },
     async editSchedule({ commit }, { id, schedule }) {
-      const data = await SchedulesService.editSchedule(id, schedule);
+      const { data, error } = await SchedulesService.editSchedule(id, schedule);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the schedule',
+        });
+        return;
+      }
       const updatedSchedule = formatSchedules([data])[0];
 
       commit(UPDATE_SCHEDULE, { id, updatedSchedule });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Schedule has been successfully edited',
+      });
     },
     async fetchTriggers({ commit }, pageNumber) {
-      const data = await TriggersService.fetchTriggers(pageNumber);
+      const { data, error } = await TriggersService.fetchTriggers(pageNumber);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while fetching triggers',
+        });
+        return;
+      }
+
       const triggers = formatTriggers(data.content);
 
       commit(SET_PAGINATION, {
@@ -253,25 +364,62 @@ export default createStore({
       commit(SET_TRIGGERS, triggers);
     },
     async deleteTrigger({ commit }, id) {
-      await TriggersService.deleteTrigger(id);
+      const { error } = await TriggersService.deleteTrigger(id);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while deleting the schedules',
+        });
+        return;
+      }
 
       commit(DECREMENT_PAGINATION_TOTAL);
       commit(REMOVE_TRIGGER, id);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Trigger has been successfully deleted',
+      });
     },
     async createTrigger({ commit }, trigger) {
-      await TriggersService.createTrigger(trigger);
+      const { error } = await TriggersService.createTrigger(trigger);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while creating the trigger',
+        });
+        return;
+      }
 
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Trigger has been successfully created',
+      });
     },
     async editTrigger({ commit }, { id, trigger }) {
-      const data = await TriggersService.editTrigger(id, trigger);
+      const { data, error } = await TriggersService.editTrigger(id, trigger);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Error occurred while editing the trigger',
+        });
+        return;
+      }
+
       const updatedTrigger = formatTriggers([data])[0];
 
       commit(UPDATE_TRIGGER, { id, updatedTrigger });
       commit(CLOSE_APP_MODAL);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'Trigger has been successfully edited',
+      });
     },
-    showAlert({ commit }, { active, success, message }) {
-      commit(SET_ALERT, { active, success, message });
+    hideAlert({ commit }) {
+      commit(SET_ALERT_VISIBILITY, false);
     },
   },
   modules: {},

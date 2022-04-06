@@ -4,41 +4,41 @@ const TriggersService = {
   fetchTriggers: async (pageNumber) => {
     const url = `/triggers?offset=${pageNumber - 1}&pagesize=15`;
     try {
-      const response = await axios.get(url);
+      const { data } = await axios.get(url);
 
-      return response.data;
+      return { data };
     } catch (error) {
-      console.log(error);
+      return { error };
     }
   },
   deleteTrigger: async (id) => {
     const url = `/triggers/${id}`;
     try {
-      const response = await axios.delete(url);
+      const { data } = await axios.delete(url);
 
-      return response.data;
+      return { data };
     } catch (error) {
-      console.log(error);
+      return { error };
     }
   },
   createTrigger: async (trigger) => {
     const url = '/triggers';
     try {
-      const response = await axios.post(url, trigger);
+      const { data } = await axios.post(url, trigger);
 
-      return response.data;
+      return { data };
     } catch (error) {
-      console.log(error);
+      return { error };
     }
   },
   editTrigger: async (id, trigger) => {
     const url = `/triggers/${id}`;
     try {
-      const response = await axios.put(url, trigger);
+      const { data } = await axios.put(url, trigger);
 
-      return response.data;
+      return { data };
     } catch (error) {
-      console.log(error);
+      return { error };
     }
   },
 };
