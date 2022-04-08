@@ -1,7 +1,6 @@
 export const OPEN_APP_MODAL = 'OPEN_APP_MODAL';
 export const CLOSE_APP_MODAL = 'CLOSE_APP_MODAL';
 export const LOGIN = 'LOGIN';
-export const REMOVE_AUTH = 'REMOVE_AUTH';
 export const LOGOUT = 'LOGOUT';
 export const SET_PAGINATION = 'SET_PAGINATION';
 export const INCREMENT_PAGINATION_TOTAL = 'INCREMENT_PAGINATION_TOTAL';

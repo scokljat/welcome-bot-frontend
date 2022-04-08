@@ -4,7 +4,6 @@ import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
   LOGIN,
-  REMOVE_AUTH,
   LOGOUT,
   SET_PAGINATION,
   INCREMENT_PAGINATION_TOTAL,
@@ -111,10 +110,6 @@ export default createStore({
       state.token = accessToken;
       localStorage.setItem('token', accessToken);
     },
-    [REMOVE_AUTH]: (state) => {
-      state.token = null;
-      localStorage.removeItem('token');
-    },
     [LOGOUT]: (state) => {
       state.token = localStorage.removeItem('token');
       router.push({ name: 'login' });
@@ -202,7 +197,7 @@ export default createStore({
       });
     },
     deleteAuth({ commit }) {
-      commit(REMOVE_AUTH);
+      commit(LOGOUT);
     },
     async logout({ commit }, token) {
       const { error } = await AuthService.logout(token);
