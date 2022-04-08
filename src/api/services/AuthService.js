@@ -3,7 +3,7 @@ const AuthService = {
   login: async (token) => {
     const url = 'auth/login';
     try {
-      const { data } = await axios.post(url, { idToken: token });
+      const { data } = await axios.post(url, { accessToken: token });
 
       return { data };
     } catch (error) {

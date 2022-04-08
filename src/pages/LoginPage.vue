@@ -24,7 +24,7 @@ export default {
           return null;
         }
 
-        const token = googleUser.wc.id_token;
+        const token = googleUser.wc.access_token;
 
         await this.login({ token });
 
