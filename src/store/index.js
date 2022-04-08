@@ -1,8 +1,10 @@
 import { createStore } from 'vuex';
+import router from '@/router/index';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
   LOGIN,
+  REMOVE_AUTH,
   LOGOUT,
   SET_PAGINATION,
   INCREMENT_PAGINATION_TOTAL,
@@ -105,13 +107,17 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [LOGIN]: (state, idToken) => {
-      state.token = idToken;
-      localStorage.setItem('token', idToken);
+    [LOGIN]: (state, accessToken) => {
+      state.token = accessToken;
+      localStorage.setItem('token', accessToken);
     },
-    [LOGOUT]: (state) => {
+    [REMOVE_AUTH]: (state) => {
       state.token = null;
       localStorage.removeItem('token');
+    },
+    [LOGOUT]: (state) => {
+      state.token = localStorage.removeItem('token');
+      router.push({ name: 'login' });
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -189,14 +195,31 @@ export default createStore({
         return;
       }
 
-      commit(LOGIN, data.idToken);
+      commit(LOGIN, data.accessToken);
       commit(SET_ALERT, {
         success: true,
         message: 'You are successfully log in',
       });
     },
-    logout({ commit }) {
+    deleteAuth({ commit }) {
+      commit(REMOVE_AUTH);
+    },
+    async logout({ commit }, token) {
+      const { error } = await AuthService.logout(token);
+
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'Something went wrong. Try again.',
+        });
+        return;
+      }
+
       commit(LOGOUT);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'You are successfully log out',
+      });
     },
     async fetchMessages({ commit }, pageNumber) {
       const { data, error } = await MessagesService.fetchMessages(pageNumber);
@@ -208,6 +231,7 @@ export default createStore({
         });
         return;
       }
+
       const messages = formatMessages(data.content);
 
       commit(SET_PAGINATION, {

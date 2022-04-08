@@ -27,7 +27,7 @@ instance.interceptors.response.use(
 
   (error) => {
     if (error.response.status === 403) {
-      store.dispatch('logout');
+      store.dispatch('deleteAuth');
       router.push({ name: 'login' });
     }
     return Promise.reject(error);

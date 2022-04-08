@@ -10,5 +10,15 @@ const AuthService = {
       return { error };
     }
   },
+  logout: async (token) => {
+    const url = 'auth/logout';
+    try {
+      const { data } = await axios.post(url, { accessToken: token });
+
+      return { data };
+    } catch (error) {
+      return { error };
+    }
+  },
 };
 export default AuthService;

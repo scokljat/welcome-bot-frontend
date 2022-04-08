@@ -16,6 +16,10 @@
         <router-link to="/triggers" class="sidebar-link" @click="closeSidebar"
           ><i class="fas fa-comment-alt"></i><span>Triggers</span></router-link
         >
+        <button @click="handleLogout">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i
+          ><span>Logout</span>
+        </button>
       </div>
     </div>
   </div>
@@ -24,10 +28,12 @@
 <script>
 import { ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
+import { useStore } from 'vuex';
 
 export default {
   name: 'TheSidebar',
   setup() {
+    const store = useStore();
     const target = ref(null);
     let collapsed = ref(true);
 
@@ -43,7 +49,17 @@ export default {
       collapsed.value = true;
     };
 
-    return { target, collapsed, toggleSidebar, closeSidebar };
+    const handleLogout = () => {
+      store.dispatch('logout', store.state.token);
+    };
+
+    return {
+      target,
+      collapsed,
+      toggleSidebar,
+      closeSidebar,
+      handleLogout,
+    };
   },
 };
 </script>
@@ -72,7 +88,8 @@ export default {
   margin-top: 3.75rem;
 }
 
-.sidebar-link {
+.sidebar-link,
+button {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -83,7 +100,21 @@ export default {
   padding: 1.25rem;
 }
 
-.fas {
+button:hover {
+  color: var(--text-secondary-1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--text-secondary-1);
+    opacity: 0.1;
+    z-index: 100;
+  }
+}
+
+.fas,
+.fa-solid {
   font-size: $text-xl;
 }
 
