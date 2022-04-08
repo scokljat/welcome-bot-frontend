@@ -105,9 +105,9 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [LOGIN]: (state, idToken) => {
-      state.token = idToken;
-      localStorage.setItem('token', idToken);
+    [LOGIN]: (state, accessToken) => {
+      state.token = accessToken;
+      localStorage.setItem('token', accessToken);
     },
     [LOGOUT]: (state) => {
       state.token = null;
@@ -189,7 +189,7 @@ export default createStore({
         return;
       }
 
-      commit(LOGIN, data.idToken);
+      commit(LOGIN, data.accessToken);
       commit(SET_ALERT, {
         success: true,
         message: 'You are successfully log in',
