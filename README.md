@@ -54,6 +54,7 @@ for running the development server at this address: http://localhost:8080
 
 ## Collaborators
 
+- Josip Ivančić - A mentor in the project
 - Salko Balić [@thedev966](https://github.com/thedev966)
 - Selma Čokljat [@scokljat](https://github.com/scokljat)
 
