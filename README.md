@@ -9,6 +9,14 @@ Welcome Bot is a system which offers user option to install bot into Slack syste
 responsible for publishing messages to channels or private messages. Bot action is controlled
 inside Bot Admin application.
 
+## Screenshot
+### Login Page
+![Login Screen](https://i.imgur.com/PkhpxqI.png)
+### UI
+![UI](https://i.imgur.com/hqXmOyW.png)
+### Dark Mode
+![UI](https://i.imgur.com/YXkOYEj.png)
+
 ## Technologies
 
 Technologies used in this project are:
@@ -23,6 +31,12 @@ Technologies used in this project are:
 - [vee-validate](https://vee-validate.logaretm.com/v4/) - Form Validation for Vue.js
 - [element-plus](https://element-plus.org/en-US/) - a Vue 3 based component library for designers and developers
 
+## Features
+
+- Login and Logout functionality.
+- You can write messages that you want to present to channel users.
+- You can write messages and schedule them to appear.
+- You can trigger private messages to users on certain events (eg. channel join).
 
 ## Setup
 
