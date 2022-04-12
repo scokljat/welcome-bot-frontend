@@ -9,7 +9,7 @@ Welcome Bot is a system which offers user option to install bot into Slack syste
 responsible for publishing messages to channels or private messages. Bot action is controlled
 inside Bot Admin application.
 
-## Screenshot
+## Screenshots
 ### Login Page
 ![Login Screen](https://i.imgur.com/PkhpxqI.png)
 ### UI
@@ -24,6 +24,7 @@ Technologies used in this project are:
 - [Vue.js](https://vuejs.org/) - A Javascript framework
 - [Vuex](https://vuex.vuejs.org/) - The official state management library for Vue
 - [Vue-Router](https://router.vuejs.org/) - The official router for Vue.js
+- [VueUse](https://vueuse.org/) - Collection of essential Vue Composition Utilities
 - [SCSS](https://sass-lang.com/) - CSS preprocessor
 - [date-fns](https://date-fns.org/) - Modern JavaScript date utility library
 - [Axios](https://github.com/axios/axios) - Promise based HTTP client
