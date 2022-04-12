@@ -16,50 +16,39 @@
   align-items: center;
   text-align: center;
   min-height: 80vh;
-  padding: 0 0.63rem;
   color: var(--text-primary-1);
 
   h1 {
     font-size: 6.25rem;
+
+    @include tablet-md {
+      font-size: 9.4rem;
+    }
   }
 
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+
+    @include tablet-md {
+      font-size: 1.9rem;
+    }
   }
 
   p {
-    font-size: 0.94rem;
+    font-size: 1.3rem;
+
+    @include tablet-md {
+      font-size: 1.5rem;
+    }
   }
 
   .redirect-link {
     background-color: var(--primary);
     color: var(--text-secondary-1);
     text-decoration: none;
-    padding: 0.63rem;
+    padding: 1.25rem 1.9rem;
     margin: 1.25rem;
     border-radius: 0.25rem;
-  }
-}
-
-@include tablet-md {
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    h1 {
-      font-size: 9.4rem;
-      padding: 0.63rem;
-    }
-
-    h2 {
-      font-size: 1.88rem;
-    }
-
-    p {
-      font-size: 1.25rem;
-    }
   }
 }
 </style>

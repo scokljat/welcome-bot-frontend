@@ -1,9 +1,14 @@
+import axios from '../http';
 const AuthService = {
-  login: ({ token }) => {
-    //when we use real request
-    //  const response=await axios.post('/login',{token})
-    //  return {response.data}
-    return { token };
+  login: async (token) => {
+    const url = 'auth/login';
+    try {
+      const { data } = await axios.post(url, { accessToken: token });
+
+      return { data };
+    } catch (error) {
+      return { error };
+    }
   },
 };
 export default AuthService;

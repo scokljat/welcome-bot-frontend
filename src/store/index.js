@@ -2,7 +2,8 @@ import { createStore } from 'vuex';
 import {
   OPEN_APP_MODAL,
   CLOSE_APP_MODAL,
-  SET_USER,
+  LOGIN,
+  LOGOUT,
   SET_PAGINATION,
   INCREMENT_PAGINATION_TOTAL,
   DECREMENT_PAGINATION_TOTAL,
@@ -107,9 +108,13 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [SET_USER]: (state, payload) => {
-      state.token = payload.token;
-      localStorage.setItem('token', payload.token);
+    [LOGIN]: (state, accessToken) => {
+      state.token = accessToken;
+      localStorage.setItem('token', accessToken);
+    },
+    [LOGOUT]: (state) => {
+      state.token = null;
+      localStorage.removeItem('token');
     },
     [SET_PAGINATION]: (state, { page, total }) => {
       state.pagination.page = page;
@@ -185,10 +190,25 @@ export default createStore({
     },
   },
   actions: {
-    login({ commit }, token) {
-      const response = AuthService.login(token);
+    async login({ commit }, { token }) {
+      const { data, error } = await AuthService.login(token);
 
-      commit(SET_USER, response);
+      if (error) {
+        commit(SET_ALERT, {
+          success: false,
+          message: 'You are not authorized to access this website',
+        });
+        return;
+      }
+
+      commit(LOGIN, data.accessToken);
+      commit(SET_ALERT, {
+        success: true,
+        message: 'You are successfully logged in',
+      });
+    },
+    logout({ commit }) {
+      commit(LOGOUT);
     },
     async fetchMessages({ commit }, pageNumber) {
       const { data, error } = await MessagesService.fetchMessages(pageNumber);
@@ -449,6 +469,12 @@ export default createStore({
     },
     hideAlert({ commit }) {
       commit(SET_ALERT_VISIBILITY, false);
+    },
+    showAlert({ commit }) {
+      commit(SET_ALERT, {
+        success: false,
+        message: 'Something went wrong.Try again!',
+      });
     },
   },
   modules: {},
