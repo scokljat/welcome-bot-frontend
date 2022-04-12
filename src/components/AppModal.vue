@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isModalActive" class="modal-container">
+  <div class="modal-container" :class="{ active: isModalActive }">
     <div class="header">
       <h2>{{ modalTitle }}</h2>
       <button @click="closeAppModal">
@@ -46,10 +46,12 @@ export default {
   box-shadow: 0 0.5rem 0.63rem 0 rgba(0, 0, 0, 0.2),
     0 0.38rem 1.88rem 0.31rem rgba(0, 0, 0, 0.1),
     0 1rem 1.5rem 0.13rem rgba(0, 0, 0, 0.1);
-  top: 50%;
+  top: 100%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   padding: 1.5rem;
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
 
   .header {
     width: 100%;
@@ -80,5 +82,12 @@ export default {
       font-weight: 400;
     }
   }
+}
+
+.active {
+  visibility: visible;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

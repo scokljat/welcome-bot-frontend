@@ -3,6 +3,10 @@
   height: 88vh !important;
 }
 
+.el-table__empty-block {
+  width: 100% !important;
+}
+
 .el-table__body,
 .el-table__footer,
 .el-table__header {
@@ -130,10 +134,11 @@ i.icon {
   color: var(--text-primary-2);
   margin-top: 0.25rem;
   opacity: 0.8;
+  transition: color 0.1s ease-in;
 }
 
 i.icon:hover {
-  opacity: 0.6;
+  color: var(--primary);
 }
 
 i.icon:first-child {
@@ -145,13 +150,17 @@ i.icon:first-child {
   justify-content: right;
   padding-right: 0.8rem;
   padding-bottom: 0.7rem !important;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.el-table__row.active .action-icons {
+  visibility: visible;
+  opacity: 1;
 }
 
 i.fa-pencil,
 i.fa-trash {
-  font-size: 0.85rem;
-
-  @include tablet-md {
-    font-size: 1rem;
-  }
+  font-size: 1rem;
 }

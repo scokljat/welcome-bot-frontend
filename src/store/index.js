@@ -11,12 +11,15 @@ import {
   SET_MESSAGES,
   SET_ALL_MESSAGES,
   REMOVE_MESSAGE,
+  ADD_MESSAGE,
   UPDATE_MESSAGE,
   SET_SCHEDULES,
   REMOVE_SCHEDULE,
+  ADD_SCHEDULE,
   UPDATE_SCHEDULE,
   SET_TRIGGERS,
   REMOVE_TRIGGER,
+  ADD_TRIGGER,
   UPDATE_TRIGGER,
   SET_ALERT,
   SET_ALERT_VISIBILITY,
@@ -135,6 +138,9 @@ export default createStore({
         return message.messageId !== id;
       });
     },
+    [ADD_MESSAGE]: (state, message) => {
+      state.messages = [...state.messages, message];
+    },
     [UPDATE_MESSAGE]: (state, { id, updatedMessage }) => {
       const index = state.messages.findIndex((message) => {
         return message.messageId === id;
@@ -149,6 +155,9 @@ export default createStore({
         return schedule.scheduleId !== id;
       });
     },
+    [ADD_SCHEDULE]: (state, schedule) => {
+      state.schedules = [...state.schedules, schedule];
+    },
     [UPDATE_SCHEDULE]: (state, { id, updatedSchedule }) => {
       const index = state.schedules.findIndex((schedule) => {
         return schedule.scheduleId === id;
@@ -162,6 +171,9 @@ export default createStore({
       state.triggers = state.triggers.filter((trigger) => {
         return trigger.triggerId !== payload;
       });
+    },
+    [ADD_TRIGGER]: (state, trigger) => {
+      state.triggers = [...state.triggers, trigger];
     },
     [UPDATE_TRIGGER]: (state, { id, updatedTrigger }) => {
       const index = state.triggers.findIndex((trigger) => {
@@ -193,7 +205,7 @@ export default createStore({
       commit(LOGIN, data.accessToken);
       commit(SET_ALERT, {
         success: true,
-        message: 'You are successfully log in',
+        message: 'You are successfully logged in',
       });
     },
     deleteAuth({ commit }) {
@@ -266,8 +278,8 @@ export default createStore({
         message: 'Message has been successfully deleted',
       });
     },
-    async createMessage({ commit }, message) {
-      const { error } = await MessagesService.createMessage(message);
+    async createMessage({ commit, state }, message) {
+      const { data, error } = await MessagesService.createMessage(message);
 
       if (error) {
         commit(SET_ALERT, {
@@ -275,6 +287,14 @@ export default createStore({
           message: 'Error occurred while creating the message',
         });
         return;
+      }
+
+      const newMessage = formatMessages([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.messages.length < state.pagination.size) {
+        commit(ADD_MESSAGE, newMessage);
       }
 
       commit(CLOSE_APP_MODAL);
@@ -340,8 +360,8 @@ export default createStore({
         message: 'Schedule has been successfully deleted',
       });
     },
-    async createSchedule({ commit }, schedule) {
-      const { error } = await SchedulesService.createSchedule(schedule);
+    async createSchedule({ commit, state }, schedule) {
+      const { data, error } = await SchedulesService.createSchedule(schedule);
 
       if (error) {
         commit(SET_ALERT, {
@@ -349,6 +369,14 @@ export default createStore({
           message: 'Error occurred while creating the schedule',
         });
         return;
+      }
+
+      const newSchedule = formatSchedules([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.schedules.length < state.pagination.size) {
+        commit(ADD_SCHEDULE, newSchedule);
       }
 
       commit(CLOSE_APP_MODAL);
@@ -413,8 +441,8 @@ export default createStore({
         message: 'Trigger has been successfully deleted',
       });
     },
-    async createTrigger({ commit }, trigger) {
-      const { error } = await TriggersService.createTrigger(trigger);
+    async createTrigger({ commit, state }, trigger) {
+      const { data, error } = await TriggersService.createTrigger(trigger);
 
       if (error) {
         commit(SET_ALERT, {
@@ -422,6 +450,14 @@ export default createStore({
           message: 'Error occurred while creating the trigger',
         });
         return;
+      }
+
+      const newTrigger = formatTriggers([data])[0];
+
+      commit(INCREMENT_PAGINATION_TOTAL);
+
+      if (state.triggers.length < state.pagination.size) {
+        commit(ADD_TRIGGER, newTrigger);
       }
 
       commit(CLOSE_APP_MODAL);
@@ -452,6 +488,12 @@ export default createStore({
     },
     hideAlert({ commit }) {
       commit(SET_ALERT_VISIBILITY, false);
+    },
+    showAlert({ commit }) {
+      commit(SET_ALERT, {
+        success: false,
+        message: 'Something went wrong.Try again!',
+      });
     },
   },
   modules: {},

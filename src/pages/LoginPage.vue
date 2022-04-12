@@ -14,7 +14,7 @@ export default {
     ...mapGetters({ isLoggedIn: 'isLoggedIn' }),
   },
   methods: {
-    ...mapActions({ login: 'login' }),
+    ...mapActions({ login: 'login', showAlert: 'showAlert' }),
 
     async handleSignIn() {
       try {
@@ -32,7 +32,7 @@ export default {
           this.$router.push({ name: 'messages' });
         }
       } catch (error) {
-        console.log(error);
+        this.showAlert();
       }
     },
   },
