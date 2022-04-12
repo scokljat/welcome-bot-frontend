@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppInput.vue renders properly 1`] = `
+<div class="input-box"><label data-testid="label" class="input-label">Message</label><input class="input-text" type="text" name="title" placeholder="Enter the message...">
+  <!--v-if-->
+</div>
+`;
