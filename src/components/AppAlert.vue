@@ -1,6 +1,6 @@
 <template>
   <div class="alert" :class="{ success: alert.success, visible: alert.active }">
-    <i :class="alertIcon"></i>
+    <i data-testid="icon" :class="alertIcon"></i>
     <span>{{ alert.message }}</span>
   </div>
 </template>

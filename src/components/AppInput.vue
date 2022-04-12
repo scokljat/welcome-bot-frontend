@@ -1,8 +1,11 @@
 <template>
   <div class="input-box">
-    <label class="input-label" :class="{ 'error-label': error }">{{
-      title
-    }}</label>
+    <label
+      data-testid="label"
+      class="input-label"
+      :class="{ 'error-label': error }"
+      >{{ title }}</label
+    >
     <input
       class="input-text"
       :class="{ 'error-input': error }"
