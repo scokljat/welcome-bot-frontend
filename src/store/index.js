@@ -106,9 +106,9 @@ export default createStore({
     [CLOSE_APP_MODAL]: (state) => {
       state.isModalActive = false;
     },
-    [LOGIN]: (state, accessToken) => {
-      state.token = accessToken;
-      localStorage.setItem('token', accessToken);
+    [LOGIN]: (state, token) => {
+      state.token = token;
+      localStorage.setItem('token', token);
     },
     [LOGOUT]: (state) => {
       state.token = localStorage.removeItem('token');
@@ -213,7 +213,7 @@ export default createStore({
       commit(LOGOUT);
       commit(SET_ALERT, {
         success: true,
-        message: 'You are successfully log out',
+        message: 'You are successfully logged out',
       });
     },
     async fetchMessages({ commit }, pageNumber) {
