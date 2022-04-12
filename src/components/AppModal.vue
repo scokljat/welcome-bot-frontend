@@ -1,15 +1,17 @@
 <template>
-  <div class="modal-container" :class="{ active: isModalActive }">
-    <div class="header">
-      <h2>{{ modalTitle }}</h2>
-      <button @click="closeAppModal">
-        <i class="fa-solid fa-x"></i>
-      </button>
+  <transition name="fade">
+    <div v-if="isModalActive" class="modal-container">
+      <div class="header">
+        <h2>{{ modalTitle }}</h2>
+        <button @click="closeAppModal">
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+      <div class="form-body">
+        <slot />
+      </div>
     </div>
-    <div class="form-body">
-      <slot />
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -46,12 +48,10 @@ export default {
   box-shadow: 0 0.5rem 0.63rem 0 rgba(0, 0, 0, 0.2),
     0 0.38rem 1.88rem 0.31rem rgba(0, 0, 0, 0.1),
     0 1rem 1.5rem 0.13rem rgba(0, 0, 0, 0.1);
-  top: 100%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
   padding: 1.5rem;
-  visibility: hidden;
-  transition: all 0.5s ease-in-out;
 
   .header {
     width: 100%;
@@ -89,5 +89,36 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.fade-enter-from {
+  opacity: 0;
+  visibility: hidden;
+  top: -100%;
+}
+
+.fade-enter-to {
+  opacity: 1;
+  visibility: visible;
+  top: 50%;
+}
+
+.fade-enter-active {
+  transition: all 0.6s ease;
+}
+
+.fade-leave-from {
+  opacity: 1;
+  visibility: visible;
+  top: 50%;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.fade-leave-active {
+  transition: all 0.4s ease;
 }
 </style>

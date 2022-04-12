@@ -32,15 +32,14 @@
         >
       </div></Field
     >
-    <Field v-slot="{ field }" v-model="interval" name="interval"
-      ><AppSelect
-        v-if="repeat"
-        v-bind="field"
-        v-model="interval"
-        :items="intervalOptions"
-        title="Interval"
-        :error="errors.interval"
-    /></Field>
+    <AppSelect
+      v-if="repeat"
+      v-bind="field"
+      v-model="interval"
+      :items="intervalOptions"
+      title="Interval"
+      :error="errors.interval"
+    />
     <Field v-slot="{ field }" v-model="channel" name="channel"
       ><AppInput
         v-bind="field"
@@ -90,7 +89,6 @@ export default {
         .number()
         .required('Message is a required field')
         .nullable('Message is a required field'),
-      interval: yup.string().required().label('Interval'),
       channel: yup.string().required().label('Channel name'),
       repeat: yup.bool().label('Repeat option'),
       active: yup.bool().label('Active option'),
