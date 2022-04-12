@@ -101,19 +101,6 @@ button {
   transition: all 0.25s ease-in-out;
 }
 
-button:hover {
-  color: var(--text-secondary-1);
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--text-secondary-1);
-    opacity: 0.1;
-    z-index: 100;
-  }
-}
-
 .fas,
 .fa-solid {
   font-size: $text-xl;
@@ -136,7 +123,8 @@ span {
   }
 }
 
-.sidebar-link:hover {
+.sidebar-link:hover,
+button:hover {
   color: var(--text-secondary-1);
 
   &::after {
@@ -172,6 +160,7 @@ span {
     }
   }
 
+  button,
   .sidebar-link {
     padding: 1.8rem 2.1rem;
   }
