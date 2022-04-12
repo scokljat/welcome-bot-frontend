@@ -57,8 +57,4 @@ describe('AppAlert.vue', () => {
 
     expect(wrapper.getByTestId('icon')).toHaveClass('fa-solid fa-circle-check');
   });
-
-  test('alert closes after 3 seconds', async () => {
-    expect(store.commit).toHaveBeenCalled();
-  });
 });
