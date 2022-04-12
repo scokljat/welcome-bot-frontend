@@ -153,7 +153,7 @@ span {
   position: fixed;
   z-index: 101;
   left: 1.25rem;
-  top: 0.38rem;
+  top: 0.75rem;
   padding: 0.31rem;
   transition: 0.2s ease;
   margin-bottom: 1.25rem;
