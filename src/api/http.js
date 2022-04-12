@@ -1,6 +1,5 @@
 import store from '@/store';
 import axios from 'axios';
-import router from '../router/index';
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_SERVER_URL,
@@ -27,8 +26,7 @@ instance.interceptors.response.use(
 
   (error) => {
     if (error.response.status === 403) {
-      store.dispatch('logout');
-      router.push({ name: 'login' });
+      store.dispatch('deleteAuth');
     }
     return Promise.reject(error);
   }
