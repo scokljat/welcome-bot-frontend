@@ -192,7 +192,7 @@ export default createStore({
       commit(LOGIN, data.accessToken);
       commit(SET_ALERT, {
         success: true,
-        message: 'You are successfully log in',
+        message: 'You are successfully logged in',
       });
     },
     logout({ commit }) {
@@ -433,6 +433,12 @@ export default createStore({
     },
     hideAlert({ commit }) {
       commit(SET_ALERT_VISIBILITY, false);
+    },
+    showAlert({ commit }) {
+      commit(SET_ALERT, {
+        success: false,
+        message: 'Something went wrong.Try again!',
+      });
     },
   },
   modules: {},
